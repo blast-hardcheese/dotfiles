@@ -223,6 +223,8 @@ if [[ -d /usr/local/Cellar ]]; then
     fi
 fi
 
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
 if [ -f ~/.tools/configs/machines/$(hostname -s).bashrc ]; then
   . ~/.tools/configs/machines/$(hostname -s).bashrc
 fi
