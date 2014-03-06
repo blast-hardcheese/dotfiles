@@ -40,7 +40,16 @@ Useful things
     as_start: Start an ssh-agent and register it
     as_use: Use a registered ssh-agent
     as_register: Write the contents of SSH_AUTH_SOCK into the appropriate place
-    as_revert: If you want to revert back to what socket you were using _before_ as_use, use this. Useful for if you ssh -A to a box that already has ssh-agent running, but you want to use your forwarded agent.
+    as_revert: If you want to revert back to what socket you were using _before_
+               as_use, use this. Useful for if you ssh -A to a box that already
+               has ssh-agent running, but you want to use your forwarded agent.
+
+.i3/tagger.py: wmii-style tag support for i3.
+
+    Mod+t to tag your windows with whatever you want!
+
+    Requires working i3ipc, (I recommend https://github.com/whitelynx/i3ipc ,
+    as it seems the most maintained (and my patch was finally integrated)).
 
 Contribution/Attribution
 ------------------------

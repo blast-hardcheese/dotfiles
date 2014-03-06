@@ -1,0 +1,7 @@
+# Excerpt from ~/.xsessionrc
+
+mkdir -p ~/.i3/logs
+I3LOGFILE=~/.i3/logs/i3log-$(date +'%F-%k-%M-%S')
+
+# exec /usr/bin/i3 > $I3LOGFILE 2>&1
+exec /usr/bin/i3 -V -d all >$I3LOGFILE 2>&1
