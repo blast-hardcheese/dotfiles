@@ -1,0 +1,93 @@
+#!/bin/sh
+
+_pathmunge () {
+  if [ -z $PATH ]; then
+    PATH=$1
+  elif ! [[ $PATH =~ (\^|:)$1($|:) ]]; then
+#  if ! echo $PATH | /bin/egrep -q "(\^|:)$1($|:)" ; then
+    if [ "$2" = "after" ] ; then
+      PATH=$PATH:$1
+    else
+      PATH=$1:$PATH
+    fi
+  fi
+}
+
+path_from_file() {
+    if [ -f $1 ]; then
+        for COMPONENT in $(/usr/bin/env cat $1); do
+            _pathmunge $COMPONENT
+        done
+    fi
+}
+
+path_from_dir() {
+    if [ -d $1 ]; then
+        for _FILE in $(/usr/bin/env ls $1); do
+            path_from_file $_FILE
+        done
+    fi
+}
+
+# The goal here is to provide a clean working slate for any $PATH modifications
+if [ -z $ORIGPATH ]; then
+    ORIGPATH=$PATH
+fi
+
+unset PATH
+path_from_file /etc/paths
+path_from_dir /etc/paths.d
+
+if [ -z $PATH ]; then
+    PATH=$ORIGPATH
+fi
+
+# Source global bashrc if it exists
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+FINKPATHS="/sw/bin"
+MACPORTPATHS="/opt/local/bin /opt/local/sbin"
+HOMEBREWPATHS="/usr/local/bin /usr/local/sbin /usr/local/share/npm/bin /usr/local/opt/ruby/bin /usr/local/opt/coreutils/libexec/gnubin"
+CABALPATHS="$HOME/.cabal/bin"
+LOCALIZEDPATHS="
+$HOME/.tools/bin $HOME/.tools/localized/bin
+$HOME/bin $HOME/.bin
+$HOME/.rvm/bin
+"
+SBINPATHS="/usr/sbin /sbin"
+
+TESTPATHS="$FINKPATHS $MACPORTPATHS $HOMEBREWPATHS $CABALPATHS $LOCALIZEDPATHS $SBINPATHS"
+
+bash_only_homebrew() {
+    export ONLY_HOMEBREW=1;
+    exec bash -l
+}
+
+if [ -n "$ONLY_HOMEBREW" ]; then
+    TESTPATHS="$HOMEBREWPATHS"
+fi
+
+for COMPONENT in $TESTPATHS; do
+  if [ -d $COMPONENT ]; then
+    _pathmunge $COMPONENT
+  fi
+done
+
+ANDROID_PATH=$HOME/.tools/localized/android-sdk/
+if [ -d "$ANDROID_PATH" ]; then
+    export PATH=$ANDROID_PATH/tools/:$ANDROID_PATH/platform-tools/:$PATH
+    export ANDROID_HOME="$ANDROID_PATH"
+fi
+
+MANPATH=$MANPATH:/usr/local/share/man
+
+GOPATH=$HOME/.tools/localized/go
+if [ -d "$GOPATH" ]; then
+    export GOPATH
+    export PATH=$GOPATH/bin:$PATH
+fi
+
+export PATH
+export MANPATH
