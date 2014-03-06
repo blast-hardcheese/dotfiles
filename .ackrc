@@ -1,0 +1,4 @@
+# http://groups.google.com/group/ack-users/browse_thread/thread/c1703ad45f67c6ef?pli=1
+--type-set=asp=.asp
+--type-add=python=.wsgi
+--type-add=go=.go
