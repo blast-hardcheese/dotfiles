@@ -32,6 +32,16 @@ If you don't want to follow my directory structure, do something else:
 
 Or just take install.sh, uninstall.sh, and lib.sh and do your own thing (it's really OK).
 
+Useful things
+=============
+
+.auth\_sockrc: This provides some support for managing ssh-agent sockets. Tested and used for years on both Linux and OSX.
+
+    as_start: Start an ssh-agent and register it
+    as_use: Use a registered ssh-agent
+    as_register: Write the contents of SSH_AUTH_SOCK into the appropriate place
+    as_revert: If you want to revert back to what socket you were using _before_ as_use, use this. Useful for if you ssh -A to a box that already has ssh-agent running, but you want to use your forwarded agent.
+
 Contribution/Attribution
 ------------------------
 

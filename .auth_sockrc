@@ -1,0 +1,130 @@
+#!/bin/env bash
+
+alias as_register='echo -n $SSH_AUTH_SOCK > $SOCKPATH'
+alias as_use='export SSH_AUTH_SOCK=$(cat $SOCKPATH)'
+alias as_revert='export SSH_AUTH_SOCK=$OLD_AUTH_SOCK'
+alias as_start='eval $(ssh-agent); as_register'
+
+VARS="SOCKDIR SOCKFILE ABORT NEW_AUTH_SOCK SOCKCODE VARS PID AGENTS AGENTCOUNT"
+
+set_readlinks() {
+    # Determine what options we can use with readlink.
+    # Usage: set_readlinks "readlink -f" "readlink -e" "readlink"
+
+    SOURCE=$(mktemp /tmp/auth_sockrc.XXXXX)
+    TARGET=$(mktemp /tmp/auth_sockrc.XXXXX)
+
+    rm $TARGET
+    ln -s $SOURCE $TARGET
+
+    for READLINK in "$@"; do
+        $READLINK $TARGET 1>/dev/null 2>/dev/null
+        if test $? -eq 0 ; then
+            break
+        fi
+    done
+
+    # Cleanup
+    rm $SOURCE $TARGET
+}
+
+set_readlinks "readlink -e" "readlink"
+
+# Steps:
+#   - Check to see if SSH_AUTH_SOCK is set and usable
+#   - Check to see if $SOCKPATH has a usable socket
+#   - Use find(8) to find open sockets
+#   - Start a new ssh-agent
+
+test_auth_sock() {
+    SOCKFILE=$1
+    if test "xx$SOCKFILE" = "xx"; then
+        return 1
+    fi
+
+    if ls "$SOCKFILE" &>/dev/null; then
+        # The following perl blurb grabs the pid out of a string like:
+        # /tmp/ssh-qeedRuu2jHmL/agent.23886
+        # and then increments it, since (at least on linux) the socket pid
+        # is the parent pid (not the daemon pid)
+        SSHPID=$(echo -n $SOCKFILE |
+            perl -ne 's/^.*agent\.(\d*)/$1/; print;')
+        if [ "$SSHPID" = "$SOCKFILE" ]; then
+            return 4 # Unknown path type
+        fi
+        AGENTPID=$(($SSHPID+1))
+
+        # If the regex matched a pid
+        if test \( "xx$AGENTPID" != "xx" \) -o \( "xx$SSHPID" != "xx" \) ; then
+            # If neight AGENTPID or SSHPID are running, return 3
+            ps -p $AGENTPID &>/dev/null || ps -p $SSHPID &>/dev/null || return 3
+        else
+            return 100
+        fi
+    else
+        return 2
+    fi
+}
+
+SOCKDIR=~/.ssh/agent_socks
+SOCKPATH="$SOCKDIR/$(hostname -s).auth_sock"
+OLD_AUTH_SOCK=$SSH_AUTH_SOCK
+
+mkdir -p $SOCKDIR
+touch $SOCKPATH
+
+ABORT=0
+NEW_AUTH_SOCK=$(cat $SOCKPATH)
+test_auth_sock "$NEW_AUTH_SOCK"
+SOCKCODE=$?
+
+if test $SOCKCODE -eq 0; then
+    SSH_AUTH_SOCK=$NEW_AUTH_SOCK
+elif test $SOCKCODE -eq 100; then
+    echo "Unknown socket format. Aborting."
+    ABORT=1
+else
+    test_auth_sock $SSH_AUTH_SOCK
+    if test $? -ne 0; then
+        unset SSH_AUTH_SOCK
+    fi
+fi
+
+if test -z "$SSH_AUTH_SOCK" ; then
+    # Find agent socks
+    AGENTS=$(find $TMPDIR/ssh-* -user $USER -type s 2>/dev/null)
+    AGENTCOUNT=$(echo $AGENTS | wc -w)
+    if test $AGENTCOUNT -eq 0 ; then
+        #echo "Unable to find SSH agent"
+        echo -n
+    elif test $AGENTCOUNT -gt 1 ; then
+        #echo "Multiple SSH agents found, bailing."
+        echo -n
+    elif type pgrep 2>&1 >/dev/null && test ! -z "$READLINK" && type lsof 2>&1 >/dev/null; then
+        PGREPIDS=$(pgrep -u $(whoami) ssh-agent)
+        COUNT=$(echo $PGREPIDS | wc -l)
+        if test $? == 0 -a $COUNT -eq 1 ; then
+            PGREPATH=$($READLINK $AGENTS)
+            if test $? -eq 0; then
+                export SSH_AUTH_SOCK=$PGREPATH
+            fi
+        fi
+    elif [[ "$READLINK" != "" ]] ; then
+        if test $AGENTCOUNT == 1; then
+            export SSH_AUTH_SOCK=$($READLINK $AGENTS)
+        fi
+    fi
+fi
+
+if test -z "$SSH_AUTH_SOCK" && test $AGENTCOUNT -gt 1 ; then
+    echo "Multiple ssh-agents found, unable to continue"
+elif test -z "$SSH_AUTH_SOCK" && test $ABORT -eq 0 ; then
+    echo "Couldn't find ssh-agent. Use as_start to start one."
+fi
+
+export SSH_AUTH_SOCK
+echo -n $SSH_AUTH_SOCK > $SOCKPATH
+
+for VAR in "$VARS"; do
+    unset $VAR
+done
