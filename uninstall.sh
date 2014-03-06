@@ -8,6 +8,8 @@ for SOURCE_PATH in $CONFIGFILES; do
     test_path "$SOURCE_PATH" ".*/\.$" && continue
     test_path "$SOURCE_PATH" ".*/\.\.$" && continue
     test_path "$SOURCE_PATH" ".*/\.DS_Store$" && continue
+    test_path "$SOURCE_PATH" ".*/\.git$" && continue  # Don't bother with .git
+    test_path "$SOURCE_PATH" ".*/\.gitignore$" && continue  # Don't bother with .gitignore
     test_path "$SOURCE_PATH" ".*/\..*.sw.$" && continue
 
     BASE_FNAME="$HOME/$(basename "$SOURCE_PATH")"
