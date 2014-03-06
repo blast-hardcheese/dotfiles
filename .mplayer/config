@@ -1,0 +1,51 @@
+# http://shreevatsa.wordpress.com/2009/05/29/mplayer-changing-speed-without-changing-pitch-avoiding-the-chipmunk-effect/
+af="scaletempo"
+
+# http://ubuntuforums.org/archive/index.php/t-77329.html
+# From pizzach
+# Video
+monitoraspect="16:9" # keeps 4:3 content from stretching
+# Subtitles
+ffactor="10" # black outline
+sub-bg-alpha="0" # background color ala closed captions
+sub-bg-color="0" # black to white
+subfont-text-scale="3.7" # truetype font scaling
+subfont-blur="1" # Slight blur
+# This sets the postprocessing into overdrive using all possible spare cpu cycles to make the movie look better
+autoq=100
+vf=pp=de,hqdn3d
+# turns off xscreen saver...maybe
+stop-xscreensaver="yes"
+#
+# From ow50
+# Align subs. (-1: as they want to align themselves)
+spualign=-1
+# Anti-alias subs. (4: best and slowest)
+spuaa=4
+# Set language.
+slang=en,eng
+# Find subtitle files. (1: load all subs containing movie name)
+sub-fuzziness=1
+# Set font encoding.
+subfont-encoding=unicode
+# Set subtitle file encoding.
+unicode=yes
+utf8=yes
+# Resample the font alphamap. (1: narrow black outline)
+ffactor=1
+# Set subtitle position. (100: as low as possible)
+subpos=100
+# Set subtitle alignment at its position. (2: bottom)
+subalign=2
+# Set font size. (2: proportional to movie width)
+subfont-autoscale=2
+# Set font blur radius. (default: 2)
+subfont-blur=2.0
+# Set font outline thickness. (default: 2)
+subfont-outline=2.0
+# Set autoscale coefficient. (default: 5)
+subfont-text-scale=4.4
+# OSD
+#====
+# Set autoscale coefficient. (default: 6)
+subfont-osd-scale=4.4
