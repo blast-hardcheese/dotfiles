@@ -47,6 +47,9 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+OSXPATHS="
+/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources
+"
 FINKPATHS="/sw/bin"
 MACPORTPATHS="/opt/local/bin /opt/local/sbin"
 HOMEBREWPATHS="/usr/local/bin /usr/local/sbin /usr/local/share/npm/bin /usr/local/opt/ruby/bin /usr/local/opt/coreutils/libexec/gnubin"
@@ -58,7 +61,7 @@ $HOME/.rvm/bin
 "
 SBINPATHS="/usr/sbin /sbin"
 
-TESTPATHS="$FINKPATHS $MACPORTPATHS $HOMEBREWPATHS $CABALPATHS $LOCALIZEDPATHS $SBINPATHS"
+TESTPATHS="$OSXPATHS $FINKPATHS $MACPORTPATHS $HOMEBREWPATHS $CABALPATHS $LOCALIZEDPATHS $SBINPATHS"
 
 bash_only_homebrew() {
     export ONLY_HOMEBREW=1;
