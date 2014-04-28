@@ -226,3 +226,8 @@ let localrc = $HOME . "/.tools/configs/machines/" . hostname . ".vimrc"
 if filereadable(localrc)
     exec "source " . localrc
 endif
+
+let localrc = $HOME . "/.tools/configs/machines-private/" . hostname . ".vimrc"
+if filereadable(localrc)
+    exec "source " . localrc
+endif
