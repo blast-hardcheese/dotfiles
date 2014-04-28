@@ -225,6 +225,10 @@ fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
+if [ -f ~/.tools/configs-private/machines/$(hostname -s).bashrc ]; then
+  . ~/.tools/configs-private/machines/$(hostname -s).bashrc
+fi
+
 if [ -f ~/.tools/configs/machines/$(hostname -s).bashrc ]; then
   . ~/.tools/configs/machines/$(hostname -s).bashrc
 fi
