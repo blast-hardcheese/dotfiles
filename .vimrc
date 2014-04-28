@@ -231,3 +231,20 @@ let localrc = $HOME . "/.tools/configs/machines-private/" . hostname . ".vimrc"
 if filereadable(localrc)
     exec "source " . localrc
 endif
+
+" Inspired by
+" http://stackoverflow.com/questions/12556267/how-to-prevent-quitting-vim-accidentally
+function ProtectQuit()
+    cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'close' : 'q')<CR>
+    echo "Quit locked"
+endfunction
+
+function UnprotectQuit()
+    cunabbrev q
+    echo "Quit unlocked"
+endfunction
+
+cabbrev <silent> protect call ProtectQuit()<CR>
+cabbrev <silent> unprotect call UnprotectQuit()<CR>
+nnoremap <silent> <Leader>p :call ProtectQuit()<CR>
+nnoremap <silent> <Leader>u :call UnprotectQuit()<CR>
