@@ -30,6 +30,10 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Bundle "leafgarland/typescript-vim"
     Bundle "saltstack/salt-vim"
 
+    Bundle "lukerandall/haskellmode-vim"
+    Bundle "ciaranm/detectindent"
+    Bundle "mxw/vim-jsx"
+
     filetype plugin indent on     " required!
     "
     " Brief help
