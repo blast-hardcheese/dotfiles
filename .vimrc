@@ -9,30 +9,40 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     " let Vundle manage Vundle
     " required!
     Bundle 'gmarik/vundle'
-    Bundle 'gre/play2vim'
-"    Bundle 'tpope/vim-git'
-"    Bundle 'has207/vim-scala'
-    Bundle 'derekwyatt/vim-scala'
-    Bundle 'derekwyatt/vim-sbt'
-"    Bundle 'klen/python-mode'
-    Bundle 'othree/html5.vim'
-"    Bundle 'ervandew/supertab'
-    Bundle 'scrooloose/syntastic'
-    Bundle 'Lokaltog/vim-easymotion'
-"    Bundle 'vim-scripts/javacomplete'
-    Bundle 'mhinz/vim-tmuxify'
-    Bundle 'kien/ctrlp.vim'
-"    Bundle 'mhinz/vim-signify' " Replaced by gitgutter
-    Bundle 'safetydank/vim-gitgutter'
-    Bundle 'gitolite.vim'
-    Bundle "pangloss/vim-javascript"
 
+" Usability
+    Bundle 'Lokaltog/vim-easymotion'
+""    Bundle 'mhinz/vim-tmuxify'
+    Bundle 'kien/ctrlp.vim'
+    Bundle 'safetydank/vim-gitgutter'
+    Bundle "ciaranm/detectindent"
+    Bundle 'scrooloose/syntastic'
+
+" Scala
+    Bundle 'gre/play2vim'
+    Bundle 'derekwyatt/vim-scala'
+"    Bundle 'has207/vim-scala'
+    Bundle 'derekwyatt/vim-sbt'
+
+" HTML/JavaScript/CSS
+    Bundle 'othree/html5.vim'
+    Bundle "pangloss/vim-javascript"
+    Bundle 'othree/javascript-libraries-syntax.vim'
+    Bundle "wookiehangover/jshint.vim"
+    Bundle "mxw/vim-jsx"
+    Bundle "groenewege/vim-less"
+
+" TypeScript
     Bundle "leafgarland/typescript-vim"
+
+" Haskell
+    Bundle "lukerandall/haskellmode-vim"
+
+" SaltStack
     Bundle "saltstack/salt-vim"
 
-    Bundle "lukerandall/haskellmode-vim"
-    Bundle "ciaranm/detectindent"
-    Bundle "mxw/vim-jsx"
+" Gitolite
+    Bundle 'gitolite.vim'
 
     filetype plugin indent on     " required!
     "
