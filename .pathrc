@@ -1,95 +1,61 @@
 #!/bin/sh
 
-_pathmunge () {
-  if [ -z $PATH ]; then
-    PATH=$1
-  elif ! [[ $PATH =~ (\^|:)$1($|:) ]]; then
-#  if ! echo $PATH | /bin/egrep -q "(\^|:)$1($|:)" ; then
-    if [ "$2" = "after" ] ; then
-      PATH=$PATH:$1
+remove_path() {
+  PATH=$(echo -n "$PATH" | sed -e "s#:$1:#:#g" -e "s#:$1\$##" -e "s#^$1:##")
+}
+
+prefix_path() {
+  remove_path "$1"
+
+  if [[ -d "$1" ]]; then
+    if [ -z "$PATH" ]; then
+      PATH="$1"
     else
-      PATH=$1:$PATH
+      PATH="$1:$PATH"
+    fi
+
+    man="${1%%/bin}/share/man"
+    if [ -d "$man" ]; then
+      MANPATH="$man:$MANPATH"
     fi
   fi
 }
 
-path_from_file() {
-    if [ -f $1 ]; then
-        for COMPONENT in $(/usr/bin/env cat $1); do
-            _pathmunge $COMPONENT
-        done
-    fi
-}
+# airport tool
+prefix_path "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources"
 
-path_from_dir() {
-    if [ -d $1 ]; then
-        for _FILE in $(/usr/bin/env ls $1); do
-            path_from_file $_FILE
-        done
-    fi
-}
+# Fink
+prefix_path "/sw/bin"
 
-# The goal here is to provide a clean working slate for any $PATH modifications
-if [ -z $ORIGPATH ]; then
-    ORIGPATH=$PATH
-fi
+# Macports
+prefix_path "/opt/local/bin"
+prefix_path "/opt/local/sbin"
 
-unset PATH
-path_from_file /etc/paths
-path_from_dir /etc/paths.d
+prefix_path "/sbin"
+prefix_path "/usr/sbin"
+prefix_path "/usr/local/bin"
+prefix_path "/usr/local/sbin"
+prefix_path "/usr/local/share/npm/bin"
+prefix_path "/usr/local/opt/ruby/bin"
+prefix_path "/usr/local/opt/coreutils/libexec/gnubin"
+prefix_path "$HOME/.cabal/bin"
+prefix_path "$HOME/.tools/bin"
+prefix_path "$HOME/.tools/localized/bin"
+prefix_path "$HOME/bin"
+prefix_path "$HOME/.bin"
+prefix_path "$HOME/.rvm/bin"
 
-if [ -z $PATH ]; then
-    PATH=$ORIGPATH
-fi
-
-# Source global bashrc if it exists
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
-
-OSXPATHS="
-/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources
-"
-FINKPATHS="/sw/bin"
-MACPORTPATHS="/opt/local/bin /opt/local/sbin"
-HOMEBREWPATHS="/usr/local/bin /usr/local/sbin /usr/local/share/npm/bin /usr/local/opt/ruby/bin /usr/local/opt/coreutils/libexec/gnubin"
-CABALPATHS="$HOME/.cabal/bin"
-LOCALIZEDPATHS="
-$HOME/.tools/bin $HOME/.tools/localized/bin
-$HOME/bin $HOME/.bin
-$HOME/.rvm/bin
-"
-SBINPATHS="/usr/sbin /sbin"
-
-TESTPATHS="$OSXPATHS $FINKPATHS $MACPORTPATHS $HOMEBREWPATHS $CABALPATHS $LOCALIZEDPATHS $SBINPATHS"
-
-bash_only_homebrew() {
-    export ONLY_HOMEBREW=1;
-    exec bash -l
-}
-
-if [ -n "$ONLY_HOMEBREW" ]; then
-    TESTPATHS="$HOMEBREWPATHS"
-fi
-
-for COMPONENT in $TESTPATHS; do
-  if [ -d $COMPONENT ]; then
-    _pathmunge $COMPONENT
-  fi
-done
-
-ANDROID_PATH=$HOME/.tools/localized/android-sdk/
+ANDROID_PATH="$HOME/.tools/localized/android-sdk"
 if [ -d "$ANDROID_PATH" ]; then
-    export PATH=$ANDROID_PATH/tools/:$ANDROID_PATH/platform-tools/:$PATH
+    prefix_path "$ANDROID_PATH/tools"
+    prefix_path "$ANDROID_PATH/platform-tools"
     export ANDROID_HOME="$ANDROID_PATH"
 fi
-
-MANPATH=$MANPATH:/usr/local/share/man
 
 GOPATH=$HOME/.tools/localized/go
 if [ -d "$GOPATH" ]; then
     export GOPATH
-    export PATH=$GOPATH/bin:$PATH
+    prefix_path "$GOPATH/bin"
 fi
 
 export PATH
