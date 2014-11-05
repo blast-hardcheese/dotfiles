@@ -237,19 +237,6 @@ nnoremap <C-W>n :new<cr>
 " Create a new window, vertically
 nnoremap <C-W>N :vnew<cr>
 
-" Include settings from local vimrc
-let hostname = system("hostname -s")
-let hostname = substitute(hostname, "\n$", "", "g")
-let localrc = $HOME . "/.tools/configs/machines/" . hostname . ".vimrc"
-if filereadable(localrc)
-    exec "source " . localrc
-endif
-
-let localrc = $HOME . "/.tools/configs/machines-private/" . hostname . ".vimrc"
-if filereadable(localrc)
-    exec "source " . localrc
-endif
-
 " Inspired by
 " http://stackoverflow.com/questions/12556267/how-to-prevent-quitting-vim-accidentally
 function ProtectQuit()
@@ -278,3 +265,16 @@ noremap <leader>7 7gt
 noremap <leader>8 8gt
 noremap <leader>9 9gt
 noremap <leader>0 :tablast<cr>
+
+" Include settings from local vimrc
+let hostname = system("hostname -s")
+let hostname = substitute(hostname, "\n$", "", "g")
+let localrc = $HOME . "/.tools/configs/machines/" . hostname . ".vimrc"
+if filereadable(localrc)
+    exec "source " . localrc
+endif
+
+let localrc = $HOME . "/.tools/configs/machines-private/" . hostname . ".vimrc"
+if filereadable(localrc)
+    exec "source " . localrc
+endif
