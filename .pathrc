@@ -58,5 +58,19 @@ if [ -d "$GOPATH" ]; then
     prefix_path "$GOPATH/bin"
 fi
 
+# Adding /usr/local sources to searchpaths
+if [ -z "$LIBRARY_PATH" ]; then
+    LIBRARY_PATH=/usr/local/lib
+else
+    LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
+fi
+if [ -z "$CPATH" ]; then
+    CPATH=/usr/local/include/SDL
+else
+    CPATH=/usr/local/include/SDL:$CPATH
+fi
+
 export PATH
 export MANPATH
+export LIBRARY_PATH
+export CPATH

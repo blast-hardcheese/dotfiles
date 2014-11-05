@@ -212,17 +212,6 @@ if [ -f "/usr/local/opt/chruby/share/chruby/chruby.sh" ]; then
     source /usr/local/opt/chruby/share/chruby/chruby.sh
 fi
 
-# Adding /usr/local sources to searchpaths
-export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
-export CPATH=/usr/local/include/SDL:$CPATH
-
-if [[ -d /usr/local/Cellar ]]; then
-    export RBENV_ROOT=/usr/local/var/rbenv
-    if which rbenv > /dev/null; then
-        eval "$(rbenv init -)"
-    fi
-fi
-
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 if [ -f ~/.tools/configs-private/machines/$(hostname -s).bashrc ]; then
