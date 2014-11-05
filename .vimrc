@@ -254,6 +254,10 @@ cabbrev <silent> unprotect call UnprotectQuit()<CR>
 nnoremap <silent> <Leader>p :call ProtectQuit()<CR>
 nnoremap <silent> <Leader>u :call UnprotectQuit()<CR>
 
+" http://vim.wikia.com/wiki/Editing_crontab
+au BufEnter /private/tmp/crontab.* setl backupcopy=yes
+au BufEnter /tmp/crontab.* setl backupcopy=yes
+
 " https://superuser.com/questions/410982/in-vim-how-can-i-quickly-switch-between-tabs#answer-675119
 noremap <leader>1 1gt
 noremap <leader>2 2gt
