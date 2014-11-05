@@ -1,3 +1,6 @@
+" http://vim.wikia.com/wiki/256_colors_in_vim
+set t_Co=256
+
 " Vundle
 let vundlepath=$HOME . "/.vim/bundle/vundle/.git"
 if isdirectory(vundlepath) || filereadable(vundlepath)
