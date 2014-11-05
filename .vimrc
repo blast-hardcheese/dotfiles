@@ -14,9 +14,10 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Bundle 'Lokaltog/vim-easymotion'
 ""    Bundle 'mhinz/vim-tmuxify'
     Bundle 'kien/ctrlp.vim'
-    Bundle 'safetydank/vim-gitgutter'
+    Bundle 'airblade/vim-gitgutter'
     Bundle "ciaranm/detectindent"
     Bundle 'scrooloose/syntastic'
+    Bundle 'tagbar'
 
 " Scala
     Bundle 'gre/play2vim'
@@ -34,6 +35,9 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
 
 " TypeScript
     Bundle "leafgarland/typescript-vim"
+
+" Purescript
+    Bundle "raichoo/purescript-vim"
 
 " Haskell
     Bundle "lukerandall/haskellmode-vim"
