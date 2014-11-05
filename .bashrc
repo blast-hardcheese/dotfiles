@@ -1,6 +1,5 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
-
 if [ -f ~/.pathrc ]; then
     source ~/.pathrc
 fi
@@ -141,7 +140,6 @@ if ! shopt -oq posix; then
     fi
 
     # Homebrew Bash shell command completion
-    BREW_COMPLETION=
     if type brew >/dev/null 2>&1 && [[ -f `brew --prefix`/etc/bash_completion ]]; then
         source `brew --prefix`/etc/bash_completion
 
