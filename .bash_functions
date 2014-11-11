@@ -215,6 +215,32 @@ jinja2() {
     python -c 'import sys, jinja2; print jinja2.Template(open(sys.argv[1]).read()).render()' "$1"
 }
 
+# Exploratory vim hammer.
+# Usage: vimp <find(1) path pattern>
+# What is to be expected is a prompt showing which files matched the pattern,
+# offering the option to open them all in tabs.
+# This was written before I integrated Ctrl-P into my workflow.
+vimp() {
+  unset files i
+  echo "Edit files:"
+  for name in "$@"; do
+    while IFS= read -r -u3 -d $'\0' file; do
+      files[i++]="$file"
+      echo "  $i: $file"
+      if [[ $i -eq 50 ]]; then
+        echo "Continue?"
+        read
+      fi
+    done 3< <(find . -type f -name "$name" \! -path '*/target/*' -print0)
+  done
+
+  if [[ $i -gt 1 ]]; then
+    echo "[Press enter]"
+    read
+  fi
+  vim -p "${files[@]}"
+}
+
 #### Overrides
 if [ -f ~/.tools/configs/machines/$(hostname -s).bash_functions ]; then
   . ~/.tools/configs/machines/$(hostname -s).bash_functions
