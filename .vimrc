@@ -21,6 +21,7 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Bundle "ciaranm/detectindent"
     Bundle 'scrooloose/syntastic'
     Bundle 'tagbar'
+    Plugin 'flazz/vim-colorschemes'
 
 " Scala
     Bundle 'gre/play2vim'
