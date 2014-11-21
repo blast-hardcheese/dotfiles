@@ -243,12 +243,12 @@ nnoremap <C-W>N :vnew<cr>
 
 " Inspired by
 " http://stackoverflow.com/questions/12556267/how-to-prevent-quitting-vim-accidentally
-function ProtectQuit()
+function! ProtectQuit()
     cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'close' : 'q')<CR>
     echo "Quit locked"
 endfunction
 
-function UnprotectQuit()
+function! UnprotectQuit()
     cunabbrev q
     echo "Quit unlocked"
 endfunction
@@ -276,6 +276,9 @@ noremap <leader>0 :tablast<cr>
 
 " http://vim.wikia.com/wiki/Search_and_replace_the_word_under_the_cursor
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+
+" Reload settings
+nnoremap <leader>R :source ~/.vimrc<CR>:echo "Reloaded ~/.vimrc"<CR>
 
 " Include settings from local vimrc
 let hostname = system("hostname -s")
