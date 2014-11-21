@@ -274,6 +274,9 @@ noremap <leader>8 8gt
 noremap <leader>9 9gt
 noremap <leader>0 :tablast<cr>
 
+" http://vim.wikia.com/wiki/Search_and_replace_the_word_under_the_cursor
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+
 " Include settings from local vimrc
 let hostname = system("hostname -s")
 let hostname = substitute(hostname, "\n$", "", "g")
