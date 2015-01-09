@@ -1,7 +1,7 @@
 #!/bin/sh
 
 show_help() {
-  echo "Usage: git open [-h] [-n|-c]"
+  echo "Usage: git open [-h] [-n|-c] [path]"
 }
 
 noopen=0
@@ -19,6 +19,9 @@ while getopts "hnc" opt; do
         ;;
     esac
 done
+
+filepath="$1"
+shift
 
 if type xclip >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
   XCLIP_IN="xclip -i";
@@ -47,7 +50,7 @@ if [[ $line == *"github.com"* ]]; then
   branchname=$(git name-rev HEAD)
   branchname=${branchname:5}
 
-  url="https://github.com/$repopath/tree/$branchname"
+  url="https://github.com/$repopath/tree/$branchname/$filepath"
 fi
 
 if [ $noopen -eq 1 ]; then
