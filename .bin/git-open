@@ -1,5 +1,22 @@
 #!/bin/sh
 
+if type xclip >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
+  XCLIP_IN="xclip -i";
+  XCLIP_OUT="xclip -o";
+elif type pbcopy >/dev/null 2>&1; then
+  XCLIP_IN="pbcopy";
+  XCLIP_OUT="pbpaste";
+else
+  unset XCLIP_IN
+  unset XCLIP_OUT
+fi
+
+if type xdg-open >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
+  OPEN="xdg-open"
+elif type open >/dev/null 2>&1; then
+  OPEN="open"
+fi
+
 line=$(git remote -v show -n origin | grep 'Fetch URL')
 
 if [[ $line == *"github.com"* ]]; then
@@ -18,5 +35,5 @@ if [ "$1" = "-n" ]; then
 elif [ "$1" = "-c" ]; then
   echo "$url\c" | $XCLIP_IN && echo "Copied to clipboard"
 else
-  open "$url"
+  $OPEN "$url"
 fi
