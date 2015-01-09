@@ -1,5 +1,25 @@
 #!/bin/sh
 
+show_help() {
+  echo "Usage: git open [-h] [-n|-c]"
+}
+
+noopen=0
+clipboard=0
+
+while getopts "hnc" opt; do
+    case "$opt" in
+    h)
+        show_help
+        exit 0
+        ;;
+    n)  noopen=1
+        ;;
+    c)  clipboard=1
+        ;;
+    esac
+done
+
 if type xclip >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
   XCLIP_IN="xclip -i";
   XCLIP_OUT="xclip -o";
@@ -30,9 +50,9 @@ if [[ $line == *"github.com"* ]]; then
   url="https://github.com/$repopath/tree/$branchname"
 fi
 
-if [ "$1" = "-n" ]; then
+if [ $noopen -eq 1 ]; then
   echo "$url"
-elif [ "$1" = "-c" ]; then
+elif [ $clipboard -eq 1 ]; then
   echo "$url\c" | $XCLIP_IN && echo "Copied to clipboard"
 else
   $OPEN "$url"
