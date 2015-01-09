@@ -1,0 +1,20 @@
+#!/bin/bash
+
+args=(-p)
+while read recfile; do
+    dir="$(dirname "$recfile")"
+    file="$(basename "$recfile")"
+    file="${file%\.swp}"
+    file="${file#\.}"
+    path="$dir/$file"
+
+    echo "Recovering: $path ($recfile)"
+    ex -s "$path" -r -c ':wq'
+    rm -v "$recfile"
+
+    args+=("$path")
+done < <(find . -name '.*.swp')
+echo "Done, opening tabs: ${args[1]}"
+echo "[enter]"
+read
+vim "${args[@]}"
