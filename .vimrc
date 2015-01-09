@@ -130,6 +130,12 @@ map <C-t><down> :tabl<cr>
 map <C-t><left> :tabp<cr>
 map <C-t><right> :tabn<cr>
 
+" Close tab
+map <C-t>c :tabclose<cr>
+
+" Close all other tabs
+map <C-t>o :tabonly<cr>
+
 syntax on
 set ruler
 
@@ -212,6 +218,9 @@ nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>
 nnoremap <silent> tt :execute 'silent! tabmove ' . tabpagenr()<cr>
 nnoremap <silent> tT :execute 'silent! tabmove ' . (tabpagenr()-2)<cr>
 
+" Map to to "tab only"
+nnoremap <silent> to :tabonly<cr>
+
 " set ic
 
 se incsearch
@@ -280,6 +289,9 @@ nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
 " Reload settings
 nnoremap <leader>R :source ~/.vimrc<CR>:echo "Reloaded ~/.vimrc"<CR>
+
+" Reload tabs
+nnoremap <leader>e :tabdo exec ':windo e'<CR>
 
 " Include settings from local vimrc
 let hostname = system("hostname -s")
