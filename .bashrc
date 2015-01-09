@@ -4,17 +4,6 @@ if [ -f ~/.pathrc ]; then
     source ~/.pathrc
 fi
 
-# Fix broken pasteboard support in tmux under OSX
-if type pbcopy >/dev/null 2>&1 && ! pbpaste >/dev/null 2>&1; then
-    if type reattach-to-user-namespace >/dev/null 2>&1; then
-        exec reattach-to-user-namespace -l bash
-    else
-        echo "System clipboard link is broken, but reattach-to-user-namespace not found." >&2
-        echo "Please install reattach-to-user-namespace." >&2
-        echo "https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard" >&2
-    fi
-fi
-
 if [ -d ~/.tools/ ]; then
   export PYTHONPATH=$PYTHONPATH:~/.tools/:~/.tools/code/python/
 fi
