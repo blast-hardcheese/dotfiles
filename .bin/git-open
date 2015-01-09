@@ -1,0 +1,22 @@
+#!/bin/sh
+
+line=$(git remote -v show -n origin | grep 'Fetch URL')
+
+if [[ $line == *"github.com"* ]]; then
+  skipstr='  Fetch URL: git@github.com:'
+  skip=${#skipstr}
+  length=$((${#line}-$skip-4))
+  repopath=${line:skip:$length} # "account/repo"
+  branchname=$(git name-rev HEAD)
+  branchname=${branchname:5}
+
+  url="https://github.com/$repopath/tree/$branchname"
+fi
+
+if [ "$1" = "-n" ]; then
+  echo "$url"
+elif [ "$1" = "-c" ]; then
+  echo "$url\c" | $XCLIP_IN && echo "Copied to clipboard"
+else
+  open "$url"
+fi
