@@ -4,21 +4,36 @@ show_help() {
   echo "Usage: git open [-h] [-n|-c] [path]"
 }
 
+OPTERR=0
+
 noopen=0
 clipboard=0
 
 while getopts "hnc" opt; do
-    case "$opt" in
-    h)
-        show_help
-        exit 0
-        ;;
-    n)  noopen=1
-        ;;
-    c)  clipboard=1
-        ;;
-    esac
+  case "$opt" in
+  h)
+    show_help
+    exit 0
+    ;;
+  n)
+    noopen=1
+    ;;
+  c)
+    clipboard=1
+    ;;
+  ?)
+    show_help
+    exit 1
+    ;;
+  esac
 done
+
+if [ $noopen -eq 1 -a $clipboard -eq 1 ]; then
+  show_help
+  exit 1
+fi
+
+shift $(($OPTIND - 1))
 
 filepath="$1"
 shift
