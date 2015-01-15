@@ -59,15 +59,17 @@ fi
 
 line=$(git remote -v show -n origin | grep 'Fetch URL')
 
-if [[ $line == *"github.com"* ]]; then
-  skipstr='  Fetch URL: git@github.com:'
-  skip=${#skipstr}
-  length=$((${#line}-$skip-4))
-  repopath=${line:skip:$length} # "account/repo"
-  branchname=$(git name-rev HEAD)
-  branchname=${branchname:5}
+if echo $line | grep -q "github.com"; then
+  repopath=$(echo "$line" | grep -ho 'github.com[:/].*' | sed 's~^github.com[:/]~~; s~\.git$~~')
+  branchname=$(git name-rev HEAD | sed 's/^HEAD //')
 
-  url="https://github.com/$repopath/tree/$branchname/$filepath"
+  url="https://github.com/$repopath"
+  if [ "$branchname" != "master" ]; then
+    url="$url/tree/$branchname"
+  fi
+  if [ ! -z "$filepath" ]; then
+    url="$url/$filepath"
+  fi
 fi
 
 if [ $noopen -eq 1 ]; then
