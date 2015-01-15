@@ -36,7 +36,9 @@ fi
 shift $(($OPTIND - 1))
 
 filepath="$1"
-shift
+if [ ! -z "$filepath" ]; then
+  shift
+fi
 
 if type xclip >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
   XCLIP_IN="xclip -i";
