@@ -4,39 +4,55 @@ remove_path() {
   PATH=$(echo -n "$PATH" | sed -e "s#:$1:#:#g" -e "s#:$1\$##" -e "s#^$1:##")
 }
 
+remove_manpath() {
+  MANPATH=$(echo -n "$MANPATH" | sed -e "s#:$1:#:#g" -e "s#:$1\$##" -e "s#^$1:##")
+}
+
 prefix_path() {
   remove_path "$1"
 
-  if [[ -d "$1" ]]; then
+  if [ -d "$1" ]; then
     if [ -z "$PATH" ]; then
       PATH="$1"
     else
       PATH="$1:$PATH"
     fi
+  fi
+}
 
-    man="${1%%/bin}/share/man"
-    if [ -d "$man" ]; then
-      MANPATH="$man:$MANPATH"
+prefix_manpath() {
+  remove_manpath "$1"
+
+  if [ -d "$1" ]; then
+    if [ -z "$MANPATH" ]; then
+      MANPATH="$1"
+    else
+      MANPATH="$1:$MANPATH"
     fi
   fi
+}
+
+prefix_root() {
+  prefix_path "$1/bin"
+  prefix_path "$1/sbin"
+  prefix_manpath "$1/share/man"
 }
 
 # airport tool
 prefix_path "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources"
 
 # Fink
-prefix_path "/sw/bin"
+prefix_root "/sw"
 
 # Macports
-prefix_path "/opt/local/bin"
-prefix_path "/opt/local/sbin"
+prefix_root "/opt/local"
 
+prefix_path "/bin"
 prefix_path "/sbin"
-prefix_path "/usr/sbin"
-prefix_path "/usr/local/bin"
-prefix_path "/usr/local/sbin"
-prefix_path "/usr/local/share/npm/bin"
-prefix_path "/usr/local/opt/ruby/bin"
+prefix_root "/usr"
+prefix_root "/usr/local"
+prefix_root "/usr/local/share/npm"
+prefix_root "/usr/local/opt/ruby"
 prefix_path "/usr/local/opt/coreutils/libexec/gnubin"
 prefix_path "$HOME/.cabal/bin"
 prefix_path "$HOME/.tools/bin"
@@ -44,6 +60,7 @@ prefix_path "$HOME/.tools/localized/bin"
 prefix_path "$HOME/bin"
 prefix_path "$HOME/.bin"
 prefix_path "$HOME/.rvm/bin"
+prefix_root "$HOME/.nix-profile"
 
 ANDROID_PATH="$HOME/.tools/localized/android-sdk"
 if [ -d "$ANDROID_PATH" ]; then
