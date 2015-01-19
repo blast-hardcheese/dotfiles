@@ -1,15 +1,16 @@
-#!/bin/sh
+#!/usr/bin/env dash
 
 show_help() {
-  echo "Usage: git open [-h] [-n|-c] [path]"
+  echo "Usage: git open [-h] [-n|-c] [-r remote] [path]"
 }
 
 OPTERR=0
 
 noopen=0
 clipboard=0
+remote="origin"
 
-while getopts "hnc" opt; do
+while getopts "hncr:" opt; do
   case "$opt" in
   h)
     show_help
@@ -20,6 +21,9 @@ while getopts "hnc" opt; do
     ;;
   c)
     clipboard=1
+    ;;
+  r)
+    remote="$OPTARG"
     ;;
   ?)
     show_help
@@ -57,7 +61,7 @@ elif type open >/dev/null 2>&1; then
   OPEN="open"
 fi
 
-line=$(git remote -v show -n origin | grep 'Fetch URL')
+line=$(git remote -v show -n "$remote" | grep 'Fetch URL')
 
 if echo $line | grep -q "github.com"; then
   repopath=$(echo "$line" | grep -ho 'github.com[:/].*' | sed 's~^github.com[:/]~~; s~\.git$~~')
