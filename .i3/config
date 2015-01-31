@@ -27,6 +27,7 @@ for_window [class="Florence"] floating enable
 for_window [class="kvm"] floating enable
 
 for_window [class="Tomboy"] floating enable
+for_window [window_role="pop-up"] floating enable
 
 #   Cssh
 for_window [class="Cssh"] floating enable
