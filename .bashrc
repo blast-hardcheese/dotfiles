@@ -146,10 +146,12 @@ fi
 # Git PS1 support
 if [[ $(__git_ps1 1>/dev/null 2>/dev/null) || $? == 0 ]]; then
   GITPS1='$(__git_ps1 " \[\033[31m\](%s)\[\033[0m\]")'
-  PS1="\[\033[0m\]\h:\W$GITPS1 \u\$ \[\033[0m\]"
 else
-  PS1="\[\033[0m\]\h:\W \u\$ \[\033[0m\]"
+  GITPS1=''
 fi
+PS1="\[\033[0m\]\h:\W$GITPS1 \u\$ \[\033[0m\]"
+
+PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\h: \w\a\]$PS1"
 
 if [ -f /usr/share/source-highlight/src-hilite-lesspipe.sh ]; then
   export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
