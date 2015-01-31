@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 
 show_help() {
   echo "Usage: git open [-h] [-n|-c] [-b branch] [-r remote] [path]"
