@@ -48,12 +48,18 @@ if [ ! -z "$filepath" ]; then
   shift
 fi
 
+_echo() { echo "$@\c"; }
+
 if type xclip >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
   XCLIP_IN="xclip -i";
   XCLIP_OUT="xclip -o";
 elif type pbcopy >/dev/null 2>&1; then
   XCLIP_IN="pbcopy";
   XCLIP_OUT="pbpaste";
+elif type /c/windows/system32/clip.exe >/dev/null 2>&1; then
+  XCLIP_IN="/c/windows/system32/clip.exe"
+  unset XCLIP_OUT
+  _echo() { echo "$@"; }
 else
   unset XCLIP_IN
   unset XCLIP_OUT
@@ -63,12 +69,14 @@ if type xdg-open >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
   OPEN="xdg-open"
 elif type open >/dev/null 2>&1; then
   OPEN="open"
+elif type /c/windows/system32/explorer.exe >/dev/null 2>&1; then
+  OPEN="/c/windows/system32/explorer.exe"
 fi
 
 line=$(git remote -v show -n "$remote" | grep 'Fetch URL')
 
 if echo $line | grep -q "github.com"; then
-  repopath=$(echo "$line" | grep -ho 'github.com[:/].*' | sed 's~^github.com[:/]~~; s~\.git$~~')
+  repopath=$(echo "$line" | grep 'github.com[:/].*' | sed 's~^.*github.com[:/]~~; s~\.git$~~')
 
   url="https://github.com/$repopath"
   if [ "$branchname" != "master" ]; then
@@ -82,7 +90,7 @@ fi
 if [ $noopen -eq 1 ]; then
   echo "$url"
 elif [ $clipboard -eq 1 ]; then
-  echo "$url\c" | $XCLIP_IN && echo "Copied to clipboard"
+  _echo "$url" | $XCLIP_IN && echo "Copied to clipboard"
 else
   $OPEN "$url"
 fi
