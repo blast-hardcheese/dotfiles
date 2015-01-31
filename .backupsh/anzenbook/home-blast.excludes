@@ -1,0 +1,16 @@
+- blast/.backupsh/logs
+- blast/.cabal
+- blast/.cache
+- blast/.dbus
+- blast/.gem
+- blast/.ghc
+- blast/.ivy2
+- blast/.m2
+- blast/.npm
+- blast/.pip
+- blast/.rubies
+- blast/.rvm
+- blast/.sass-cache
+- blast/.sbt
+- blast/.ssh/pool
+- blast/.wine
