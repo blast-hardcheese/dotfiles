@@ -131,7 +131,7 @@ bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
-bindsym $mod+t exec ~/.i3/tagger.py
+bindsym $mod+t exec i3tagger
 
 # move focused container to workspace
 bindsym $mod+Shift+exclam move container to workspace 1
@@ -146,7 +146,7 @@ bindsym $mod+Shift+parenleft move container to workspace 9
 bindsym $mod+Shift+parenright move container to workspace 10
 
 
-bindsym $mod+Shift+T exec ~/.i3/tagger.py -m
+bindsym $mod+Shift+T exec i3tagger -m
 bindsym $mod+Shift+Mod1+asterisk exec xcalib -invert -alter
 
 ## reload the configuration file
