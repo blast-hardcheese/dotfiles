@@ -211,6 +211,16 @@ mode "config" {
 
 bindsym $mod+Escape mode "config"
 
+mode "display" {
+    bindsym $mod+Up exec "hdmi-on"
+    bindsym $mod+Down exec "hdmi-off"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+d mode "display"
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
