@@ -197,17 +197,16 @@ bindsym Escape mode "default"
 #bindsym $mod+r mode "resize"
 
 mode "config" {
+    # reload the configuration file
+    bindsym $mod+Shift+C reload
+    # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+    bindsym $mod+Shift+R restart
+    # exit i3 (logs you out of your X session)
+    bindsym $mod+Shift+Q exec gnome-session-quit --no-prompt
+    bindsym $mod+Shift+K exit
 
-# reload the configuration file
-bindsym $mod+Shift+C reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+R restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+Q exec gnome-session-quit --no-prompt
-bindsym $mod+Shift+K exit
-
-bindsym Return mode "default"
-bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 bindsym $mod+Escape mode "config"
@@ -217,4 +216,3 @@ bindsym $mod+Escape mode "config"
 bar {
     status_command i3status
 }
-
