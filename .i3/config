@@ -132,6 +132,10 @@ bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
 bindsym $mod+t exec i3tagger
+bindsym $mod+Mod1+h workspace prev
+bindsym $mod+Mod1+Left workspace prev
+bindsym $mod+Mod1+l workspace next
+bindsym $mod+Mod1+Right workspace next
 
 # move focused container to workspace
 bindsym $mod+Shift+exclam move container to workspace 1
