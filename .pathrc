@@ -94,3 +94,7 @@ export PATH
 export MANPATH
 export LIBRARY_PATH
 export CPATH
+
+if [ -f ~/.tools/configs/machines/$(hostname -s).pathrc ]; then
+  . ~/.tools/configs/machines/$(hostname -s).pathrc
+fi
