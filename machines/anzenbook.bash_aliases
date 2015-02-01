@@ -1,1 +1,1 @@
-rh() { restore.sh "rawrbookpro" "Users/blast" "$1"; }
+rh() { restore.sh "rawrbookpro" "Users/blast" "$1" "$2"; }
