@@ -64,10 +64,10 @@ bindsym $mod+p exec dmenu_run
 bindsym $mod+Shift+P exec gmrun
 
 # change focus
-#bindsym $mod+j focus left
-#bindsym $mod+k focus down
-#bindsym $mod+l focus up
-#bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -82,10 +82,10 @@ bindsym Mod1+Shift+Left move left
 bindsym Mod1+Shift+Right move right
 
 # move focused window
-#bindsym $mod+Shift+J move left
-#bindsym $mod+Shift+K move down
-#bindsym $mod+Shift+L move up
-#bindsym $mod+Shift+plus move right
+bindsym $mod+Shift+H move left
+bindsym $mod+Shift+J move down
+bindsym $mod+Shift+K move up
+bindsym $mod+Shift+L move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
