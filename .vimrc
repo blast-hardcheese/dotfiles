@@ -295,6 +295,9 @@ nnoremap <leader>R :source ~/.vimrc<CR>:echo "Reloaded ~/.vimrc"<CR>
 " Reload tabs
 nnoremap <leader>e :tabdo exec ':windo e'<CR>
 
+" http://vim.wikia.com/wiki/Accessing_the_system_clipboard
+set clipboard=unnamedplus
+
 " https://superuser.com/questions/401926/how-to-get-shiftarrows-and-ctrlarrows-working-in-vim-in-tmux
 if &term =~ '^screen'
     " tmux will send xterm-style keys when its xterm-keys option is on
