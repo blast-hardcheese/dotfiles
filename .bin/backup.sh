@@ -93,6 +93,7 @@ for job in "$JOBROOT"/*.path; do
     ec=$?
     if [ $ec -eq 255 ]; then
         echo "Stopping..."
+        echo "  $CURRENT"
         exit 255
     fi
 done
