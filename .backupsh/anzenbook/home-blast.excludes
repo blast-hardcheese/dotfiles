@@ -1,17 +1,27 @@
 - blast/.backupsh/logs
-- blast/.cabal
-- blast/.cache
 - blast/.dbus
-- blast/.gem
+- blast/.ssh/pool
+
+- blast/.cache
+
+- blast/.cabal
 - blast/.ghc
 - blast/.ivy2
 - blast/.m2
+- blast/.sbt
 - blast/.npm
 - blast/.pip
-- blast/.rubies
+- blast/.gem
 - blast/.rvm
+- blast/.rubies
 - blast/.sass-cache
-- blast/.sbt
-- blast/.ssh/pool
+
 - blast/.wine
+- blast/.wine64
+
 - blast/Work/Talenthouse/th-public
+- blast/Work/Virsix
+
+- blast/.config/google-chrome
+- blast/.config/chromium
+- blast/.mozilla
