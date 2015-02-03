@@ -1,0 +1,10 @@
+#!/bin/sh
+
+gitroot="$(git-root)"
+shapath="$gitroot/.git/rebase-merge/stopped-sha"
+
+if [ -e "$shapath" ]; then
+  git show $(cat "$shapath")
+else
+  echo "No conflicts"
+fi
