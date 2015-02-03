@@ -23,6 +23,8 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Bundle 'scrooloose/nerdcommenter'
     Bundle 'tagbar'
     Plugin 'flazz/vim-colorschemes'
+"    Plugin 'jreybert/vim-mark'
+"    Plugin 'guns/xterm-color-table.vim'
 
 " Scala
     Bundle 'gre/play2vim'
