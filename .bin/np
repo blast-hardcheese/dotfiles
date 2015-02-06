@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Simple wrapper to make working with local node package repos easier.
+# Usage:
+#   $ npm install http-server # Install to a local repo
+#   $ np http-server -p 8080  # Use the locally provided binary
+
+if [ ! -d node_modules ]; then
+    echo 'Unable to find a functional node_modules in the current directory!'
+    echo 'Usage: np command [args...]'
+    exit 1
+fi
+
+export NODE_PATH=$(pwd)/node_modules
+export PATH="$(pwd)/node_modules/.bin:$PATH"
+
+$*
