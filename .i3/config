@@ -209,8 +209,8 @@ mode "config" {
 bindsym $mod+Escape mode "config"
 
 mode "display" {
-    bindsym $mod+Up exec "hdmi-on"
-    bindsym $mod+Down exec "hdmi-off"
+    bindsym $mod+Up exec "hdmi-on"; mode "default"
+    bindsym $mod+Down exec "hdmi-off"; mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
