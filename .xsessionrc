@@ -1,0 +1,11 @@
+curfile="xsessionrc"
+
+[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
+
+if [ -f ~/.tools/configs-private/machines/$(hostname -s)."$curfile" ]; then
+  . ~/.tools/configs-private/machines/$(hostname -s)."$curfile"
+fi
+
+if [ -f ~/.tools/configs/machines/$(hostname -s)."$curfile" ]; then
+  . ~/.tools/configs/machines/$(hostname -s)."$curfile"
+fi

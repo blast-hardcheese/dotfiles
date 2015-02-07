@@ -1,0 +1,20 @@
+xrdb -merge <<!
+Xft*dpi:       96
+!
+
+xsetroot -solid '#333333'
+xsetroot -cursor_name arrow
+
+# Define 1600x900 resolution, then switch to it.
+xrandr --newmode "1600x900_60.00"  118.25  1600 1696 1856 2112  900 903 908 934 -hsync +vsync^C
+xrandr --addmode eDP1 1600x900_60.00
+xrandr --size 1600x900_60.00
+
+# Disable Caps Lock
+xmodmap -e 'keycode 66 = NoSymbol NoSymbol NoSymbol'
+
+# Reverse scroll direction (Natural Scrolling)
+xmodmap -e 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12'
+
+# Disable touchscreen
+xinput disable 'Atmel Atmel maXTouch Digitizer'
