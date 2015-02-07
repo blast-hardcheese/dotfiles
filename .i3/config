@@ -230,3 +230,7 @@ bindsym $mod+Shift+d mode "display"
 bar {
     status_command i3status
 }
+
+# Things to start at launch:
+exec_always --no-startup-id glipper
+exec_always --no-startup-id wicd-client -t
