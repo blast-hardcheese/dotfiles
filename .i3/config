@@ -131,7 +131,7 @@ bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
-bindsym $mod+t exec i3tagger
+bindsym $mod+t exec ~/.bin/i3tagger
 bindsym $mod+Mod1+h workspace prev
 bindsym $mod+Mod1+Left workspace prev
 bindsym $mod+Mod1+l workspace next
@@ -150,7 +150,7 @@ bindsym $mod+Shift+parenleft move container to workspace 9
 bindsym $mod+Shift+parenright move container to workspace 10
 
 
-bindsym $mod+Shift+T exec i3tagger -m
+bindsym $mod+Shift+T exec ~/.bin/i3tagger -m
 bindsym $mod+Control+Mod1+asterisk exec xcalib -invert -alter
 
 # https://faq.i3wm.org/question/3747/enabling-multimedia-keys/
