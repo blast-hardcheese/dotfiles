@@ -216,14 +216,19 @@ mode "config" {
 bindsym $mod+Escape mode "config"
 
 mode "display" {
-    bindsym $mod+Up exec "hdmi-on"; mode "default"
-    bindsym $mod+Down exec "hdmi-off"; mode "default"
+    bindsym $mod+Shift+Up exec "~/.bin/hdmi-on"; mode "default"
+    bindsym $mod+Shift+Down exec "~/.bin/hdmi-off"; mode "default"
+
+    bindsym Mod1+Shift+Up move workspace to output up; mode "default"
+    bindsym Mod1+Shift+Down move workspace to output down; mode "default"
+    bindsym Mod1+Shift+Left move workspace to output left; mode "default"
+    bindsym Mod1+Shift+Right move workspace to output right; mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
-bindsym $mod+Shift+d mode "display"
+bindsym $mod+d mode "display"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
