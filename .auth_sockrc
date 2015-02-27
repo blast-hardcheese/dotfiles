@@ -1,5 +1,7 @@
 #!/bin/env bash
 
+if type ssh-add >/dev/null 2>&1; then
+
 alias as_register='echo -n $SSH_AUTH_SOCK > $SOCKPATH'
 alias as_use='export SSH_AUTH_SOCK=$(cat $SOCKPATH)'
 alias as_revert='export SSH_AUTH_SOCK=$OLD_AUTH_SOCK'
@@ -128,3 +130,5 @@ echo -n $SSH_AUTH_SOCK > $SOCKPATH
 for VAR in "$VARS"; do
     unset $VAR
 done
+
+fi
