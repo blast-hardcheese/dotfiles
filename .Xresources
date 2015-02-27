@@ -2,9 +2,10 @@ URxvt*background: Black
 URxvt*foreground: White
 URxvt*geometry: 80x24
 URxvt*scrollBar: false
-! Xft*antialias: true
-! Xft*hinting:   true
-! Xft*hintstyle: hintfull
+
+Xft*antialias: true
+Xft*hinting:   true
+Xft*hintstyle: hintfull
 ! Xft*rgba:      rgb
 
 ! Other colors
