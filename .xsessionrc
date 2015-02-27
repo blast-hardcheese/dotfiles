@@ -1,3 +1,5 @@
+. ~/.pathrc
+
 curfile="xsessionrc"
 
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
