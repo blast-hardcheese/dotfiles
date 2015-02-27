@@ -156,9 +156,9 @@ bindsym $mod+Control+Mod1+asterisk exec xcalib -invert -alter
 # https://faq.i3wm.org/question/3747/enabling-multimedia-keys/
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 -- +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -- -5% #decrease sound volume
-bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 -- +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -- -5% #decrease sound volume
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
