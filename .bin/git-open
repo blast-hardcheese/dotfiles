@@ -83,6 +83,9 @@ if echo $line | grep -q "github.com"; then
     url="$url/tree/$branchname"
   fi
   if [ ! -z "$filepath" ]; then
+    if [ "$branchname" = "master" ]; then
+      url="$url/tree/$branchname"
+    fi
     url="$url/$filepath"
   fi
 fi
