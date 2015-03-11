@@ -1,0 +1,6 @@
+gitroot="$(git rev-parse --show-cdup)"
+if [ -z "$gitroot" ]; then
+    gitroot="."
+fi
+
+echo "$gitroot"
