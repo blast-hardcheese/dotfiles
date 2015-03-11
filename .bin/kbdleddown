@@ -1,0 +1,19 @@
+#!/bin/sh
+
+root="/sys/class/leds/asus::kbd_backlight"
+
+device="$root/brightness"
+
+cur="$(cat "$device")"
+
+min=0
+max="$(cat "$root/max_brightness")"
+
+if [ "$cur" -gt "$min" ]; then
+  tgt=$(($cur-1))
+
+  echo "$cur -> $tgt"
+  echo -n "$tgt" > "$device"
+else
+  echo "min"
+fi

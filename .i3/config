@@ -162,6 +162,9 @@ bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
 
 bindsym XF86TouchpadToggle exec synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')
 
+bindsym XF86KbdBrightnessUp exec kbdledup
+bindsym XF86KbdBrightnessDown exec kbdleddown
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
     # These bindings trigger as soon as you enter the resize mode
