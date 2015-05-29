@@ -1,0 +1,12 @@
+#!/bin/sh
+
+uid=$(id -u)
+file="/var/run/user/$uid/touchscreen-disabled"
+device="Atmel Atmel maXTouch Digitizer"
+
+# If "$file" exists, we assume the touchscreen is disabled
+if [ -e "$file" ]; then
+  xinput enable "$device" && rm "$file"
+else
+  xinput disable "$device" && touch "$file"
+fi
