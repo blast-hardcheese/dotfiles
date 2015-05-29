@@ -15,13 +15,24 @@
 - blast/.rvm
 - blast/.rubies
 - blast/.sass-cache
+- blast/.steam
+- blast/Steam
+- blast/VirtualBox VMs
 
 - blast/.wine
 - blast/.wine64
 
 - blast/Work/Talenthouse/th-public
+- blast/Downloads/a*.dump
 - blast/Work/Virsix
 
 - blast/.config/google-chrome
 - blast/.config/chromium
 - blast/.mozilla
+
+- Downloads/*.iso
+- Projects/*/target/*
+- */node_modules/*
+- */.cabal-sandbox/*
+- */dist/build/*
+- */dist/*/build/*
