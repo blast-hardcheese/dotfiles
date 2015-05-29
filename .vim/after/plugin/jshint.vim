@@ -1,1 +1,2 @@
 let JSHintUpdateWriteOnly=1
+let JSHintHighlightErrorLine=0
