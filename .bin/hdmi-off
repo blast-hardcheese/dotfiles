@@ -1,2 +1,11 @@
 #!/bin/sh
-xrandr --output HDMI1 --off
+
+target="$1"
+
+if [ "x$target" = "x" ]; then
+  target="$(xrandr | grep '\(dis\)\?connected' | grep -v 'disconnected' | grep -v eDP1 | cut -f 1 -d ' ')"
+fi
+
+echo "Using $target"
+
+xrandr --output $target --off

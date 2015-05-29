@@ -221,8 +221,8 @@ mode "config" {
 bindsym $mod+Escape mode "config"
 
 mode "display" {
-    bindsym $mod+Shift+Up exec "~/.bin/hdmi-on"; mode "default"
-    bindsym $mod+Shift+Down exec "~/.bin/hdmi-off"; mode "default"
+    bindsym $mod+Shift+Up exec "~/.bin/hdmi-on"
+    bindsym $mod+Shift+Down exec "~/.bin/hdmi-off"
 
     bindsym Mod1+Shift+Up move workspace to output up; mode "default"
     bindsym Mod1+Shift+Down move workspace to output down; mode "default"
