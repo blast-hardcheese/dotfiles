@@ -158,9 +158,11 @@ bindsym Control+Mod4+Mod1+8 exec xcalib -invert -alter
 # https://faq.i3wm.org/question/3747/enabling-multimedia-keys/
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 -- +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -- -5% #decrease sound volume
-bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioRaiseVolume      exec pulse-volume-up
+bindsym XF86AudioLowerVolume      exec pulse-volume-down
+bindsym XF86AudioMute             exec pulse-volume-mute
+bindsym $mod+XF86AudioRaiseVolume exec pulse-sink-next
+bindsym $mod+XF86AudioLowerVolume exec pulse-sink-prev
 
 bindsym XF86TouchpadToggle exec synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')
 

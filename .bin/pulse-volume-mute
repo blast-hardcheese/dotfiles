@@ -1,0 +1,4 @@
+#!/bin/sh
+card="$(cat ~/.config/local/pulse-soundcard)"
+
+pactl set-sink-mute   "$card" toggle

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+card=$(cat ~/.config/local/pulse-soundcard)
+
+card=$(pactl list sinks short | cut -f 2 | cycle --backwards "$card" | tee ~/.config/local/pulse-soundcard)
+pacmd set-default-sink "$card"
