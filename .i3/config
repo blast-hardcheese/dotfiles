@@ -169,7 +169,7 @@ bindsym XF86TouchpadToggle exec synclient TouchpadOff=$(synclient -l | grep -c '
 bindsym XF86KbdBrightnessUp exec kbdledup
 bindsym XF86KbdBrightnessDown exec kbdleddown
 
-bindsym Mod1+Mod4+F7 exec "~/.bin/toggle-touchscreen"; mode "default"
+bindsym Mod1+Mod4+F7 exec "~/.bin/toggle-touchscreen"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
