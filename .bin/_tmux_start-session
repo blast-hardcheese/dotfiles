@@ -1,0 +1,62 @@
+#!/bin/bash
+
+doexit() {
+    filename="$(basename "$0")"
+    echo "$filename: No session found!" >&2
+    echo "  usage:" >&2
+    echo >&2
+    echo "    session=stub" >&2
+    echo "    dir=\"\$HOME/Projects\"" >&2
+    echo "    dockerdeps=(postgres redis elasticsearch)" >&2
+    echo "    windows=(sbt:1 vim:2 shell:3 redis:9)" >&2
+    echo "    commands=(sbt:sbt vim:vim-recover redis:redis-cli)" >&2
+    echo >&2
+    echo "    source \$(which $filename)"
+    echo >&2
+
+    exit 1
+}
+
+[[ -z "$session" ]] && doexit
+
+if tmux list-windows -t "$session" >/dev/null; then
+    tmux a -t "${session}"
+    exit 0
+fi
+
+if [[ -z "$keyfile" ]]; then
+    keyfile="$session"
+fi
+if ! ssh-add -l | grep "$keyfile"; then
+    echo "No $session key ($keyfile) found in ssh-agent. Exiting."
+    exit 1
+fi
+
+if [ -z "$dockercmd" ]; then
+    dockercmd="sudo docker"
+fi
+$dockercmd start "${dockerdeps[@]}"
+
+for window in ${windows[@]}; do
+    label="${window%:*}"
+    number="${window#"$label":}"
+
+    if ! (tmux has-session -t "$session" >/dev/null 2>&1); then
+        echo tmux new-session -d -s "${session}" -c "${dir}" -n "$label" -t "$number"
+        tmux new-session -d -s "${session}" -c "${dir}" -n "$label"
+        if [ "$number" -ne 1 ]; then
+            tmux move-window -t "$number"
+        fi
+    else
+        tmux new-window -c "${dir}" -n "$label" -t "$number"
+    fi
+done
+
+for cmdpair in "${commands[@]}"; do
+    label="${cmdpair%:*}"
+    cmdstr="${cmdpair#"$label":}"
+    tmux send-keys -t "${session}:$label" "$cmdstr"$'\n'
+done
+
+# Select the first window in $windows
+tmux select-window -t "${windows[0]#"${windows[0]%:*}":}"
