@@ -2,8 +2,10 @@
 
 set -e
 PATH="/usr/local/bin:$PATH"
-dir="`git rev-parse --git-dir`"
+dir="$(git rev-parse --git-dir)"
 trap 'rm -f "$dir/$$.tags"' EXIT
+
+ignorepath="$dir/.ctags-ignore"
 
 uuid=$(uuidgen)
 echo "$uuid" > "$dir/taglock"
@@ -12,7 +14,7 @@ sleep 1
 
 if [ -f "$dir/taglock" -a  $(cat "$dir/taglock") = "$uuid" ]; then
 
-  git ls-files | grep -v 'bower_components' | \
+  ([ -f "$ignorepath" ] && git ls-files | grep -E -v -f "$ignorepath" || git ls-files) | \
     ctags --tag-relative -L - -f"$dir/$$.tags"
 
   mv "$dir/$$.tags" "$dir/tags"
