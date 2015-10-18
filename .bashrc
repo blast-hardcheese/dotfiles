@@ -196,6 +196,8 @@ fi
 # Stick all node stuff in here
 export NODE_PATH="$HOME/.tools/localized/lib/node"
 
+export PYTHONSTARTUP="$HOME/.pythonrc"
+
 # Set up chruby
 if [ -f "/usr/local/opt/chruby/share/chruby/chruby.sh" ]; then
     source /usr/local/opt/chruby/share/chruby/chruby.sh
