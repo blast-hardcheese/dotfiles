@@ -14,7 +14,12 @@ while read recfile; do
 
     args+=("$path")
 done < <(find . -name '.*.swp')
-echo "Done, opening tabs: ${args[1]}"
-echo "[enter]"
-read
-vim "${args[@]}"
+
+if [ ${#args[@]} -gt 1 ]; then
+    echo "Done, opening tabs: ${args[1]}"
+    echo "[enter]"
+    read
+    vim "${args[@]}"
+else
+    vim
+fi
