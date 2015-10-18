@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# git recover-changes:
+#
+# Search dangling commits (stashes, reset commits, etc) for changes to a path.
+#
+# Usage:
+#
+#   $ git recover-changes "app/controllers/MyController.scala"
+#   1234...
+#   <changes in that commit>
+#
+#   2345...
+#   <changes in that commit>
+
+
+path="$1"
+
+danglingRefs() {
+    git fsck --full | grep '^dangling commit' | cut -d ' ' -f 3
+}
+
+
+for ref in $(danglingRefs); do
+    count=$(git diff "$ref^..$ref" -- "$path" | wc -l)
+
+    if [ $count -gt 0 ]; then
+        echo "$ref"
+
+        git diff "$ref^..$ref" -- "$path"
+        echo
+    fi
+done
