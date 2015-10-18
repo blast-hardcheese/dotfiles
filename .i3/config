@@ -61,6 +61,7 @@ bindsym Mod1+F4 kill
 
 # start dmenu (a program launcher)
 bindsym $mod+p exec dmenu_run
+bindsym Mod1+Shift+P exec i3-dmenu-desktop
 bindsym $mod+Shift+P exec gmrun
 
 # change focus
