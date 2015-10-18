@@ -32,10 +32,12 @@ if ! ssh-add -l | grep "$keyfile"; then
     exit 1
 fi
 
-if [ -z "$dockercmd" ]; then
-    dockercmd="sudo docker"
+if [ "${#dockerdeps[@]}" -gt 0 ]; then
+    if [ -z "$dockercmd" ]; then
+        dockercmd="sudo docker"
+    fi
+    $dockercmd start "${dockerdeps[@]}"
 fi
-$dockercmd start "${dockerdeps[@]}"
 
 for window in ${windows[@]}; do
     label="${window%:*}"
