@@ -153,9 +153,9 @@ PS1="\[\033[0m\]\h:\W$GITPS1 \u\$ \[\033[0m\]"
 
 PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\h: \w\a\]$PS1"
 
+export LESS='-RFMSXix4'
 if [ -f /usr/share/source-highlight/src-hilite-lesspipe.sh ]; then
   export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-  export LESS=' -R '
 fi
 
 HISTNAME=$(hostname -s).hist
