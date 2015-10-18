@@ -29,8 +29,8 @@ sdu() { du -shx "$@" | perl -e '%byte_order = ( G => 0, M => 1, K => 2 ); print 
 
 upload() {
   for FILE in "$@"; do
-    TARGETHOST="scyther"
-    TARGETBASEPATH="/var/people/blast_hardcheese/public_html/files/"
+    TARGETHOST="viridian"
+    TARGETBASEPATH="/home/blast/public_html/files/"
 
     DATE=$(date +"%Y-%m-%d")
     TARGETPATH=$TARGETBASEPATH/$DATE
