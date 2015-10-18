@@ -11,7 +11,7 @@ doexit() {
     echo "    windows=(sbt:1 vim:2 shell:3 redis:9)" >&2
     echo "    commands=(sbt:sbt vim:vim-recover redis:redis-cli)" >&2
     echo >&2
-    echo "    source \$(which $filename)"
+    echo "    source \"\$(which $filename)\""
     echo >&2
 
     exit 1
