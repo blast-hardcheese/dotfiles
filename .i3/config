@@ -249,6 +249,6 @@ bar {
 }
 
 # Things to start at launch:
-exec_always --no-startup-id glipper
+exec --no-startup-id glipper
 exec --no-startup-id wpa_gui -t
 exec --no-startup-id light-locker
