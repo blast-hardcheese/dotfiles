@@ -6,6 +6,6 @@ dockerdeps=()
 windows=(shell:1 vim:2)
 commands=(vim:vim-recover)
 
-source _tmux
+source _tmux_start-session
 
 source _tmux_attach
