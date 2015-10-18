@@ -217,7 +217,6 @@ mode "config" {
     # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
     bindsym $mod+Shift+R restart
     # exit i3 (logs you out of your X session)
-    bindsym $mod+Shift+Q exec gnome-session-quit --no-prompt
     bindsym $mod+Shift+K exit
 
     bindsym Return mode "default"
