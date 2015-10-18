@@ -1,0 +1,4 @@
+#!/bin/sh
+
+file=$(basename "$0")
+redis-cli ${file#redis-} "$@" | cat -

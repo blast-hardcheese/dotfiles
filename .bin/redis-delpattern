@@ -1,0 +1,5 @@
+#!/bin/sh
+
+pattern="$1"
+
+redis-keys "$pattern" | xargs -n 1 -- redis-del
