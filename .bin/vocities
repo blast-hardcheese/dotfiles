@@ -1,0 +1,18 @@
+#!/bin/bash
+
+session=vocities
+dir=~/Projects/vocities/vocities
+dockerdeps=(th-postgres th-redis)
+windows=(sbt:1 vim:2 shell:3 redis:7 psql:9)
+commands=(sbt:sbt vim:vim-recover redis:redis-cli)
+
+source _tmux_start-session
+
+until nc -z localhost 5432; do
+    echo 'waiting for localhost:5432 (postgres)'
+    sleep 1
+done
+sleep 1 # Give pg an additional second after the socket opens to actually start accepting connections
+tmux send-keys -t "${session}:psql" $'psql --user postgres -h localhost vocities\n'
+
+source _tmux_attach

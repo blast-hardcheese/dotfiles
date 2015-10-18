@@ -1,0 +1,11 @@
+#!/bin/bash
+
+session=nextapp
+dir="$HOME/Work/NextApp/api"
+dockerdeps=()
+windows=(shell:1 vim:2)
+commands=(vim:vim-recover)
+
+source _tmux
+
+source _tmux_attach
