@@ -8,9 +8,9 @@ for SOURCE_PATH in $CONFIGFILES; do
     test_path "$SOURCE_PATH" ".*/\.$" && continue
     test_path "$SOURCE_PATH" ".*/\.\.$" && continue
     test_path "$SOURCE_PATH" ".*/\.DS_Store$" && continue
-    test_path "$SOURCE_PATH" ".*/\.git$" && continue  # Don't copy our git repo
+    test_path "$SOURCE_PATH" ".*/\.git$" && continue        # Don't copy our git repo
     test_path "$SOURCE_PATH" ".*/\.gitignore$" && continue  # Don't copy our tracked .gitignore
-    test_path "$SOURCE_PATH" ".*/.git*" && continue
+    test_path "$SOURCE_PATH" ".*/\.gitmodules$" && continue # Don't copy tracked .gitmodules
     test_path "$SOURCE_PATH" ".*/\..*.sw.$" && continue
 
     BASE_FNAME="$HOME/$(basename "$SOURCE_PATH")"
