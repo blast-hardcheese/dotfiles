@@ -218,7 +218,7 @@ nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>
 " inoremap <C-d> <Del>
 
 " Map tt and tT to "move tab right" and "move tab left", respectively
-nnoremap <silent> tt :execute 'silent! tabmove ' . tabpagenr()<cr>
+nnoremap <silent> tt :execute 'silent! tabmove ' . (tabpagenr()+1)<cr>
 nnoremap <silent> tT :execute 'silent! tabmove ' . (tabpagenr()-2)<cr>
 
 " Map to to "tab only"
