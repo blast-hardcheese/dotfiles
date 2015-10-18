@@ -15,4 +15,8 @@ xmodmap -e 'keycode 66 = NoSymbol NoSymbol NoSymbol'
 # Reverse scroll direction (Natural Scrolling)
 xmodmap -e 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12'
 
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+
 dropbox start
