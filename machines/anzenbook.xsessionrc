@@ -5,9 +5,10 @@ Xft*dpi:       96
 xsetroot -solid '#333333'
 
 # Define 1600x900 resolution, then switch to it.
-xrandr --newmode "1600x900_60.00"  118.25  1600 1696 1856 2112  900 903 908 934 -hsync +vsync^C
+xrandr --newmode "1600x900_60.00"  118.25  1600 1696 1856 2112  900 903 908 934 -hsync +vsync
 xrandr --addmode eDP1 1600x900_60.00
 xrandr --size 1600x900_60.00
+xrandr --dpi 96
 
 # Disable Caps Lock
 xmodmap -e 'keycode 66 = NoSymbol NoSymbol NoSymbol'
