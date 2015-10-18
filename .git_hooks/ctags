@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+PATH="/usr/local/bin:$PATH"
+dir="`git rev-parse --git-dir`"
+trap 'rm -f "$dir/$$.tags"' EXIT
+
+uuid=$(uuidgen)
+echo "$uuid" > "$dir/taglock"
+
+sleep 1
+
+if [ -f "$dir/taglock" -a  $(cat "$dir/taglock") = "$uuid" ]; then
+
+  git ls-files | grep -v 'bower_components' | \
+    ctags --tag-relative -L - -f"$dir/$$.tags"
+
+  mv "$dir/$$.tags" "$dir/tags"
+
+  rm -f "$dir/taglock"
+
+fi &

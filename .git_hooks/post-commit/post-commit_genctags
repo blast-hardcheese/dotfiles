@@ -1,0 +1,4 @@
+#!/bin/sh
+
+root="$(dirname "$0")"
+"${root}/../ctags" &
