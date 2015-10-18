@@ -25,6 +25,7 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Plugin 'flazz/vim-colorschemes'
 "    Plugin 'jreybert/vim-mark'
 "    Plugin 'guns/xterm-color-table.vim'
+    Plugin 'tpope/vim-fugitive'
 
 " Scala
     Bundle 'gre/play2vim'
