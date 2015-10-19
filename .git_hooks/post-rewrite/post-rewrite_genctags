@@ -1,8 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 root="$(dirname "$0")"
 name="$(basename "$0")"
 
-case "$1" in
+case "${1}" in
+  --about) echo -n 'Generate ctags' ;;
   rebase) exec "${root}/../post-merge/post-merge_${name}" ;;
 esac

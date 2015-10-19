@@ -1,4 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
-root="$(dirname "$0")"
-"${root}/../ctags" &
+function run_test
+{
+  root="$(dirname "$0")"
+  "${root}/../ctags" &
+}
+
+case "${1}" in
+    --about ) echo -n "Generate ctags" ;;
+    * ) run_test "$@" ;;
+esac
