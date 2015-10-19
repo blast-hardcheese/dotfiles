@@ -44,12 +44,9 @@ Useful things
                as_use, use this. Useful for if you ssh -A to a box that already
                has ssh-agent running, but you want to use your forwarded agent.
 
-.i3/tagger.py: wmii-style tag support for i3.
+`.bin/i3tagger`: wmii-style tag support for i3.
 
     Mod+t to tag your windows with whatever you want!
-
-    Requires working i3ipc, (I recommend https://github.com/whitelynx/i3ipc ,
-    as it seems the most maintained (and my patch was finally integrated)).
 
 Contribution/Attribution
 ------------------------
