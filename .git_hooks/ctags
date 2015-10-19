@@ -2,7 +2,14 @@
 
 set -e
 PATH="/usr/local/bin:$PATH"
-dir="$(git rev-parse --git-dir)"
+if [ "$(git rev-parse --is-inside-work-tree)"='true' ]; then
+  dir="$(git rev-parse --git-common-dir)"
+elif [ "$(git rev-parse --is-inside-git-dir)"='true' ]; then
+  dir="$(git rev-parse --git-dir)"
+else
+  echo 'Not inside a git repo, bailing' >&2
+  exit 1
+fi
 trap 'rm -f "$dir/$$.tags"' EXIT
 
 ignorepath="$dir/.ctags-ignore"
