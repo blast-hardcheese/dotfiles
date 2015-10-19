@@ -62,3 +62,9 @@ done
 
 # Select the first window in $windows
 tmux select-window -t "${windows[0]#"${windows[0]%:*}":}"
+
+if type tmux_after 2>/dev/null | head -n 1 | grep "is a function" >/dev/null; then
+    tmux_after
+fi
+
+tmux a -t "${session}"

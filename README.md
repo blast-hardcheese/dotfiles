@@ -52,6 +52,11 @@ This provides some support for managing ssh-agent sockets. Tested and used for y
 
 wmii-style tag support for i3. Mod+t to tag your windows with whatever workspace name you want!
 
+`.bin/_tmux_start-session`
+------------------------
+
+Reasonably flexible tmux workspace generation! Examples are in [work](.bin/work) and [vocities](.bin/vocities), and a somewhat helpful error text is displayed on stderr when run directly (as it is intended to be _sourced_ into another script that provides configuration information. If necessary, the `tmux_after` function can be defined before sourcing `_tmux_start-session`, in order to customize environment startup before attaching. **NOTE:** These names are not noconflicted, so their names may change in the future.
+
 Contribution/Attribution
 ------------------------
 
