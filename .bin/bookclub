@@ -1,0 +1,18 @@
+#!/bin/bash
+
+book="$1"
+session="bookclub-$book"
+keyfile=zenbook
+dir="$HOME/Work/Talenthouse/bookclub/$book"
+dockerdeps=()
+windows=(sbt:1 vim:2 shell:3)
+commands=(sbt:sbt vim:vim-recover)
+
+if [ -z "$book" ]; then
+  echo "Please select a book:" >&2
+  ls "$dir" >&2
+  exit 1
+fi
+
+
+source _tmux_start-session
