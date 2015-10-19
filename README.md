@@ -35,7 +35,10 @@ Or just take install.sh, uninstall.sh, and lib.sh and do your own thing (it's re
 Useful things
 =============
 
-.auth\_sockrc: This provides some support for managing ssh-agent sockets. Tested and used for years on both Linux and OSX.
+`.auth_sockrc`
+-------------
+
+This provides some support for managing ssh-agent sockets. Tested and used for years on both Linux and OSX.
 
     as_start: Start an ssh-agent and register it
     as_use: Use a registered ssh-agent
@@ -44,9 +47,10 @@ Useful things
                as_use, use this. Useful for if you ssh -A to a box that already
                has ssh-agent running, but you want to use your forwarded agent.
 
-`.bin/i3tagger`: wmii-style tag support for i3.
+`.bin/i3tagger`
+-------------
 
-    Mod+t to tag your windows with whatever you want!
+wmii-style tag support for i3. Mod+t to tag your windows with whatever workspace name you want!
 
 Contribution/Attribution
 ------------------------
