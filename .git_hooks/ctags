@@ -3,16 +3,26 @@
 set -e
 PATH="/usr/local/bin:$PATH"
 if [ "$(git rev-parse --is-inside-work-tree)"='true' ]; then
+
+  gitdir="$(git rev-parse --git-dir)"
   dir="$(git rev-parse --git-common-dir)"
+
 elif [ "$(git rev-parse --is-inside-git-dir)"='true' ]; then
-  dir="$(git rev-parse --git-dir)"
+
+  gitdir="$(git rev-parse --git-dir)"
+  dir="$gitdir"
+
 else
   echo 'Not inside a git repo, bailing' >&2
   exit 1
 fi
 trap 'rm -f "$dir/$$.tags"' EXIT
 
-ignorepath="$dir/.ctags-ignore"
+if [ -f "$dir/.ctags-ignore" ]; then
+  ignorepath="$dir/.ctags-ignore"
+else
+  ignorepath="$gitdir/.ctags-ignore"
+fi
 
 uuid=$(uuidgen)
 echo "$uuid" > "$dir/taglock"
