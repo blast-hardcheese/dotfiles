@@ -7,5 +7,7 @@ if [ "x$target" = "x" ]; then
 fi
 
 echo "Using $target"
+touchscreen_id=$(xinput list --id-only 'Atmel Atmel maXTouch Digitizer')
 
 xrandr --output $target --off
+xinput --map-to-output "$touchscreen_id" eDP1
