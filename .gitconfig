@@ -1,0 +1,19 @@
+[user]
+	name = Devon Stewart
+	email = blast@hardchee.se
+[core]
+	excludesfile = /home/blast/.gitignore_global
+[color]
+	ui = auto
+[alias]
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+[push]
+	default = current
+[merge]
+	tool = diffconflicts
+[mergetool "diffconflicts"]
+	cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
+	trustExitCode = true
+[mergetool]
+	keepBackup = false
