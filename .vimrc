@@ -27,6 +27,7 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Plugin 'sjl/gundo.vim'
     Plugin 'tagbar'
     Plugin 'tpope/vim-fugitive'
+    Plugin 'tpope/vim-repeat'
 
 " Scala
 "    Plugin 'has207/vim-scala'
