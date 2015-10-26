@@ -14,32 +14,33 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Plugin 'gmarik/vundle'
 
 " Usability
+"    Plugin 'guns/xterm-color-table.vim'
+"    Plugin 'jreybert/vim-mark'
+"    Plugin 'mhinz/vim-tmuxify'
     Plugin 'Lokaltog/vim-easymotion'
-""    Plugin 'mhinz/vim-tmuxify'
-    Plugin 'kien/ctrlp.vim'
     Plugin 'airblade/vim-gitgutter'
     Plugin 'ciaranm/detectindent'
-    Plugin 'scrooloose/syntastic'
-    Plugin 'scrooloose/nerdcommenter'
-    Plugin 'tagbar'
     Plugin 'flazz/vim-colorschemes'
-"    Plugin 'jreybert/vim-mark'
-"    Plugin 'guns/xterm-color-table.vim'
+    Plugin 'kien/ctrlp.vim'
+    Plugin 'scrooloose/nerdcommenter'
+    Plugin 'scrooloose/syntastic'
+    Plugin 'sjl/gundo.vim'
+    Plugin 'tagbar'
     Plugin 'tpope/vim-fugitive'
 
 " Scala
-    Bundle 'gre/play2vim'
-    Plugin 'derekwyatt/vim-scala'
-"    Bundle 'has207/vim-scala'
+"    Plugin 'has207/vim-scala'
     Plugin 'derekwyatt/vim-sbt'
+    Plugin 'derekwyatt/vim-scala'
+    Plugin 'gre/play2vim'
 
 " HTML/JavaScript/CSS
-    Plugin 'othree/html5.vim'
-    Plugin 'pangloss/vim-javascript'
-    Plugin 'othree/javascript-libraries-syntax.vim'
-    Plugin 'wookiehangover/jshint.vim'
-    Plugin 'mxw/vim-jsx'
     Plugin 'groenewege/vim-less'
+    Plugin 'mxw/vim-jsx'
+    Plugin 'othree/html5.vim'
+    Plugin 'othree/javascript-libraries-syntax.vim'
+    Plugin 'pangloss/vim-javascript'
+    Plugin 'wookiehangover/jshint.vim'
 
 " TypeScript
     Plugin 'leafgarland/typescript-vim'
