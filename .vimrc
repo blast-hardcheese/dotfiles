@@ -11,17 +11,17 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
 
     " let Vundle manage Vundle
     " required!
-    Bundle 'gmarik/vundle'
+    Plugin 'gmarik/vundle'
 
 " Usability
-    Bundle 'Lokaltog/vim-easymotion'
-""    Bundle 'mhinz/vim-tmuxify'
-    Bundle 'kien/ctrlp.vim'
-    Bundle 'airblade/vim-gitgutter'
-    Bundle "ciaranm/detectindent"
-    Bundle 'scrooloose/syntastic'
-    Bundle 'scrooloose/nerdcommenter'
-    Bundle 'tagbar'
+    Plugin 'Lokaltog/vim-easymotion'
+""    Plugin 'mhinz/vim-tmuxify'
+    Plugin 'kien/ctrlp.vim'
+    Plugin 'airblade/vim-gitgutter'
+    Plugin 'ciaranm/detectindent'
+    Plugin 'scrooloose/syntastic'
+    Plugin 'scrooloose/nerdcommenter'
+    Plugin 'tagbar'
     Plugin 'flazz/vim-colorschemes'
 "    Plugin 'jreybert/vim-mark'
 "    Plugin 'guns/xterm-color-table.vim'
@@ -29,32 +29,32 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
 
 " Scala
     Bundle 'gre/play2vim'
-    Bundle 'derekwyatt/vim-scala'
+    Plugin 'derekwyatt/vim-scala'
 "    Bundle 'has207/vim-scala'
-    Bundle 'derekwyatt/vim-sbt'
+    Plugin 'derekwyatt/vim-sbt'
 
 " HTML/JavaScript/CSS
-    Bundle 'othree/html5.vim'
-    Bundle "pangloss/vim-javascript"
-    Bundle 'othree/javascript-libraries-syntax.vim'
-    Bundle "wookiehangover/jshint.vim"
-    Bundle "mxw/vim-jsx"
-    Bundle "groenewege/vim-less"
+    Plugin 'othree/html5.vim'
+    Plugin 'pangloss/vim-javascript'
+    Plugin 'othree/javascript-libraries-syntax.vim'
+    Plugin 'wookiehangover/jshint.vim'
+    Plugin 'mxw/vim-jsx'
+    Plugin 'groenewege/vim-less'
 
 " TypeScript
-    Bundle "leafgarland/typescript-vim"
+    Plugin 'leafgarland/typescript-vim'
 
 " Purescript
-    Bundle "raichoo/purescript-vim"
+    Plugin 'raichoo/purescript-vim'
 
 " Haskell
-    Bundle "lukerandall/haskellmode-vim"
+    Plugin 'lukerandall/haskellmode-vim'
 
 " SaltStack
-    Bundle "saltstack/salt-vim"
+    Plugin 'saltstack/salt-vim'
 
 " Gitolite
-    Bundle 'gitolite.vim'
+    Plugin 'gitolite.vim'
 
     filetype plugin indent on     " required!
     "
