@@ -1,0 +1,35 @@
+#!/bin/bash
+
+gitroot="$(git rev-parse --git-common-dir)"
+worktrees="$gitroot/worktrees"
+
+cwd=$(pwd)
+
+display() {
+    label="$1"
+    gitpath="$2"
+    path="$(readlink -f "$gitpath")"
+    path="${path%/.git}"
+
+    suffix=''
+    if [[ $cwd = $path ]]; then
+        suffix=" (current)"
+    fi
+
+    echo
+    echo "Worktree: ${name}${suffix}"
+
+    (cd "$path"; git status --short --branch)
+}
+
+display "Main" "$gitroot"
+
+for worktree in "$worktrees"/*; do
+    name="${worktree#$worktrees/}"
+    gitfile="$worktree/gitfile"
+    [ -f "$gitfile" ] || continue
+    wgitpath="$gitroot/../$(cat "$gitfile")"
+    path="$wgitpath"
+
+    display "$name" "$path"
+done
