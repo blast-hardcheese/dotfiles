@@ -1,0 +1,52 @@
+#!/bin/sh
+
+mainprefix=""
+mainsuffix=""
+verbose=0
+
+while getopts "div" opt; do
+  case "$opt" in
+    d)
+      mainprefix='putStrLn $ show $'
+      ;;
+    i)
+      mainsuffix='>>= (putStrLn . show)'
+      ;;
+    v)
+      verbose=1
+      ;;
+    *)
+      echo "Unknown argument: $opt" >&2
+      ;;
+  esac
+  shift
+done
+
+code="$1"
+
+fname="$(tempfile --prefix ghceXXXX --suffix .hs)"
+cat >"$fname" <<!
+import Control.Applicative
+import qualified Control.Concurrent as C
+
+import Data.Function
+import Data.Maybe
+
+-- Milliseconds are good enough
+delay :: Int -> IO ()
+delay = C.threadDelay . (*1000)
+
+split :: (a -> a -> b) -> a -> b
+split f x = f x x
+
+main :: IO ()
+main = ${mainprefix} ${code} ${mainsuffix}
+!
+
+if [ "$verbose" -eq 1 ]; then
+  cat "$fname"
+fi
+
+runhaskell "$fname"
+
+rm "$fname"
