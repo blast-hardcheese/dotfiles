@@ -17,7 +17,7 @@ display() {
     fi
 
     echo
-    echo "Worktree: ${name}${suffix}"
+    echo "Worktree: ${label}${suffix}"
 
     (cd "$path"; git status --short --branch)
 }
