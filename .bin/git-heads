@@ -1,0 +1,24 @@
+#!/bin/bash
+
+gitroot="$(git rev-parse --git-common-dir)"
+worktrees="$gitroot/worktrees"
+
+cwd=$(pwd)
+
+display() {
+    gitpath="$1"
+    path="$(readlink -f "$gitpath")"
+    path="${path%/.git}"
+
+    (cd "$path"; git rev-parse --abbrev-ref HEAD | grep -v '^HEAD$')
+}
+
+display "$gitroot"
+
+for worktree in "$worktrees"/*; do
+    gitfile="$worktree/gitfile"
+    [ -f "$gitfile" ] || continue
+    path="$gitroot/../$(cat "$gitfile")"
+
+    display "$path"
+done
