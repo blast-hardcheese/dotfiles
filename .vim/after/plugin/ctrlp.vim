@@ -5,8 +5,12 @@ if filereadable(localrc)
     exec "source " . localrc
 endif
 
+if filereadable('.git')
+    let &tags=&tags . ',' . substitute(system("cut -f2 -d ' ' < '.git'"), '\n', '/tags', 'g')
+endif
+
 if isdirectory('.git')
-    set grepprg="git grep"
+    set tags+='.git/tags'
 endif
 
 let g:ctrlp_user_command = {
