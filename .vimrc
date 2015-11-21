@@ -21,7 +21,7 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Plugin 'airblade/vim-gitgutter'
     Plugin 'ciaranm/detectindent'
     Plugin 'flazz/vim-colorschemes'
-    Plugin 'kien/ctrlp.vim'
+    Plugin 'ctrlpvim/ctrlp.vim'
     Plugin 'scrooloose/nerdcommenter'
     Plugin 'scrooloose/syntastic'
     Plugin 'sjl/gundo.vim'
