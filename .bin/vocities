@@ -1,6 +1,7 @@
 #!/bin/bash
 
 session=vocities
+keyfile=blast-zenbook
 dir=~/Projects/vocities/vocities
 dockerdeps=(th-postgres th-redis)
 windows=(sbt:1 vim:2 shell:3 redis:7 psql:9)
