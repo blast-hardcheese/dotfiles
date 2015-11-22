@@ -19,6 +19,12 @@ doexit() {
 
 [[ -z "$session" ]] && doexit
 
+if [ -f "$HISTFILE" ]; then
+    export HISTFILE=${HISTFILE%.hist}-${session}.hist
+fi
+
+export TMUX_SESSION="${session}"
+
 if tmux list-windows -t "$session" >/dev/null; then
     tmux a -t "${session}"
     exit 0
@@ -41,6 +47,11 @@ fi
 
 tmux new-session -d -s "${session}" -c "${dir}" -n "INITIAL"
 tmux move-window -s "${session}:^" -t "999"
+tmux set-option -a -t "${session}" update-environment ' HISTFILE TMUX_SESSION'
+tmux clock-mode -t "${session}"
+
+(sleep 1 && tmux detach-client -s "${session}") &
+tmux attach -t "${session}"
 
 for window in ${windows[@]}; do
     label="${window%:*}"
