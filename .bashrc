@@ -115,21 +115,21 @@ fi
 # sources /etc/bash.bashrc).
 HASCOMPLETION=0
 if ! shopt -oq posix; then
-    if [ -f /etc/bash_completion ]; then
+    if [ -f ~/.tools/localized/bash-completion/bash_completion ]; then
+        source ~/.tools/localized/bash-completion/bash_completion
+
+        HASCOMPLETION=1
+    elif [ -f /etc/bash_completion ]; then
         source /etc/bash_completion
 
         HASCOMPLETION=1
-    fi
-
-    # MacPorts Bash shell command completion
-    if [ -f /opt/local/etc/bash_completion ]; then
+    elif [ -f /opt/local/etc/bash_completion ]; then
+        # MacPorts Bash shell command completion
         source /opt/local/etc/bash_completion
 
         HASCOMPLETION=1
-    fi
-
-    # Homebrew Bash shell command completion
-    if type brew >/dev/null 2>&1 && [[ -f `brew --prefix`/etc/bash_completion ]]; then
+    elif type brew >/dev/null 2>&1 && [[ -f `brew --prefix`/etc/bash_completion ]]; then
+        # Homebrew Bash shell command completion
         source `brew --prefix`/etc/bash_completion
 
         HASCOMPLETION=1
