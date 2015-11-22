@@ -39,20 +39,18 @@ if [ "${#dockerdeps[@]}" -gt 0 ]; then
     $dockercmd start "${dockerdeps[@]}"
 fi
 
+tmux new-session -d -s "${session}" -c "${dir}" -n "INITIAL"
+tmux move-window -s "${session}:^" -t "999"
+
 for window in ${windows[@]}; do
     label="${window%:*}"
     number="${window#"$label":}"
 
-    if ! (tmux has-session -t "$session" >/dev/null 2>&1); then
-        echo tmux new-session -d -s "${session}" -c "${dir}" -n "$label" -t "$number"
-        tmux new-session -d -s "${session}" -c "${dir}" -n "$label"
-        if [ "$number" -ne 1 ]; then
-            tmux move-window -t "$number"
-        fi
-    else
-        tmux new-window -c "${dir}" -n "$label" -t "$number"
-    fi
+    tmux new-window -c "${dir}" -n "$label" -t "$number"
+    tmux respawn-window -t "${session}:${number}"
 done
+
+tmux kill-window -t "${session}:999"
 
 for cmdpair in "${commands[@]}"; do
     label="${cmdpair%:*}"
