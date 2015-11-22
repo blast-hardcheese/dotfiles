@@ -168,6 +168,11 @@ if [ -f ~/.bash_history ]; then
   fi
 fi
 
+if [ "$HISTFILE" = ~/.bash_history ]; then
+  export HISTFILE=$HOME/.bash_history/$HISTNAME
+  unset HISTNAME
+fi
+
 # Disable flow control
 stty -ixon
 
@@ -185,9 +190,6 @@ set +H
 # GPG always wants to know what TTY it's running on.
 export GPG_TTY=$(tty)
 
-
-export HISTFILE=$HOME/.bash_history/$HISTNAME
-unset HISTNAME
 
 if type vim >/dev/null 2>&1; then
   export EDITOR=vim
