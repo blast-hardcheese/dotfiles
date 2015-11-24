@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [ -z "$TERM" ] || [ "$TERM" = "dumb" ]; then
+    exec xterm -e "$0 $@; sleep 3"
+fi
+
+target="$1"
+
+rect=$(xrectsel)
+echo $rect
+if [[ "$rect" == "0x0+"* ]]; then
+    mapfile -t screen < <(xrandr | grep '\<connected')
+    if [ "${#screen[@]}" -gt 1 ]; then
+        echo 'Multiple screens detected, please select an explicit range' >&2
+        exit 1
+    fi
+    rect=$(echo ${screen[0]} | grep -ho '[[:digit:]]\+x[[:digit:]]\++[[:digit:]]\++[[:digit:]]\+')
+    echo "Defaulting to entire screen, $rect"
+fi
+
+size="${rect%%+*}"
+offset="${rect#*+}"
+xoffset="${offset%%+*}"
+yoffset="${offset#*+}"
+
+if [ -z "$target" ]; then
+    esize="$(echo "$size" | sed 's/%/%%/g')"
+    eoffset="$(echo "${xoffset}x${yoffset}" | sed 's/%/%%/g')"
+    target="$(date +"%Y-%m-%d_%H%M%S_${esize}+${eoffset}-x264.mp4")"
+fi
+
+echo "Recording to ${target}..."
+ffmpeg -video_size "${size}" -framerate 10 -f x11grab -i :0.0+"${xoffset},${yoffset}" -vcodec libx264 "$target"
+echo "${target}"
