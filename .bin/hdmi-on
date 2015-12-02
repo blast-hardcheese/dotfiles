@@ -1,13 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-target="$1"
+source "$(which _display-tools)"
 
-if [ "x$target" = "x" ]; then
-  target="$(xrandr | grep '\(dis\)\?connected' | grep -v 'disconnected' | grep -v eDP1 | cut -f 1 -d ' ')"
-fi
+xrandr --output "$target" --above "$builtin" --auto
 
-echo "Using $target"
-touchscreen_id=$(xinput list --id-only 'Atmel Atmel maXTouch Digitizer')
-
-xrandr --output "$target" --above eDP1 --auto
-xinput --map-to-output "$touchscreen_id" eDP1
+after_display_config
