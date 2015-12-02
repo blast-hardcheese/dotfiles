@@ -4,6 +4,7 @@ target="$1"
 if [ -z "$builtin" ]; then
   builtin="eDP1"
 fi
+builtin_mode="1600x900_60.00"
 
 touchscreen_id=$(xinput list --id-only 'Atmel Atmel maXTouch Digitizer')
 

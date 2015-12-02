@@ -5,5 +5,6 @@ source "$(which _display-tools)"
 xrandr --output "$target" --primary
 xrandr --output "$builtin" --primary
 xrandr --output "$target" --off
+xrandr --output "$builtin" --mode "$builtin_mode" --panning 0x0
 
 after_display_config
