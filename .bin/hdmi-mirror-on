@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source "$(which _display-tools)"
+res="1920x1080"
+
+xrandr --output "$builtin" --rate 60 --mode "$res" --fb "$res" --panning "$res" --output "$target" --mode "$res" --same-as "$builtin"
+
+after_display_config

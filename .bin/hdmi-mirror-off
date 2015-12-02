@@ -1,0 +1,9 @@
+#!/bin/bash
+
+source "$(which _display-tools)"
+
+xrandr --output "$target" --primary
+xrandr --output "$builtin" --primary
+xrandr --output "$target" --off
+
+after_display_config

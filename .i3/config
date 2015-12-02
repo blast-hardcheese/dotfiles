@@ -229,6 +229,7 @@ bindsym $mod+Escape mode "config"
 mode "display" {
     bindsym $mod+Shift+Up exec "hdmi-on"
     bindsym $mod+Shift+Down exec "hdmi-off"
+    bindsym $mod+Shift+m mode "display-mirror"
 
     bindsym Mod1+Shift+Up move workspace to output up; mode "default"
     bindsym Mod1+Shift+Down move workspace to output down; mode "default"
@@ -236,6 +237,14 @@ mode "display" {
     bindsym Mod1+Shift+Right move workspace to output right; mode "default"
 
     bindsym $mod+l exec light-locker-command -l; mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+mode "display-mirror" {
+    bindsym $mod+Shift+Up exec "hdmi-mirror-on"
+    bindsym $mod+Shift+Down exec "hdmi-mirror-off"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
