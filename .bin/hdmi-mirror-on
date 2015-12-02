@@ -1,7 +1,13 @@
 #!/bin/bash
 
-source "$(which _display-tools)"
 res="1920x1080"
+if [ ! -z "$1" ]; then
+  res="$1"
+  shift
+fi
+echo $1
+
+source "$(which _display-tools)"
 
 xrandr --output "$builtin" --rate 60 --mode "$res" --fb "$res" --panning "$res" --output "$target" --mode "$res" --same-as "$builtin"
 
