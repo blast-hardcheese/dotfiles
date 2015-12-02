@@ -8,7 +8,7 @@ builtin_mode="1600x900_60.00"
 
 touchscreen_id=$(xinput list --id-only 'Atmel Atmel maXTouch Digitizer')
 
-if [ "x$target" = "x" ]; then
+if [ -z "$target" ]; then
   target="$(xrandr | grep '\(dis\)\?connected' | grep -v 'disconnected' | grep -v "$builtin" | cut -f 1 -d ' ')"
 fi
 
