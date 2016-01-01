@@ -1,0 +1,10 @@
+#!/bin/bash
+
+session=talks
+keyfile=blast-zenbook
+dir=~/Projects/Talks/talks
+dockerdeps=()
+windows=(vim:1 shell:2)
+commands=(vim:vim-recover)
+
+source "$(which _tmux_start-session)"

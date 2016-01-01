@@ -1,0 +1,10 @@
+#!/bin/bash
+
+session=toswatch
+keyfile=blast-zenbook
+dir=~/Projects/toswatch/toswatch
+dockerdeps=()
+windows=(shell:1 vim:2 shell:3)
+commands=(vim:vim-recover)
+
+source _tmux_start-session

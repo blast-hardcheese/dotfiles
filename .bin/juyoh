@@ -1,0 +1,10 @@
+#!/bin/bash
+
+session=juyoh
+keyfile=blast-zenbook
+dir=~/Work/Juyoh
+dockerdeps=()
+windows=(sbt:1 vim:2 shell:3)
+commands=(sbt:sbt vim:vim-recover)
+
+source _tmux_start-session
