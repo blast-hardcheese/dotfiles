@@ -1,9 +1,9 @@
 #!/bin/bash
 
 session=nextapp
-dir="$HOME/Work/NextApp/api"
+dir="$HOME/Work/NextApp/api/salt"
 dockerdeps=()
-windows=(shell:1 vim:2)
-commands=(vim:vim-recover)
+windows=(shell:1 editor:2)
+commands=(editor:vim-recover)
 
 source _tmux_start-session
