@@ -30,5 +30,5 @@ if [ -z "$target" ]; then
 fi
 
 echo "Recording to ${target}..."
-ffmpeg -video_size "${size}" -framerate 10 -f x11grab -i :0.0+"${xoffset},${yoffset}" -vcodec libx264 "$target"
+ffmpeg -video_size "${size}" -framerate 10 -f x11grab -i :0.0+"${xoffset},${yoffset}" -vcodec libx264 -pix_fmt yuv420p "$target"
 echo "${target}"
