@@ -19,7 +19,7 @@ fi
 
 tagspath="$gitdir/tags"
 
-if [ $(($(date +%s) - $(stat -L --format %Y "$tagspath"))) -lt 10 ]; then
+if [ -e "$tagspath" ] && [ $(($(date +%s) - $(stat -L --format %Y "$tagspath"))) -lt 10 ]; then
   # Modified recently, skipping...
   exit 1
 fi
