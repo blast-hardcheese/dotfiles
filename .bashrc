@@ -198,6 +198,10 @@ fi
 # Stick all node stuff in here
 export NODE_PATH="$HOME/.tools/localized/lib/node"
 
+# Nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
 # Set up chruby
