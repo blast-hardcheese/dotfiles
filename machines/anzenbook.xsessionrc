@@ -14,8 +14,15 @@ xrandr --dpi 96
 xmodmap -e 'keycode 66 = NoSymbol NoSymbol NoSymbol'
 xmodmap -e 'keycode 248 = NoSymbol Caps_Lock'
 
+synvert() {
+  key="$1"
+  newkv=$(synclient | grep "$key" | sed 's/\s//g; s/=-/=neg/; s/=\([[:digit:]]\)/=-\1/; s/=neg/=/')
+  synclient "$newkv"
+}
+
 # Reverse scroll direction (Natural Scrolling)
-xmodmap -e 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12'
+# synvert HorizScrollDelta
+synvert VertScrollDelta
 
 # Enable horizontal scrolling
 synclient HorizTwoFingerScroll=1
