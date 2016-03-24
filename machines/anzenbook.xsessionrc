@@ -12,6 +12,7 @@ xrandr --dpi 96
 
 # Disable Caps Lock
 xmodmap -e 'keycode 66 = NoSymbol NoSymbol NoSymbol'
+xmodmap -e 'keycode 248 = NoSymbol Caps_Lock'
 
 # Reverse scroll direction (Natural Scrolling)
 xmodmap -e 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12'
