@@ -18,7 +18,20 @@ if [[ "$rect" == "0x0+"* ]]; then
     echo "Defaulting to entire screen, $rect"
 fi
 
+toEven() {
+    num="$1"
+    if [ "$((num/2*2))" -eq "$num" ]; then
+        echo "$num"
+    else
+        echo "$((num+1))"
+    fi
+}
+
 size="${rect%%+*}"
+width="$(toEven "${size%x*}")"
+height="$(toEven "${size#*x}")"
+size="${width}x${height}"
+
 offset="${rect#*+}"
 xoffset="${offset%%+*}"
 yoffset="${offset#*+}"
