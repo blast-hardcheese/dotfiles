@@ -14,12 +14,17 @@ URxvt*scrollBar: false
 URxvt*perl-lib: /home/blast/.urxvt/ext
 URxvt*perl-ext-common: font-size,eval,matcher,selection-to-clipboard,xim-onthespot
 
-URxvt*keysym.C-equal: font-size:reset
-! Man pages suggest these should work, but...
-! URxvt*keysym.C-Up: builtin:
-! URxvt*keysym.C-Down: builtin:
-! URxvt*keysym.C-S-Up: builtin:
-! URxvt*keysym.C-S-Down: builtin:
+URxvt*keysym.C-equal:  font-size:reset
+URxvt.keysym.C-Up:     font-size:increase
+URxvt.keysym.C-Down:   font-size:decrease
+
+URxvt.keysym.C-V: eval:paste_clipboard
+
+URxvt.url-launcher:       sensible-browser
+URxvt.keysym.C-Delete:    matcher:last
+URxvt.keysym.M-Delete:    matcher:list
+URxvt.matcher.button:     1
+URxvt.preeditType: OnTheSpot
 
 ! Other colors
 URxvt*color0: black
