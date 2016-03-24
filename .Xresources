@@ -12,7 +12,7 @@ URxvt*geometry: 80x24
 URxvt*scrollBar: false
 
 URxvt*perl-lib: /home/blast/.urxvt/ext
-URxvt*perl-ext-common: font-size
+URxvt*perl-ext-common: font-size,eval,matcher,selection-to-clipboard,xim-onthespot
 
 URxvt*keysym.C-equal: font-size:reset
 ! Man pages suggest these should work, but...
