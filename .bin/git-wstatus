@@ -27,8 +27,14 @@ display "Main" "$gitroot"
 for worktree in "$worktrees"/*; do
     name="${worktree#$worktrees/}"
     gitfile="$worktree/gitfile"
-    [ -f "$gitfile" ] || continue
-    wgitpath="$gitroot/../$(cat "$gitfile")"
+    gitdir="$worktree/gitdir"
+    if [ -f "$gitfile" ]; then
+        wgitpath="$gitroot/../$(cat "$gitfile")"
+    elif [ -f "$gitdir" ]; then
+        wgitpath="$(cat "$gitdir")"
+    else
+        continue
+    fi
     path="$wgitpath"
 
     display "$name" "$path"
