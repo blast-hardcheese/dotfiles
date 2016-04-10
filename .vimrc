@@ -29,6 +29,7 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-unimpaired'
+    Plugin 'AnsiEsc.vim'
 
 " Scala
 "    Plugin 'has207/vim-scala'
