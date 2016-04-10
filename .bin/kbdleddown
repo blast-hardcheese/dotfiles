@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Probably a good idea to stick this in /etc/udev/rules.d somewhere
+# SUBSYSTEM=="leds", RUN+="/bin/chmod 0664 %S%p/brightness", RUN+="/bin/chgrp plugdev %S%p/brightness"
+
 root="/sys/class/leds/asus::kbd_backlight"
 
 device="$root/brightness"
