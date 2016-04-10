@@ -21,7 +21,7 @@ synvert() {
 }
 
 # Reverse scroll direction (Natural Scrolling)
-# synvert HorizScrollDelta
+synvert HorizScrollDelta
 synvert VertScrollDelta
 
 # Enable horizontal scrolling
