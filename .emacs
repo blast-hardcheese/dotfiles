@@ -14,6 +14,7 @@
 
 (setq my-packages
   '(
+    ace-jump-mode
     el-get
     evil
   )
@@ -49,6 +50,8 @@
 			     "~/.org/scala.org")
 )
 
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
 ;; Evil configuration
 (require 'evil)
 (eval-after-load "evil"
@@ -63,8 +66,15 @@
      (define-key evil-normal-state-map (kbd "C-w l") 'evil-window-right)
      (define-key evil-normal-state-map (kbd "C-w n") 'evil-window-new)
      (define-key evil-normal-state-map (kbd "C-w v") 'evil-window-vnew)
+;    (define-key evil-normal-state-map (kbd "") 'ace-jump-mode)
      ))
 
 (setq linum-format "%d ")
 
 (setq vc-follow-symlinks t)
+
+(autoload
+  'ace-jump-mode
+  "ace-jump-mode"
+  "Emacs quick move minor mode"
+    t)
