@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# There's a bug in something where my mouse cursor on my touchscreen laptop
+# gets hidden, but because nothing I use regularly hides and shows the
+# cursor, it just stays hidden. This script abuses unclutter(1) to force
+# the mouse cursor to be shown.
+
+unclutter -idle 0 &
+sleep 0.1
+kill $!
