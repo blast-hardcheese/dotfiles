@@ -23,4 +23,4 @@ fi
 export NODE_PATH="$(pwd)/node_modules"
 export PATH="$(pwd)/node_modules/.bin:$PATH"
 
-$*
+"$@"
