@@ -128,9 +128,9 @@ if ! shopt -oq posix; then
         source /opt/local/etc/bash_completion
 
         HASCOMPLETION=1
-    elif type brew >/dev/null 2>&1 && [[ -f `brew --prefix`/etc/bash_completion ]]; then
+    elif type brew >/dev/null 2>&1 && [[ -f $(brew --prefix)/etc/bash_completion ]]; then
         # Homebrew Bash shell command completion
-        source `brew --prefix`/etc/bash_completion
+        source $(brew --prefix)/etc/bash_completion
 
         HASCOMPLETION=1
     fi
@@ -214,6 +214,8 @@ if [ -f "/usr/local/opt/chruby/share/chruby/chruby.sh" ]; then
 fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+[ -e "$HOME/.env" ] && source "$HOME/.env"
 
 if [ -f ~/.tools/configs-private/machines/$(hostname -s).bashrc ]; then
   . ~/.tools/configs-private/machines/$(hostname -s).bashrc

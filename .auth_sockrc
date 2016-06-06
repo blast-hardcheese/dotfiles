@@ -9,28 +9,8 @@ alias as_start='eval $(ssh-agent); as_register'
 
 VARS="SOCKDIR SOCKFILE ABORT NEW_AUTH_SOCK SOCKCODE VARS PID AGENTS AGENTCOUNT"
 
-set_readlinks() {
-    # Determine what options we can use with readlink.
-    # Usage: set_readlinks "readlink -f" "readlink -e" "readlink"
-
-    SOURCE=$(mktemp /tmp/auth_sockrc.XXXXX)
-    TARGET=$(mktemp /tmp/auth_sockrc.XXXXX)
-
-    rm $TARGET
-    ln -s $SOURCE $TARGET
-
-    for READLINK in "$@"; do
-        $READLINK $TARGET 1>/dev/null 2>/dev/null
-        if test $? -eq 0 ; then
-            break
-        fi
-    done
-
-    # Cleanup
-    rm $SOURCE $TARGET
-}
-
-set_readlinks "readlink -e" "readlink"
+# Set up READLINK
+source "$(dirname -- "$BASH_SOURCE")/.toolslib/readlink.sh"
 
 # Steps:
 #   - Check to see if SSH_AUTH_SOCK is set and usable

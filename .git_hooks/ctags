@@ -1,15 +1,18 @@
 #!/bin/sh
 
+READLINK=readlink
+hash greadlink &>/dev/null && READLINK=greadlink
+
 set -e
 PATH="/usr/local/bin:$PATH"
 if [ "$(git rev-parse --is-inside-work-tree)"='true' ]; then
 
-  gitdir="$(git rev-parse --git-dir)"
-  commondir="$(git rev-parse --git-common-dir)"
+  gitdir="$(   "$READLINK" -f "$(git rev-parse --git-dir       )")"
+  commondir="$("$READLINK" -f "$(git rev-parse --git-common-dir)")"
 
 elif [ "$(git rev-parse --is-inside-git-dir)"='true' ]; then
 
-  gitdir="$(git rev-parse --git-dir)"
+  gitdir="$(   "$READLINK" -f "$(git rev-parse --git-dir       )")"
   commondir="$gitdir"
 
 else
@@ -17,9 +20,18 @@ else
   exit 1
 fi
 
-tagspath="$gitdir/tags"
+repopath="$(dirname "${commondir}")"
 
-if [ -e "$tagspath" ] && [ $(($(date +%s) - $(stat -L --format %Y "$tagspath"))) -lt 10 ]; then
+parentdir="$(dirname "${repopath}")"
+reponame="$(basename "${repopath}")"
+
+parenttagspath="${parentdir}/.tags"
+repotagspath="$gitdir/tags"
+
+STAT=gstat
+type "$STAT" &>/dev/null || STAT=stat
+
+if [ -e "$repotagspath" ] && [ $(($(date +%s) - $("$STAT" -L --format %Y "$repotagspath"))) -lt 10 ]; then
   # Modified recently, skipping...
   exit 1
 fi
@@ -35,15 +47,19 @@ fi
 uuid=$(uuidgen)
 echo "$uuid" > "$gitdir/taglock"
 
-sleep 1
-
-if [ -f "$gitdir/taglock" -a  $(cat "$gitdir/taglock") = "$uuid" ]; then
+if [ -f "$gitdir/taglock" ] && [ $(cat "$gitdir/taglock") = "$uuid" ]; then
 
   ([ -f "$ignorepath" ] && git ls-files | grep -E -v -f "$ignorepath" || git ls-files) | \
     ctags --tag-relative -L - -f"$gitdir/$$.tags"
 
-  mv "$gitdir/$$.tags" "$tagspath"
+  mv "$gitdir/$$.tags" "${repotagspath}"
+
+  if [ -f "${parenttagspath}" ]; then
+    grep -v "\t${reponame}/" "${parenttagspath}" > "${parenttagspath}.$$"
+    grep -v "^!_TAG_" "${repotagspath}" | sed $'s~\t../~\t'"${reponame}"'/~' >> "${parenttagspath}.$$"
+    mv "${parenttagspath}.$$" "${parenttagspath}"
+  fi
 
   rm -f "$gitdir/taglock"
 
-fi &
+fi

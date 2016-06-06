@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(dirname "$0")/lib.sh
+source $(dirname -- "$0")/lib.sh
 
 [ ! -z "$HOME" ] && pushd $HOME 2>&1 >/dev/null || die "Unable to cd to \$HOME (\"$HOME\")"
 
