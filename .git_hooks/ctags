@@ -55,8 +55,14 @@ if [ -f "$gitdir/taglock" ] && [ $(cat "$gitdir/taglock") = "$uuid" ]; then
   mv "$gitdir/$$.tags" "${repotagspath}"
 
   if [ -f "${parenttagspath}" ]; then
-    grep -v "\t${reponame}/" "${parenttagspath}" > "${parenttagspath}.$$"
-    grep -v "^!_TAG_" "${repotagspath}" | sed $'s~\t../~\t'"${reponame}"'/~' >> "${parenttagspath}.$$"
+    (
+      grep "^!_TAG_" "${parenttagspath}"
+      (
+        grep -v "\t${reponame}/" "${parenttagspath}"
+        grep -v "^!_TAG_" "${repotagspath}" | sed $'s~\t../~\t'"${reponame}"'/~'
+      ) | sort
+    ) > "${parenttagspath}.$$"
+
     mv "${parenttagspath}.$$" "${parenttagspath}"
   fi
 
