@@ -28,15 +28,15 @@ reponame="$(basename "${repopath}")"
 parenttagspath="${parentdir}/.tags"
 repotagspath="$gitdir/tags"
 
-STAT=gstat
-type "$STAT" &>/dev/null || STAT=stat
+STAT=stat
+type gstat &>/dev/null && STAT=gstat
 
 if [ -e "$repotagspath" ] && [ $(($(date +%s) - $("$STAT" -L --format %Y "$repotagspath"))) -lt 10 ]; then
   # Modified recently, skipping...
   exit 1
 fi
 
-trap 'rm -f "$gitdir/$$.tags"' EXIT
+trap 'rm -f "$gitdir/tags.$$"' EXIT
 
 if [ -f "$gitdir/.ctags-ignore" ]; then
   ignorepath="$gitdir/.ctags-ignore"
@@ -47,23 +47,28 @@ fi
 uuid=$(uuidgen)
 echo "$uuid" > "$gitdir/taglock"
 
+set -o pipefail
+
 if [ -f "$gitdir/taglock" ] && [ $(cat "$gitdir/taglock") = "$uuid" ]; then
 
+  export ignorepath
   ([ -f "$ignorepath" ] && git ls-files | grep -E -v -f "$ignorepath" || git ls-files) | \
-    ctags --tag-relative -L - -f"$gitdir/$$.tags"
+    ctags --tag-relative -L - -f"$gitdir/tags.$$"
+  export -n ignorepath
 
-  mv "$gitdir/$$.tags" "${repotagspath}"
+  mv "$gitdir/tags.$$" "${repotagspath}"
+
 
   if [ -f "${parenttagspath}" ]; then
-    (
-      grep "^!_TAG_" "${parenttagspath}"
-      (
-        grep -v "\t${reponame}/" "${parenttagspath}"
-        grep -v "^!_TAG_" "${repotagspath}" | sed $'s~\t../~\t'"${reponame}"'/~'
-      ) | sort
-    ) > "${parenttagspath}.$$"
+    grep "^!_TAG_" "${parenttagspath}" || true >> "${parenttagspath}.$$-head"
+    grep "^!_TAG_" "${repotagspath}"           >> "${parenttagspath}.$$-head"
 
-    mv "${parenttagspath}.$$" "${parenttagspath}"
+    grep -v "\t${reponame}/" "${parenttagspath}" || true                     >> "${parenttagspath}.$$-body"
+    grep -v "^!_TAG_" "${repotagspath}" | sed $'s~\t../~\t'"${reponame}"'/~' >> "${parenttagspath}.$$-body"
+
+    sort -u < "${parenttagspath}.$$-head" >> "${parenttagspath}"
+    sort -u < "${parenttagspath}.$$-body" >> "${parenttagspath}"
+    rm -v "${parenttagspath}.$$-head" "${parenttagspath}.$$-body"
   fi
 
   rm -f "$gitdir/taglock"
