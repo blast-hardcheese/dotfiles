@@ -7,7 +7,7 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     set nocompatible
     filetype off
     set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
+    call vundle#begin()
 
     " let Vundle manage Vundle
     " required!
@@ -60,6 +60,7 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
 " Gitolite
     Plugin 'gitolite.vim'
 
+    call vundle#end()            " required
     filetype plugin indent on     " required!
 endif
 
