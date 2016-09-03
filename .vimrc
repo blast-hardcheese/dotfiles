@@ -62,6 +62,9 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
 
     call vundle#end()            " required
     filetype plugin indent on     " required!
+
+    let afterroot=$HOME . "/.vim/after/vundle/"
+    exec 'source ' . afterroot . 'fugitive.vim'
 endif
 
 
