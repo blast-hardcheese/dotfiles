@@ -60,15 +60,17 @@ if [ -f "$gitdir/taglock" ] && [ $(cat "$gitdir/taglock") = "$uuid" ]; then
 
 
   if [ -f "${parenttagspath}" ]; then
-    grep "^!_TAG_" "${parenttagspath}" || true >> "${parenttagspath}.$$-head"
-    grep "^!_TAG_" "${repotagspath}"           >> "${parenttagspath}.$$-head"
+    grep "^!_TAG_" "${parenttagspath}" >> "${parenttagspath}.$$-head" || true
+    grep "^!_TAG_" "${repotagspath}"   >> "${parenttagspath}.$$-head" || true
 
-    grep -v "\t${reponame}/" "${parenttagspath}" || true                     >> "${parenttagspath}.$$-body"
-    grep -v "^!_TAG_" "${repotagspath}" | sed $'s~\t../~\t'"${reponame}"'/~' >> "${parenttagspath}.$$-body"
+    grep -v "\t${reponame}/" "${parenttagspath}"                             >> "${parenttagspath}.$$-body" || true
+    grep -v "^!_TAG_" "${repotagspath}" | sed $'s~\t../~\t'"${reponame}"'/~' >> "${parenttagspath}.$$-body" || true
 
-    sort -u < "${parenttagspath}.$$-head" >> "${parenttagspath}"
-    sort -u < "${parenttagspath}.$$-body" >> "${parenttagspath}"
-    rm -v "${parenttagspath}.$$-head" "${parenttagspath}.$$-body"
+    sort -u < "${parenttagspath}.$$-head" > "${parenttagspath}.$$"
+    sort -u < "${parenttagspath}.$$-body" >> "${parenttagspath}.$$"
+    mv -f -v "${parenttagspath}" "${parenttagspath}.bak"
+    mv -v "${parenttagspath}.$$" "${parenttagspath}"
+    rm "${parenttagspath}.$$-head" "${parenttagspath}.$$-body"
   fi
 
   rm -f "$gitdir/taglock"
