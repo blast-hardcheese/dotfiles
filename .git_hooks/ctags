@@ -51,9 +51,16 @@ set -o pipefail
 
 if [ -f "$gitdir/taglock" ] && [ $(cat "$gitdir/taglock") = "$uuid" ]; then
 
+  langs=
+  if [ -e "build.sbt" ] || [ -e "pom.xml" ] || [ -d "project" ]; then
+    langs=scala,java
+  elif [ -e "requirements.txt" ] || [ -e "setup.py" ]; then
+    langs=python
+  fi
+
   export ignorepath
   ([ -f "$ignorepath" ] && git ls-files | grep -E -v -f "$ignorepath" || git ls-files) | \
-    ctags --tag-relative -L - -f"$gitdir/tags.$$"
+    ctags --languages="$langs" --tag-relative -L - -f"$gitdir/tags.$$"
   export -n ignorepath
 
   mv "$gitdir/tags.$$" "${repotagspath}"
