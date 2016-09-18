@@ -201,9 +201,9 @@ export NVM_DIR="$HOME/.nvm"
 
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
-# Until Wayland is set up better
-# https://wayland.freedesktop.org/building.html
-export XDG_RUNTIME_DIR="/tmp/${UID}-runtime-dir"
+## Until Wayland is set up better
+## https://wayland.freedesktop.org/building.html
+#export XDG_RUNTIME_DIR="/tmp/${UID}-runtime-dir"
 
 # Set up chruby
 if [ -f "/usr/local/opt/chruby/share/chruby/chruby.sh" ]; then
