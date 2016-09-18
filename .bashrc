@@ -195,9 +195,6 @@ if type vim >/dev/null 2>&1; then
   export EDITOR=vim
 fi
 
-# Stick all node stuff in here
-export NODE_PATH="$HOME/.tools/localized/lib/node"
-
 # Nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"

@@ -8,6 +8,29 @@ py() {
   )
 }
 
+np_activate() {
+  root="$(pwd)"
+  if [ ! -z "$1" ]; then
+    root="$1"
+  fi
+
+  if [ -d "${root}/node_modules" ]; then
+    if [ -f "${root}/package.json" ] && hash jq; then
+        if [ -d "$HOME/.nvm" ] && [ ! -z "$NVM_DIR" ]; then
+            [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+
+            nodeVersion="$(jq -cMr '.engines.node' < ${root}/package.json)"
+            nvm use "$nodeVersion"
+        fi
+    fi
+
+    export NODE_PATH="${root}/node_modules"
+    export PATH="${root}/node_modules/.bin:$PATH"
+  else
+    echo "Unable to find node_modules" >&2
+  fi
+}
+
 # Set terminal title
 # @param string $1  Tab/window title
 # @param string $2  (optional) Separate window title
