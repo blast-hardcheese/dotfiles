@@ -2,7 +2,7 @@
 
 target="$1"
 if [ -z "$builtin" ]; then
-  builtin="eDP1"
+  builtin="eDP-1"
 fi
 builtin_mode="1600x900_60.00"
 
