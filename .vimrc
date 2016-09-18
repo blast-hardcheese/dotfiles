@@ -50,9 +50,13 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
 
 " Purescript
     Plugin 'raichoo/purescript-vim'
+    Plugin 'frigoeu/psc-ide-vim'
 
 " Haskell
     Plugin 'lukerandall/haskellmode-vim'
+
+" Agda
+    Plugin 'derekelkins/agda-vim'
 
 " SaltStack
     Plugin 'saltstack/salt-vim'
