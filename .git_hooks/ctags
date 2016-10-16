@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 READLINK=readlink
-hash greadlink &>/dev/null && READLINK=greadlink
+type greadlink 2>/dev/null >/dev/null && READLINK=greadlink
 
 set -e
 PATH="/usr/local/bin:$PATH"
@@ -29,7 +29,7 @@ parenttagspath="${parentdir}/.tags"
 repotagspath="$gitdir/tags"
 
 STAT=stat
-type gstat &>/dev/null && STAT=gstat
+type gstat 2>/dev/null >/dev/null && STAT=gstat
 
 if [ -e "$repotagspath" ] && [ $(($(date +%s) - $("$STAT" -L --format %Y "$repotagspath"))) -lt 10 ]; then
   # Modified recently, skipping...
