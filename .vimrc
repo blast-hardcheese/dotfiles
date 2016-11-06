@@ -42,13 +42,13 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-unimpaired'
     Plugin 'AnsiEsc.vim'
-    Plugin 'ensime/ensime-vim'
 
 " Scala
 "    Plugin 'has207/vim-scala'
     Plugin 'derekwyatt/vim-sbt'
     Plugin 'derekwyatt/vim-scala'
     Plugin 'gre/play2vim'
+    Plugin 'ensime/ensime-vim'
 
 " HTML/JavaScript/CSS
     Plugin 'groenewege/vim-less'
@@ -351,6 +351,9 @@ vnoremap <silent><C-Right> <Esc>`>:<C-U>call search('\C\<\<Bar>\%(^\<Bar>[^'.g:c
 " Prepend both `"*` and `"+` to clipboard
 " http://stackoverflow.com/a/30691754
 set clipboard^=unnamed,unnamedplus
+
+nnoremap <localleader>t :EnTypeCheck<CR>
+nnoremap <localleader>T :EnType<CR>
 
 " Include settings from local vimrc
 let hostname = system("hostname -s")
