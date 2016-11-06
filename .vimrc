@@ -42,6 +42,7 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-unimpaired'
     Plugin 'AnsiEsc.vim'
+    Plugin 'ensime/ensime-vim'
 
 " Scala
 "    Plugin 'has207/vim-scala'
@@ -69,6 +70,9 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
 
 " Agda
     Plugin 'derekelkins/agda-vim'
+
+" Idris
+    Plugin 'idris-hackers/idris-vim'
 
 " SaltStack
     Plugin 'saltstack/salt-vim'
