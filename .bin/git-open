@@ -8,8 +8,9 @@ OPTERR=0
 
 noopen=0
 clipboard=0
-remote="origin"
-branchname=$(git name-rev HEAD | sed 's/^HEAD //')
+remotes=(origin upstream)
+remote=
+branchname=
 
 while getopts "hncr:b:" opt; do
   case "$opt" in
@@ -73,12 +74,45 @@ elif type /c/windows/system32/explorer.exe >/dev/null 2>&1; then
   OPEN="/c/windows/system32/explorer.exe"
 fi
 
-line=$(git remote -v show -n "$remote" | grep 'Fetch URL')
+if [ -z "$remote" ]; then
+  for remote in "${remotes[@]}"; do
+    git remote get-url "$remote" >/dev/null 2>/dev/null && break
+  done
+fi
 
-if echo $line | grep -q "github.com"; then
-  repopath=$(echo "$line" | grep 'github.com[:/].*' | sed 's~^.*github.com[:/]~~; s~\.git$~~')
+line=$(git remote get-url "$remote")
 
-  url="https://github.com/$repopath"
+function isSshRemote() {
+  remote="$1"
+  [ -z "${remote##*@*:*}" ]
+  return $?
+}
+
+if [ ! -z "$line" ]; then
+  if isSshRemote "$line"; then
+    host="${line#git@}"
+    host="${host%:*}"
+    path="${line#git@}"
+    path="${path#${host}:}"
+    path="${path%.git}"
+  else
+    host="${line#http*://}"
+    host="${host%%/*}"
+    path="${line#http*://$host/}"
+  fi
+
+  echo "$host" "$path"
+
+  if [ -z "$branchname" ]; then
+    cur="$(git name-rev HEAD | sed 's/^HEAD //')"
+    branchname=""
+    for branchname in "$cur" master; do
+      git cat-file -p "$remote/$branchname" >/dev/null 2>/dev/null && break
+    done
+  fi
+
+
+  url="https://${host}/${path}"
   if [ "$branchname" != "master" ]; then
     url="$url/tree/$branchname"
   fi
