@@ -3,11 +3,17 @@
 session=vocities
 keyfile=blast-zenbook
 dir=~/Projects/vocities/vocities
-dockerdeps=(th-postgres th-redis)
+dockerdeps=(vocities-postgres vocities-redis)
 windows=(sbt:1 vim:2 shell:3 redis:7 psql:9)
-commands=(sbt:sbt vim:vim-recover redis:redis-cli)
+commands=(sbt:sbt vim:vim-recover)
 
 tmux_after() {
+    until nc -z localhost 6379; do
+        echo 'waiting for localhost:6379 (redis)'
+        sleep 1
+    done
+    tmux send-keys -t "${session}:redis" $'redis-cli\n'
+
     until nc -z localhost 5432; do
         echo 'waiting for localhost:5432 (postgres)'
         sleep 1
