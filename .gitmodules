@@ -4,3 +4,12 @@
 [submodule ".urxvt/ext-repos/urxvt-font-size"]
 	path = .urxvt/ext-repos/urxvt-font-size
 	url = https://github.com/majutsushi/urxvt-font-size
+[submodule ".tmux/plugins/tpm"]
+	path = .tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
+[submodule ".tmux/plugins/tmux-sensible"]
+	path = .tmux/plugins/tmux-sensible
+	url = git@github.com:tmux-plugins/tmux-sensible.git
+[submodule ".tmux/plugins/tmux-cluster"]
+	path = .tmux/plugins/tmux-cluster
+	url = https://git::@github.com/davidscholberg/tmux-cluster
