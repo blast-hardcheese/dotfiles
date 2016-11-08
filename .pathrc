@@ -62,6 +62,7 @@ prefix_root "$HOME/.homebrew"
 prefix_path "$HOME/.bin"
 prefix_path "$HOME/.rvm/bin"
 prefix_root "$HOME/.nix-profile"
+prefix_root "$HOME/Library/Python/2.7"
 if [ -d "/opt/ghc" ]; then
   prefix_root "/opt/ghc/$(ls "/opt/ghc/" | sort -n | tail -n 1)"
 fi
