@@ -11,8 +11,9 @@ clipboard=0
 remotes=(origin upstream)
 remote=
 branchname=
+lineno=
 
-while getopts "hncr:b:" opt; do
+while getopts "hncr:b:l:" opt; do
   case "$opt" in
   h)
     show_help
@@ -29,6 +30,9 @@ while getopts "hncr:b:" opt; do
     ;;
   b)
     branchname="$OPTARG"
+    ;;
+  l)
+    lineno="$OPTARG"
     ;;
   ?)
     show_help
@@ -125,6 +129,9 @@ if [ ! -z "$line" ]; then
       url="$url/tree/$branchname"
     fi
     url="$url/$filepath"
+    if [ ! -z "$lineno" ]; then
+      url="${url}/#L${lineno}"
+    fi
   fi
 fi
 
