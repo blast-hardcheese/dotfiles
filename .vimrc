@@ -356,8 +356,9 @@ vnoremap <silent><C-Right> <Esc>`>:<C-U>call search('\C\<\<Bar>\%(^\<Bar>[^'.g:c
 " http://stackoverflow.com/a/30691754
 set clipboard^=unnamed,unnamedplus
 
-nnoremap <localleader>ei :EnSuggestImport<CR>
+nnoremap <localleader>ec :EnClient<CR>
 nnoremap <localleader>ed :EnDeclaration<CR>
+nnoremap <localleader>ei :EnSuggestImport<CR>
 nnoremap <localleader>t :EnType<CR>
 nnoremap <localleader>T :EnTypeCheck<CR>
 
