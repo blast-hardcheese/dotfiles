@@ -78,6 +78,25 @@ elif type /c/windows/system32/explorer.exe >/dev/null 2>&1; then
   OPEN="/c/windows/system32/explorer.exe"
 fi
 
+cur="$(git symbolic-ref --quiet --short HEAD 2>/dev/null)"
+if [ -z "$cur" ]; then
+  cur="$(git rev-parse --short HEAD 2>/dev/null)"
+fi
+
+if [ "$branchname" = "cur" ]; then
+  branchname="$(git rev-parse "$cur")"
+  if [ -z "$remote" ]; then
+    for remote in $(git branch --no-color --remotes --contains "$branchname"); do
+      remote="${remote# }"
+      remote="${remote%/*}"
+      for known in "${remotes[@]}" __nope__; do
+        [ "$known" = "$remote" ] && break
+      done
+      [ "$known" != "__nope__" ] && break
+    done
+  fi
+fi
+
 if [ -z "$remote" ]; then
   for remote in "${remotes[@]}"; do
     git remote get-url "$remote" >/dev/null 2>/dev/null && break
@@ -105,14 +124,7 @@ if [ ! -z "$line" ]; then
     path="${line#http*://$host/}"
   fi
 
-  echo "$host" "$path"
-
   if [ -z "$branchname" ]; then
-    cur="$(git symbolic-ref --quiet --short HEAD 2>/dev/null)"
-    if [ -z "$cur" ]; then
-      cur="$(git rev-parse --short HEAD 2>/dev/null)"
-    fi
-
     branchname=""
     for branchname in "$cur" master; do
       git cat-file -p "$remote/$branchname" >/dev/null 2>/dev/null && break # Test to see if branch exists on remote... needed?
