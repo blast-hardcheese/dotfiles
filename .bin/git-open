@@ -104,18 +104,22 @@ if [ ! -z "$line" ]; then
   echo "$host" "$path"
 
   if [ -z "$branchname" ]; then
-    cur="$(git name-rev HEAD | sed 's/^HEAD //')"
+    cur="$(git symbolic-ref --quiet --short HEAD 2>/dev/null)"
+    if [ -z "$cur" ]; then
+      cur="$(git rev-parse --short HEAD 2>/dev/null)"
+    fi
+
     branchname=""
     for branchname in "$cur" master; do
-      git cat-file -p "$remote/$branchname" >/dev/null 2>/dev/null && break
+      git cat-file -p "$remote/$branchname" >/dev/null 2>/dev/null && break # Test to see if branch exists on remote... needed?
     done
   fi
-
 
   url="https://${host}/${path}"
   if [ "$branchname" != "master" ]; then
     url="$url/tree/$branchname"
   fi
+
   if [ ! -z "$filepath" ]; then
     if [ "$branchname" = "master" ]; then
       url="$url/tree/$branchname"
