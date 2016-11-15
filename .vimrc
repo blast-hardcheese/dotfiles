@@ -1,6 +1,6 @@
 " http://vim.wikia.com/wiki/256_colors_in_vim
 " https://github.com/vim/vim/blob/2ec618c9feac4573b154510236ad8121c77d0eca/runtime/doc/syntax.txt#L5237
-if (&term =~ "rxvt" || &term =~ "xterm")
+if (&term =~ "rxvt" || &term =~ "xterm" || &term =~ "nvim")
     if has("terminfo")
         set t_Co=256
         set t_Sf=[3%p1%dm
@@ -11,6 +11,10 @@ if (&term =~ "rxvt" || &term =~ "xterm")
         set t_Sb=[4%dm
     endif
 endif
+
+set t_Co=256
+set t_Sf=[3%p1%dm
+set t_Sb=[4%p1%dm
 
 
 " Vundle
