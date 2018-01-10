@@ -135,12 +135,14 @@ if ! shopt -oq posix; then
         HASCOMPLETION=1
     fi
 
-    if [ $HASCOMPLETION == 1 -a -d ~/.bash_completions ]; then
-        for COMP in ~/.bash_completions/*.completion; do
-            source "$COMP"
+    if [ $HASCOMPLETION == 1 ]; then
+        for path in ~/.bash_completions/*.completion ~/.nix-profile/etc/bash_completion.d/*; do
+            if [ -f "$path" ]; then
+                source "$path"
+            fi
         done
+        unset HASCOMPLETION
     fi
-    unset HASCOMPLETION
 fi
 
 # Git PS1 support
