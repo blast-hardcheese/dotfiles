@@ -175,21 +175,6 @@ map <C-t>o :tabonly<cr>
 syntax on
 set ruler
 
-" http://www.cs.swarthmore.edu/help/vim/
-if has("spell")
-  " turn spelling on by default
-"  set spell
-
-  " toggle spelling with F4 key
-  map <C-F4> :set spell!<CR><Bar>:echo "Spell Check: " . strpart("OffOn", 3 * &spell, 3)<CR>
-
-  " they were using white on white
-  highlight PmenuSel ctermfg=black ctermbg=lightgray
-
-  " limit it to just the top 10 items
-  set sps=best,10
-endif
-
 " http://www.vitorrodrigues.com/blog/2006/11/24/backspace-in-vim/
 set backspace=indent,eol,start
 
@@ -286,23 +271,6 @@ set nofoldenable
 nnoremap <C-W>n :new<cr>
 " Create a new window, vertically
 nnoremap <C-W>N :vnew<cr>
-
-" Inspired by
-" http://stackoverflow.com/questions/12556267/how-to-prevent-quitting-vim-accidentally
-function! ProtectQuit()
-    cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'close' : 'q')<CR>
-    echo "Quit locked"
-endfunction
-
-function! UnprotectQuit()
-    cunabbrev q
-    echo "Quit unlocked"
-endfunction
-
-cabbrev <silent> protect call ProtectQuit()<CR>
-cabbrev <silent> unprotect call UnprotectQuit()<CR>
-nnoremap <silent> <Leader>p :call ProtectQuit()<CR>
-nnoremap <silent> <Leader>u :call UnprotectQuit()<CR>
 
 " http://vim.wikia.com/wiki/Editing_crontab
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
