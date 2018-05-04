@@ -313,6 +313,8 @@ vnoremap <silent><C-Right> <Esc>`>:<C-U>call search('\C\<\<Bar>\%(^\<Bar>[^'.g:c
 " http://stackoverflow.com/a/30691754
 set clipboard^=unnamed,unnamedplus
 
+set mouse=
+
 " Include settings from local vimrc
 let hostname = system("hostname -s")
 let hostname = substitute(hostname, "\n$", "", "g")
