@@ -185,10 +185,6 @@ set hlsearch
 "This unsets the 'last search pattern' register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
-" Set filetypes for unknown extensions
-au BufNewFile,BufRead *.wsgi set filetype=python
-au BufNewFile,BufRead *.md set filetype=markdown
-
 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
 set wrap
 set linebreak
@@ -202,14 +198,6 @@ set formatoptions+=l
 " http://vim.wikia.com/wiki/Recover_from_accidental_Ctrl-U
 inoremap <c-u> <c-g>u<c-u>
 inoremap <c-w> <c-g>u<c-w>
-
-augroup custom_detect
-  au!
-
-  autocmd BufRead ~/.ssh/known_hosts
-  \ set nowrap
-
-augroup END
 
 " http://www.vim.org/scripts/script.php?script_id=1241
 " Octave Syntax
@@ -329,12 +317,6 @@ vnoremap <silent><C-Right> <Esc>`>:<C-U>call search('\C\<\<Bar>\%(^\<Bar>[^'.g:c
 " Prepend both `"*` and `"+` to clipboard
 " http://stackoverflow.com/a/30691754
 set clipboard^=unnamed,unnamedplus
-
-nnoremap <localleader>ec :EnClient<CR>
-nnoremap <localleader>ed :EnDeclaration<CR>
-nnoremap <localleader>ei :EnSuggestImport<CR>
-nnoremap <localleader>t :EnType<CR>
-nnoremap <localleader>T :EnTypeCheck<CR>
 
 " Include settings from local vimrc
 let hostname = system("hostname -s")
