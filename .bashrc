@@ -133,6 +133,8 @@ if ! shopt -oq posix; then
         source $(brew --prefix)/etc/bash_completion
 
         HASCOMPLETION=1
+    elif type _get_comp_words_by_ref >/dev/null 2>&1; then
+	HASCOMPLETION=1
     fi
 
     if [ $HASCOMPLETION == 1 ]; then
