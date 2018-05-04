@@ -46,21 +46,26 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-unimpaired'
     Plugin 'AnsiEsc.vim'
+    Plugin 'tpope/vim-obsession'
     Plugin 'altercation/vim-colors-solarized'
+
+" Elm
+    Plugin 'ElmCast/elm-vim'
 
 " Scala
 "    Plugin 'has207/vim-scala'
     Plugin 'derekwyatt/vim-sbt'
     Plugin 'derekwyatt/vim-scala'
     Plugin 'gre/play2vim'
-    Plugin 'ensime/ensime-vim'
+"    Plugin 'ensime/ensime-vim'
 
 " HTML/JavaScript/CSS
     Plugin 'groenewege/vim-less'
-    Plugin 'mxw/vim-jsx'
     Plugin 'othree/html5.vim'
     Plugin 'othree/javascript-libraries-syntax.vim'
-    Plugin 'pangloss/vim-javascript'
+"    Plugin 'pangloss/vim-javascript' " Replaced with vim-jsx-improve
+    Plugin 'chemzqm/vim-jsx-improve'
+    Plugin 'mxw/vim-jsx'
     Plugin 'wookiehangover/jshint.vim'
 
 " TypeScript
