@@ -138,11 +138,11 @@ set noautoindent
 set nocindent
 set nosmartindent
 
-" Set up <tab> to insert 4 spaces
-set expandtab
-set softtabstop=4
-set shiftwidth=4
-set softtabstop=4
+" " Set up <tab> to insert 4 spaces
+" set expandtab
+" set softtabstop=4
+" set shiftwidth=4
+" set softtabstop=4
 
 "" Enable folding by indentation
 "" Use: zc, zo, zC, zO, zR, zM
