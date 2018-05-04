@@ -4,4 +4,6 @@ greppattern="$1"
 regex="$2"
 namefilter="$3"
 
-git grep --name-only -P "$greppattern" -- "$namefilter" | xargs -n1 -I% -- bash -c $'perl -ne \"$0; print\" < % | sponge %' "$regex"
+git grep --name-only -P "$greppattern" -- "$namefilter" | while read path; do
+  perl -ne "$regex; print" < "$path" | sponge "$path"
+done
