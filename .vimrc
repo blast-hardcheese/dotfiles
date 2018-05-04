@@ -336,8 +336,6 @@ nnoremap <localleader>ei :EnSuggestImport<CR>
 nnoremap <localleader>t :EnType<CR>
 nnoremap <localleader>T :EnTypeCheck<CR>
 
-nnoremap <leader>go :exec('Git open -b cur -l ' . line('.') . ' %')<CR>
-
 " Include settings from local vimrc
 let hostname = system("hostname -s")
 let hostname = substitute(hostname, "\n$", "", "g")

@@ -6,3 +6,5 @@ nnoremap <leader>ga :Gwrite<cr>
 nnoremap <leader>gl :Glog<cr>
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gp :Gpush<cr>
+nnoremap <leader>go :silent exec('Git open -b cur -l ' . line('.') . ' %')<CR>
+nnoremap <leader>gb Gblame<CR>
