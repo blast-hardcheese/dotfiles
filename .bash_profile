@@ -10,6 +10,8 @@ if [ -f ~/.bashrc ]; then
         source ~/.bashrc
 fi
 
+[ -e "$HOME/.env_profile" ] && source "$HOME/.env_profile"
+
 # Load nix
 if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
   source "$HOME/.nix-profile/etc/profile.d/nix.sh"
