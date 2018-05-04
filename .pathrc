@@ -63,6 +63,10 @@ prefix_path "$HOME/.bin"
 prefix_path "$HOME/.rvm/bin"
 prefix_root "$HOME/.nix-profile"
 prefix_root "$HOME/Library/Python/2.7"
+prefix_path "$HOME/.rbenv/shims"
+prefix_path "$HOME/.cargo/bin"
+prefix_root "/nix/var/nix/profiles/default"
+
 if [ -d "/opt/ghc" ]; then
   prefix_root "/opt/ghc/$(ls "/opt/ghc/" | sort -n | tail -n 1)"
 fi
