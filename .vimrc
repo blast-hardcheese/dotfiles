@@ -36,7 +36,7 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Plugin 'Lokaltog/vim-easymotion'
     Plugin 'airblade/vim-gitgutter'
     Plugin 'ciaranm/detectindent'
-    Plugin 'flazz/vim-colorschemes'
+"    Plugin 'flazz/vim-colorschemes'
     Plugin 'ctrlpvim/ctrlp.vim'
     Plugin 'scrooloose/nerdcommenter'
     Plugin 'scrooloose/syntastic'
@@ -46,6 +46,7 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-unimpaired'
     Plugin 'AnsiEsc.vim'
+    Plugin 'altercation/vim-colors-solarized'
 
 " Scala
 "    Plugin 'has207/vim-scala'
