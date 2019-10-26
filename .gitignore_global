@@ -1,3 +1,5 @@
 .*.sw*
 .ensime
 .ensime_cache/
+.metals/
+.bloop/
