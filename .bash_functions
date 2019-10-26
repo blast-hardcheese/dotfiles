@@ -293,6 +293,26 @@ metals-set-version() {
     -o ~/.bin/metals-vim -f
 }
 
+convert_transparent_circle() {
+  in="$1"
+  out="$2"
+  size=( $(identify -format '%w %h' "$in") )
+  mid_x=$((${size[0]} / 2))
+  mid_y=$((${size[1]} / 2))
+  a=1
+  b=1
+  c=1
+  d=1
+  convert "$in" \
+    -alpha on \
+    -background none \
+    \( +clone -channel A -evaluate multiply 0 +channel -fill white -draw "ellipse $((mid_x-a)),$((mid_y-b)) $((mid_x-c)),$((mid_y-d)) 0,360" \) \
+    \( -clone 0,1 -compose DstOut -composite \) \
+    \( -clone 0,1 -compose DstIn -composite \) \
+    -delete 0,1,2 \
+    "$out"
+}
+
 #### Overrides
 if [ -f ~/.tools/configs/machines/$(hostname -s).bash_functions ]; then
   . ~/.tools/configs/machines/$(hostname -s).bash_functions
