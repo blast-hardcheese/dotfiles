@@ -1,2 +1,4 @@
 .DS_Store
 .*.sw*
+.bin/coursier
+.bin/metals-vim
