@@ -6,16 +6,17 @@ if [ -d "$HOME/.nix-profile/etc/profile.d" ]; then
   done
 fi
 
+if [ -d "$HOME/.nix-profile/etc/bash_completion.d" ]; then
+  for file in "$HOME/.nix-profile/etc/bash_completion.d"/*; do
+    source "$file"
+  done
+fi
+
 if [ -f ~/.bashrc ]; then
         source ~/.bashrc
 fi
 
 [ -e "$HOME/.env_profile" ] && source "$HOME/.env_profile"
-
-# Load nix
-if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
-  source "$HOME/.nix-profile/etc/profile.d/nix.sh"
-fi
 
 # User specific environment and startup programs
 
