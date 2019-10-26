@@ -142,6 +142,7 @@ set indentexpr=
 set noautoindent
 set nocindent
 set nosmartindent
+set expandtab
 
 " " Set up <tab> to insert 4 spaces
 " set expandtab
