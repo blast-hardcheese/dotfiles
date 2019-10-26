@@ -264,6 +264,35 @@ vimp() {
   vim -p "${files[@]}"
 }
 
+install-coursier() {
+  local target="$HOME/.bin/metals"
+  curl -L -o "$target" https://git.io/coursier
+  chmod +x "$target"
+}
+
+metals-set-version() {
+  local version="$1"
+  if [ -z "$version" ]; then
+    echo "Looking up latest version..." >&2
+    version=$(curl -s "https://search.maven.org/remotecontent?filepath=org/scalameta/metals_2.12/maven-metadata.xml" | \
+      xpath '/metadata/versioning/latest' 2>/dev/null | \
+      sed 's/<[^>]*>//g')
+    echo "Using version: ${version}" >&2
+  fi
+  coursier bootstrap \
+    --java-opt -Dh2.bindAddress=127.0.0.1 \
+    --java-opt -Dmetals.http=off \
+    --java-opt -XX:+UseG1GC \
+    --java-opt -XX:+UseStringDeduplication  \
+    --java-opt -Xss4m \
+    --java-opt -Xms100m \
+    --java-opt -Dmetals.client=vim-lsc \
+    "org.scalameta:metals_2.12:${version}" \
+    -r bintray:scalacenter/releases \
+    -r sonatype:snapshots \
+    -o ~/.bin/metals-vim -f
+}
+
 #### Overrides
 if [ -f ~/.tools/configs/machines/$(hostname -s).bash_functions ]; then
   . ~/.tools/configs/machines/$(hostname -s).bash_functions
