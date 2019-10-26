@@ -313,6 +313,34 @@ convert_transparent_circle() {
     "$out"
 }
 
+mov2gif() {
+  set -o pipefail
+  input="$1"
+  output="$2"
+  size="$3"
+  if [ -z "$output" ]; then
+    output="${input}.gif"
+  fi
+  if [ -z "$3" ]; then
+    size="$(ffprobe "${input}" 2>&1 | grep 'Stream.*: Video:' | grep -ho '[1-9][[:digit:]]\+x[[:digit:]]\+')"
+  fi
+  ffmpeg -i "${input}" -s "${size}" -pix_fmt rgb24 -r 7 -f gif - | gifsicle --optimize=3 --delay=8 > "${output}"
+}
+
+ivy2m2() {
+  group="$1"
+  shift
+  artifact="$1"
+  shift
+  version="$1"
+  shift
+
+  cp -vf "${HOME}/.ivy2/local/${group}/${artifact}/${version}/poms/${artifact}.pom" "${HOME}/.m2/repository/${group//\./\/}/${artifact}/${version}/${artifact}-${version}.pom"
+  cp -vf "${HOME}/.ivy2/local/${group}/${artifact}/${version}/poms/${artifact}.pom.sha1" "${HOME}/.m2/repository/${group//\./\/}/${artifact}/${version}/${artifact}-${version}.pom.sha1"
+  cp -vf "${HOME}/.ivy2/local/${group}/${artifact}/${version}/jars/${artifact}.jar" "${HOME}/.m2/repository/${group//\./\/}/${artifact}/${version}/${artifact}-${version}.jar"
+  cp -vf "${HOME}/.ivy2/local/${group}/${artifact}/${version}/jars/${artifact}.jar.sha1" "${HOME}/.m2/repository/${group//\./\/}/${artifact}/${version}/${artifact}-${version}.jar.sha1"
+}
+
 #### Overrides
 if [ -f ~/.tools/configs/machines/$(hostname -s).bash_functions ]; then
   . ~/.tools/configs/machines/$(hostname -s).bash_functions
