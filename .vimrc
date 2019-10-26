@@ -33,57 +33,62 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
     Plugin 'ciaranm/detectindent'
 "    Plugin 'flazz/vim-colorschemes'
     Plugin 'ctrlpvim/ctrlp.vim'
-    Plugin 'scrooloose/nerdcommenter'
+"    Plugin 'scrooloose/nerdcommenter'
     Plugin 'scrooloose/syntastic'
     Plugin 'sjl/gundo.vim'
-    Plugin 'tagbar'
+"    Plugin 'tagbar'
     Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-unimpaired'
     Plugin 'AnsiEsc.vim'
     Plugin 'tpope/vim-obsession'
     Plugin 'altercation/vim-colors-solarized'
+    Plugin 'whiteinge/diffconflicts'
 
 " Elm
-    Plugin 'ElmCast/elm-vim'
+"    Plugin 'ElmCast/elm-vim'
 
 " Scala
 "    Plugin 'has207/vim-scala'
     Plugin 'derekwyatt/vim-sbt'
     Plugin 'derekwyatt/vim-scala'
-    Plugin 'gre/play2vim'
+"    Plugin 'gre/play2vim'
+    Plugin 'neoclide/coc.nvim'
 "    Plugin 'ensime/ensime-vim'
 
 " HTML/JavaScript/CSS
-    Plugin 'groenewege/vim-less'
-    Plugin 'othree/html5.vim'
-    Plugin 'othree/javascript-libraries-syntax.vim'
+"    Plugin 'groenewege/vim-less'
+"    Plugin 'othree/html5.vim'
+"    Plugin 'othree/javascript-libraries-syntax.vim'
 "    Plugin 'pangloss/vim-javascript' " Replaced with vim-jsx-improve
-    Plugin 'chemzqm/vim-jsx-improve'
-    Plugin 'mxw/vim-jsx'
-    Plugin 'wookiehangover/jshint.vim'
+"    Plugin 'chemzqm/vim-jsx-improve'
+"    Plugin 'mxw/vim-jsx'
+"    Plugin 'wookiehangover/jshint.vim'
 
 " TypeScript
-    Plugin 'leafgarland/typescript-vim'
+"    Plugin 'leafgarland/typescript-vim'
 
 " Purescript
-    Plugin 'raichoo/purescript-vim'
-    Plugin 'frigoeu/psc-ide-vim'
+"    Plugin 'raichoo/purescript-vim'
+"    Plugin 'frigoeu/psc-ide-vim'
 
 " Haskell
     Plugin 'lukerandall/haskellmode-vim'
 
 " Agda
-    Plugin 'derekelkins/agda-vim'
+"    Plugin 'derekelkins/agda-vim'
 
 " Idris
-    Plugin 'idris-hackers/idris-vim'
+"    Plugin 'idris-hackers/idris-vim'
 
 " SaltStack
-    Plugin 'saltstack/salt-vim'
+"    Plugin 'saltstack/salt-vim'
 
 " Gitolite
-    Plugin 'gitolite.vim'
+"    Plugin 'gitolite.vim'
+
+" Dhall
+    Plugin 'vmchale/dhall-vim'
 
     call vundle#end()            " required
     filetype plugin indent on     " required!
