@@ -1,0 +1,126 @@
+#!/bin/sh
+
+rebase_head_exists() {
+  [ -f "${GIT_ROOT}/REBASE_HEAD${1}" ]
+}
+
+rebase_merge_exists() {
+  [ -d "${GIT_ROOT}/rebase-merge${1}" ]
+}
+
+sanity_check_stash() {
+  if rebase_head_exists "${1}" && ! rebase_merge_exists "${1}"; then
+    echo "${GIT_ROOT}/REBASE_HEAD${1} exists, but no corresponding ${GIT_ROOT}/rebase-merge${1}! Aborting!" >&2
+    exit 1
+  elif ! rebase_head_exists "${1}" && rebase_merge_exists "${1}"; then
+    echo "${GIT_ROOT}/rebase-merge${1} exists, but no corresponding ${GIT_ROOT}/REBASE_HEAD${1}! Aborting!" >&2
+    exit 1
+  elif ! rebase_head_exists "" && ! rebase_merge_exists ""; then
+    echo "Neither ${GIT_ROOT}/rebase-merge nor ${GIT_ROOT}/REBASE_HEAD exist! Aborting!" >&2
+    exit 1
+  fi
+}
+
+sanity_check_pop() {
+  if rebase_head_exists "" || rebase_merge_exists ""; then
+    echo "Either ${GIT_ROOT}/REBASE_HEAD or ${GIT_ROOT}/rebase-merge exists, there may be a rebase in progress! Aborting!" >&2
+    exit 1
+  fi
+}
+
+sanity_check_drop() {
+  if ! rebase_head_exists "${1}" || ! rebase_merge_exists "${1}"; then
+    echo "Either ${GIT_ROOT}/REBASE_HEAD or ${GIT_ROOT}/rebase-merge is missing, it doesn't look like there's a rebase in progress! Aborting!" >&2
+    exit 1
+  fi
+}
+
+do_stash() {
+  local found_caches=1
+
+  while rebase_head_exists "$found_caches" && rebase_merge_exists "$found_caches"; do
+    found_caches="$((found_caches+1))"
+  done
+  sanity_check_stash "$found_caches"
+  if [ "$found_caches" -gt 1 ]; then
+    echo "Found $found_caches previously stashed rebases, continue on, oh brave one!" >&2
+  fi
+  mv -v "${GIT_ROOT}"/REBASE_HEAD{,"${found_caches}"}
+  mv -v "${GIT_ROOT}"/rebase-merge{,"${found_caches}"}
+}
+
+do_pop() {
+  local found_caches=1
+
+  while rebase_merge_exists "$found_caches"; do
+    found_caches="$((found_caches+1))"
+  done
+  found_caches="$((found_caches-1))"
+
+  sanity_check_pop "$found_caches"
+
+  mv -vf "${GIT_ROOT}"/REBASE_HEAD{"${found_caches}",}
+  mv -v "${GIT_ROOT}"/rebase-merge{"${found_caches}",}
+}
+
+do_drop() {
+  local found_caches=1
+
+  while rebase_head_exists "$found_caches" && rebase_merge_exists "$found_caches"; do
+    found_caches="$((found_caches+1))"
+  done
+  found_caches="$((found_caches-1))"
+
+  sanity_check_drop "$found_caches"
+
+  rm -v "${GIT_ROOT}/REBASE_HEAD${found_caches}"
+  rm -rv "${GIT_ROOT}/rebase-merge${found_caches}"
+}
+
+do_status() {
+  local found_caches=1
+
+  while rebase_head_exists "$found_caches" && rebase_merge_exists "$found_caches"; do
+    found_caches="$((found_caches+1))"
+  done
+  found_caches="$((found_caches-1))"
+
+  if [ "${found_caches}" -ge 1 ]; then
+    echo "Current count of stashed rebases is ${found_caches}" >&2
+  else
+    echo "There are no stashed rebases in progress" >&2
+  fi
+  exit 0
+}
+
+do_help() {
+  local name
+  name="$(basename "$0")"
+  name="${name#git-}"
+  echo "Usage: git $name [stash|pop|status]" >&2
+  exit 1
+}
+
+find_root() {
+  git rev-parse --git-dir
+}
+
+export GIT_ROOT="$(find_root)"
+
+case "$1" in
+  drop)
+    do_drop
+    ;;
+  stash|"")
+    do_stash
+    ;;
+  pop)
+    do_pop
+    ;;
+  status)
+    do_status
+    ;;
+  help|*)
+    do_help "$@"
+    ;;
+esac
