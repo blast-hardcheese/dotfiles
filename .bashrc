@@ -205,6 +205,11 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
+# pyenv
+if hash pyenv 2>/dev/null; then
+  eval "$(pyenv init -)"
+fi
+
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
 ## Until Wayland is set up better

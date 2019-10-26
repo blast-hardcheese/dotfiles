@@ -40,6 +40,11 @@ alias mkdate="mkdir -v $(date +'%Y-%m-%d')"
 alias ve='source ~/.virtualenv/bin/activate'
 alias ve27='source ~/.virtualenv2.7/bin/activate'
 
+# neovim adapters
+alias vim=nvim
+alias vimdiff="nvim -d"
+alias view="nvim -R"
+
 if [ -f ~/.tools/configs/machines/$(hostname -s).bash_aliases ]; then
   . ~/.tools/configs/machines/$(hostname -s).bash_aliases
 fi
