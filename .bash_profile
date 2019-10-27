@@ -1,5 +1,11 @@
 # Get the aliases and functions
 
+if type brew >/dev/null 2>&1 && [[ -d "$(brew --prefix)/etc/profile.d" ]]; then
+  for file in "$(brew --prefix)/etc/profile.d"/*; do
+    source "$file"
+  done
+fi
+
 if [ -d "$HOME/.nix-profile/etc/profile.d" ]; then
   for file in "$HOME/.nix-profile/etc/profile.d"/*; do
     source "$file"
