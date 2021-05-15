@@ -170,7 +170,7 @@ date_JT() {
 }
 
 date_UTC() {
-    TZ=UTC date
+    TZ=UTC date "$@"
 }
 
 sconsole() {
@@ -232,6 +232,15 @@ clean_play() {
 mcd() {
     mkdir -p "$1"
     cd "$1"
+}
+
+wvim() {
+    files=()
+    for cmd in "$@"; do
+        files["${#files[@]}"]="$(which "$cmd")"
+    done
+
+    vim -p "${files[@]}"
 }
 
 jinja2() {
@@ -324,7 +333,7 @@ mov2gif() {
   if [ -z "$3" ]; then
     size="$(ffprobe "${input}" 2>&1 | grep 'Stream.*: Video:' | grep -ho '[1-9][[:digit:]]\+x[[:digit:]]\+')"
   fi
-  ffmpeg -i "${input}" -s "${size}" -pix_fmt rgb24 -r 7 -f gif - | gifsicle --optimize=3 --delay=8 > "${output}"
+  ffmpeg -i "${input}" -s "${size}" -pix_fmt rgb24 -r 15 -t 60 -f gif - | gifsicle --optimize=3 --delay=8 > "${output}"
 }
 
 ivy2m2() {
@@ -339,6 +348,37 @@ ivy2m2() {
   cp -vf "${HOME}/.ivy2/local/${group}/${artifact}/${version}/poms/${artifact}.pom.sha1" "${HOME}/.m2/repository/${group//\./\/}/${artifact}/${version}/${artifact}-${version}.pom.sha1"
   cp -vf "${HOME}/.ivy2/local/${group}/${artifact}/${version}/jars/${artifact}.jar" "${HOME}/.m2/repository/${group//\./\/}/${artifact}/${version}/${artifact}-${version}.jar"
   cp -vf "${HOME}/.ivy2/local/${group}/${artifact}/${version}/jars/${artifact}.jar.sha1" "${HOME}/.m2/repository/${group//\./\/}/${artifact}/${version}/${artifact}-${version}.jar.sha1"
+}
+
+# Cycle between multiple variants of the same dataset.
+# Example: cycle foo.csv -full -subset -single
+#   expects all but one of foo.csv-full foo.csv-subset or foo.csv-single
+#   to exist, as well as foo.csv to exist. It will then cycle through all
+#   extensions, finding the next in the sequence, swapping the current
+#   "focused" file out, and the new "focused" file in.
+#
+#   $ ls foo*
+#   foo.csv foo.csv-subset foo.csv-single
+#   $ cycle foo.csv -full -subset -single
+#   $ ls foo*
+#   foo.csv-full foo.csv foo.csv-single
+#   $ cycle foo.csv -full -subset -single
+#   $ ls foo*
+#   foo.csv-full foo.csv-subset foo.csv
+#
+cycle() {
+  base="$1"
+  shift
+  exts=( "$@" )
+  for idx in $(seq 0 "${#exts[@]}"); do
+    ext="${exts[$idx]}"
+    if [ ! -f "${base}${ext}" ]; then
+      next="${exts[$(((idx+1)%${#exts[@]}))]}"
+      mv -v "${base}" "${base}${ext}"
+      mv -v "${base}${next}" "${base}"
+      break
+    fi
+  done
 }
 
 #### Overrides

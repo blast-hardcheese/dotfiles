@@ -6,9 +6,9 @@ syntax enable
 set background=dark
 colorscheme solarized
 
-if &diff
-    colorscheme 1989
-endif
+" if &diff
+"     colorscheme 1989
+" endif
 " These are also good
 "carvedwoodcool
 "desert

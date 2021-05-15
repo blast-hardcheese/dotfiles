@@ -8,7 +8,7 @@ OPTERR=0
 
 noopen=0
 clipboard=0
-remotes=(origin upstream)
+remotes=(origin upstream $USER)
 remote=
 branchname=
 lineno=

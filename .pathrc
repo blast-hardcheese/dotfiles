@@ -57,6 +57,7 @@ prefix_path "/usr/local/opt/coreutils/libexec/gnubin"
 prefix_path "$HOME/.cabal/bin"
 prefix_path "$HOME/.tools/bin"
 prefix_path "$HOME/.tools/localized/bin"
+prefix_path "$HOME/.local/bin"
 prefix_path "$HOME/bin"
 prefix_root "$HOME/.homebrew"
 prefix_path "$HOME/.bin"
@@ -69,6 +70,15 @@ prefix_root "/nix/var/nix/profiles/default"
 
 if [ -d "/opt/ghc" ]; then
   prefix_root "/opt/ghc/$(ls "/opt/ghc/" | sort -n | tail -n 1)"
+fi
+
+if [ -z "$BASH_COMPLETION_USER_DIR" ]; then
+  for BASH_COMPLETION_USER_DIR in "$HOME/.nix-profile/share/bash-completion" "/usr/local/share/bash-completion"; do
+    if [ -d "$BASH_COMPLETION_USER_DIR" ]; then
+      export BASH_COMPLETION_USER_DIR
+      break
+    fi
+  done
 fi
 
 ANDROID_PATH="$HOME/.tools/localized/android-sdk"
@@ -100,6 +110,12 @@ export PATH
 export MANPATH
 export LIBRARY_PATH
 export CPATH
+
+# Needed because multi-user nix on OSX doesn't respect non-root user's channels:
+#   brick:dstewart$ nix-shell -p meld
+#   warning: Nix search path entry '/nix/var/nix/profiles/per-user/root/channels/nixpkgs' does not exist, ignoring
+#   error: file 'nixpkgs' was not found in the Nix search path (add it using $NIX_PATH or -I), at (string):1:13
+export NIX_PATH="/nix/var/nix/profiles/per-user/${USER}/channels:/nix/var/nix/profiles/per-user/root/channels"
 
 if [ -f ~/.tools/configs/machines/$(hostname -s).pathrc ]; then
   . ~/.tools/configs/machines/$(hostname -s).pathrc

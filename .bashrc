@@ -232,3 +232,4 @@ fi
 if [ -f ~/.tools/configs/machines/$(hostname -s).bashrc ]; then
   . ~/.tools/configs/machines/$(hostname -s).bashrc
 fi
+export PATH=/Users/dstewart/.local/share/fury/usr/active/bin:/Users/dstewart/.local/share/fury/usr/active/opt:$PATH # Added by Fury

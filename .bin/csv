@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+csv_explode() {
+  local line limit rest
+  local a b len buffer
+  line="$1"
+  limit="$2"
+  if [ -z "${fields}" ]; then
+    fields=()
+  fi
+  if [ "${line#\"}" = "${line}" ]; then
+    first="${line%%,*}"
+    fields[${#fields[@]}]="${first}"
+    if [ "${first}" = "${line}" ]; then
+      rest=
+    else
+      rest="${line:${#first}}"
+      rest="${rest#,}"
+    fi
+  else
+    len=2  # Surrounding "s
+    first="${line#\"}"
+    buffer=
+    while true; do
+      a="${first%%\"\"*}"
+      b="${first%%\",*}"
+      if [ "${#a}" -lt "${#b}" ]; then
+        # If we've found a CSV escaped quote...
+        buffer="${buffer}${a}\""
+        first="${first:${#a}}"
+        first="${first#\"\"}"
+        len=$((len+${#a}+2))
+      else
+        # Otherwise, set vars and bail
+        len=$((len+${#b}))
+        first="${buffer}${b}"
+        break
+      fi
+    done
+    fields[${#fields[@]}]="${first}"
+    if [ "${first}" = "${line}" ]; then
+      rest=
+    else
+      len=$((len+1))  # Trailing comma
+      rest="${line:$len}"
+    fi
+  fi
+  if [ -n "$rest" ]; then
+    if [ -z "$limit" ]; then
+      csv_explode "$rest" 
+    elif [ "$limit" -gt 1 ]; then
+      csv_explode "$rest" "$((limit-1))"
+    else
+    fields[${#fields[@]}]="$rest"
+    fi
+  fi
+}
+
+while read line; do
+  fields=()
+  csv_explode "$line"
+  echo "${fields[7]}"
+done

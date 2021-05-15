@@ -1,0 +1,8 @@
+#!/usr/bin/env python
+
+import urllib
+
+import sys
+
+for line in sys.stdin.readlines():
+  print urllib.quote_plus(line.strip())

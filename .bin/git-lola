@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+gh_pages="$(git branch --all | grep gh-pages | sed 's~^\s*remotes/~~; s~^~--not ~')"
+
+exec git log --graph --decorate --pretty=oneline --abbrev-commit --all ${gh_pages} "$@"
