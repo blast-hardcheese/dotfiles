@@ -4,6 +4,10 @@ source $(dirname -- "$0")/lib.sh
 
 [ ! -z "$HOME" ] && pushd $HOME 2>&1 >/dev/null || die "Unable to cd to \$HOME (\"$HOME\")"
 
+contains_line "$HOME/.profile"      $'# MANAGED \.tools: .profile$'      'source "$HOME/.tools_profile"      # MANAGED .tools: .profile'
+contains_line "$HOME/.bash_profile" $'# MANAGED \.tools: .bash_profile$' 'source "$HOME/.tools_bash_profile" # MANAGED .tools: .bash_profile'
+contains_line "$HOME/.bashrc"       $'# MANAGED \.tools: .bashrc$'       'source "$HOME/.tools_bashrc"       # MANAGED .tools: .bashrc'
+
 for SOURCE_PATH in $CONFIGFILES; do
     test_path "$SOURCE_PATH" ".*/\.$" && continue
     test_path "$SOURCE_PATH" ".*/\.\.$" && continue
