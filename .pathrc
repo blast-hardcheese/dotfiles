@@ -66,6 +66,7 @@ prefix_root "$HOME/.nix-profile"
 prefix_root "$HOME/Library/Python/2.7"
 prefix_path "$HOME/.rbenv/shims"
 prefix_path "$HOME/.cargo/bin"
+prefix_path "$HOME/.emacs.d/bin"
 prefix_root "/nix/var/nix/profiles/default"
 prefix_root "/run/current-system/sw"
 
