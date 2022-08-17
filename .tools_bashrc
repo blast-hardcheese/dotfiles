@@ -105,7 +105,7 @@ if ! shopt -oq posix; then
     fi
 
     if [ $HASCOMPLETION == 1 ]; then
-        for path in ~/.bash_completions/* ~/.nix-profile/etc/bash_completion.d/* /usr/local/etc/bash_completion.d/*; do
+        for path in ~/.bash_completions/* ; do
             if [ -f "$path" ]; then
                 source "$path"
             fi

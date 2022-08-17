@@ -8,6 +8,10 @@ contains_line "$HOME/.profile"      $'# MANAGED \.tools: .profile$'      'source
 contains_line "$HOME/.bash_profile" $'# MANAGED \.tools: .bash_profile$' 'source "$HOME/.tools_bash_profile" # MANAGED .tools: .bash_profile'
 contains_line "$HOME/.bashrc"       $'# MANAGED \.tools: .bashrc$'       'source "$HOME/.tools_bashrc"       # MANAGED .tools: .bashrc'
 
+find_completions tmux
+find_completions -p git
+find_completions -p nix
+
 for SOURCE_PATH in $CONFIGFILES; do
     test_path "$SOURCE_PATH" ".*/\.$" && continue
     test_path "$SOURCE_PATH" ".*/\.\.$" && continue
