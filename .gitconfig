@@ -13,7 +13,7 @@
 [merge]
 	tool = diffconflicts
 [mergetool "diffconflicts"]
-	cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
+	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
 	trustExitCode = true
 [mergetool]
 	keepBackup = false
