@@ -47,7 +47,7 @@ call plug#begin()
     Plug 'derekwyatt/vim-sbt'
     Plug 'derekwyatt/vim-scala'
 "    Plug 'gre/play2vim'
-    Plug 'neoclide/coc.nvim'
+    Plug 'neoclide/coc.nvim', { 'do': 'yarn install' }
 "    Plug 'ensime/ensime-vim'
 
 " HTML/JavaScript/CSS
