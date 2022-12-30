@@ -38,6 +38,7 @@ call plug#begin()
     Plug 'tpope/vim-obsession'
     Plug 'altercation/vim-colors-solarized'
     Plug 'whiteinge/diffconflicts'
+    Plug 'junegunn/vim-peekaboo'
 
 " Elm
 "    Plug 'ElmCast/elm-vim'
