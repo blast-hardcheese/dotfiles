@@ -1,3 +1,5 @@
+  " vimrc, accumulated over years. Largely compatible with vim and neovim.
+
 " http://vim.wikia.com/wiki/256_colors_in_vim
 " https://github.com/vim/vim/blob/2ec618c9feac4573b154510236ad8121c77d0eca/runtime/doc/syntax.txt#L5237
 if (&term =~ "rxvt" || &term =~ "xterm" || &term =~ "nvim")
@@ -12,90 +14,78 @@ if (&term =~ "rxvt" || &term =~ "xterm" || &term =~ "nvim")
     endif
 endif
 
-" Vundle
-let vundlepath=$HOME . "/.vim/bundle/vundle/.git"
-if isdirectory(vundlepath) || filereadable(vundlepath)
-    set nocompatible
-    filetype off
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#begin()
-
-    " let Vundle manage Vundle
-    " required!
-    Plugin 'gmarik/vundle'
+" vim-plug
+call plug#begin()
 
 " Usability
-"    Plugin 'guns/xterm-color-table.vim'
-"    Plugin 'jreybert/vim-mark'
-"    Plugin 'mhinz/vim-tmuxify'
-    Plugin 'Lokaltog/vim-easymotion'
-    Plugin 'airblade/vim-gitgutter'
-    Plugin 'ciaranm/detectindent'
-"    Plugin 'flazz/vim-colorschemes'
-    Plugin 'ctrlpvim/ctrlp.vim'
-"    Plugin 'scrooloose/nerdcommenter'
-    Plugin 'scrooloose/syntastic'
-    Plugin 'sjl/gundo.vim'
-"    Plugin 'tagbar'
-    Plugin 'tpope/vim-fugitive'
-    Plugin 'tpope/vim-repeat'
-    Plugin 'tpope/vim-unimpaired'
-    Plugin 'AnsiEsc.vim'
-    Plugin 'tpope/vim-obsession'
-    Plugin 'altercation/vim-colors-solarized'
-    Plugin 'whiteinge/diffconflicts'
+"    Plug 'guns/xterm-color-table.vim'
+"    Plug 'jreybert/vim-mark'
+"    Plug 'mhinz/vim-tmuxify'
+    Plug 'Lokaltog/vim-easymotion'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'ciaranm/detectindent'
+"    Plug 'flazz/vim-colorschemes'
+    Plug 'ctrlpvim/ctrlp.vim'
+"    Plug 'scrooloose/nerdcommenter'
+    Plug 'scrooloose/syntastic'
+    Plug 'sjl/gundo.vim'
+"    Plug 'tagbar'
+    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-unimpaired'
+    Plug 'vim-scripts/AnsiEsc.vim'
+    Plug 'tpope/vim-obsession'
+    Plug 'altercation/vim-colors-solarized'
+    Plug 'whiteinge/diffconflicts'
 
 " Elm
-"    Plugin 'ElmCast/elm-vim'
+"    Plug 'ElmCast/elm-vim'
 
 " Scala
-"    Plugin 'has207/vim-scala'
-    Plugin 'derekwyatt/vim-sbt'
-    Plugin 'derekwyatt/vim-scala'
-"    Plugin 'gre/play2vim'
-    Plugin 'neoclide/coc.nvim'
-"    Plugin 'ensime/ensime-vim'
+"    Plug 'has207/vim-scala'
+    Plug 'derekwyatt/vim-sbt'
+    Plug 'derekwyatt/vim-scala'
+"    Plug 'gre/play2vim'
+    Plug 'neoclide/coc.nvim'
+"    Plug 'ensime/ensime-vim'
 
 " HTML/JavaScript/CSS
-"    Plugin 'groenewege/vim-less'
-"    Plugin 'othree/html5.vim'
-"    Plugin 'othree/javascript-libraries-syntax.vim'
-"    Plugin 'pangloss/vim-javascript' " Replaced with vim-jsx-improve
-"    Plugin 'chemzqm/vim-jsx-improve'
-"    Plugin 'mxw/vim-jsx'
-"    Plugin 'wookiehangover/jshint.vim'
+"    Plug 'groenewege/vim-less'
+"    Plug 'othree/html5.vim'
+"    Plug 'othree/javascript-libraries-syntax.vim'
+"    Plug 'pangloss/vim-javascript' " Replaced with vim-jsx-improve
+"    Plug 'chemzqm/vim-jsx-improve'
+"    Plug 'mxw/vim-jsx'
+"    Plug 'wookiehangover/jshint.vim'
 
 " TypeScript
-    Plugin 'leafgarland/typescript-vim'
+    Plug 'leafgarland/typescript-vim'
 
 " Purescript
-"    Plugin 'raichoo/purescript-vim'
-"    Plugin 'frigoeu/psc-ide-vim'
+"    Plug 'raichoo/purescript-vim'
+"    Plug 'frigoeu/psc-ide-vim'
 
 " Haskell
-    Plugin 'lukerandall/haskellmode-vim'
+    Plug 'lukerandall/haskellmode-vim'
 
 " Agda
-"    Plugin 'derekelkins/agda-vim'
+"    Plug 'derekelkins/agda-vim'
 
 " Idris
-"    Plugin 'idris-hackers/idris-vim'
+"    Plug 'idris-hackers/idris-vim'
 
 " SaltStack
-"    Plugin 'saltstack/salt-vim'
+"    Plug 'saltstack/salt-vim'
 
 " Gitolite
-"    Plugin 'gitolite.vim'
+"    Plug 'gitolite.vim'
 
 " Dhall
-    Plugin 'vmchale/dhall-vim'
+    Plug 'vmchale/dhall-vim'
 
-    call vundle#end()            " required
-    filetype plugin indent on     " required!
+  filetype plugin indent on
 
-    let afterroot=$HOME . "/.vim/after/vundle/"
-    exec 'source ' . afterroot . 'fugitive.vim'
-endif
+call plug#end()
 
 
 " Tell vim to remember certain things when we exit
@@ -333,3 +323,5 @@ let localrc = $HOME . "/.tools/configs-private/machines/" . hostname . ".vimrc"
 if filereadable(localrc)
     exec "source " . localrc
 endif
+
+" vim: ts=2 sts=2 sw=2
