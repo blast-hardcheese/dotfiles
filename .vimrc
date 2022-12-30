@@ -18,6 +18,7 @@ endif
 call plug#begin()
 
 " Usability
+    Plug 'junegunn/vim-easy-align'
 "    Plug 'guns/xterm-color-table.vim'
 "    Plug 'jreybert/vim-mark'
 "    Plug 'mhinz/vim-tmuxify'
