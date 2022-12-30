@@ -1,6 +1,6 @@
 [user]
 	name = Devon Stewart
-	email = blast@hardchee.se
+	useconfigonly = true
 [core]
 	excludesfile = /home/blast/.gitignore_global
 [color]
@@ -19,3 +19,5 @@
 	trustExitCode = true
 [mergetool]
 	keepBackup = false
+[init]
+	defaultBranch = master
