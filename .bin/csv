@@ -56,8 +56,10 @@ csv_explode() {
   fi
 }
 
+field="$1"; shift || die 'Missing field index'
+
 while read line; do
   fields=()
   csv_explode "$line"
-  echo "${fields[7]}"
+  echo "${fields[field]}"
 done
