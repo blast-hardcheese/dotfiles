@@ -66,7 +66,7 @@ if isdirectory(vundlepath) || filereadable(vundlepath)
 "    Plugin 'wookiehangover/jshint.vim'
 
 " TypeScript
-"    Plugin 'leafgarland/typescript-vim'
+    Plugin 'leafgarland/typescript-vim'
 
 " Purescript
 "    Plugin 'raichoo/purescript-vim'
