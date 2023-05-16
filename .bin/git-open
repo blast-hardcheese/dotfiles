@@ -124,6 +124,11 @@ if [ ! -z "$line" ]; then
     path="${line#http*://$host/}"
   fi
 
+  if [[ "$host" = *"-github.com" ]]; then
+    host="github.com"
+  fi
+  echo "$host" >&2
+
   if [ -z "$branchname" ]; then
     branchname=""
     for branchname in "$cur" master; do
