@@ -1,4 +1,10 @@
 #!/bin/sh
 
+REDISCLI_ARGS=()
+
+if [ -n "$REDISCLI_PORT" ]; then
+  REDISCLI_ARGS=( "${REDISCLI_ARGS[@]}" -p "$REDISCLI_PORT" )
+fi
+
 file=$(basename "$0")
-redis-cli ${file#redis-} "$@" | cat -
+redis-cli "${REDISCLI_ARGS[@]}" ${file#redis-} "$@" | cat -
