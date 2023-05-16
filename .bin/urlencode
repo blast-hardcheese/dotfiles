@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import urllib
+from urllib import parse
 
 import sys
 
 for line in sys.stdin.readlines():
-  print urllib.quote_plus(line.strip())
+  print(parse.quote_plus(line.strip()))
