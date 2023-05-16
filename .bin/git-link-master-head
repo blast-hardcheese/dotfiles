@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set +e
+
+git_link_master_head() {
+  force=
+  while [ "${#@}" -gt 0 ]; do
+    case "$1" in
+      -f|--force)
+        force=1
+        ;;
+      *)
+        remote="$1"
+        ;;
+    esac
+    shift
+  done
+  if [ -z "$remote" ]; then
+    remote='origin'
+  fi
+  ref=".git/refs/remotes/$remote/HEAD"
+  if [ ! -d .git ]; then
+    return 1
+  elif [ ! -d ".git/refs/remotes/$remote" ]; then
+    return 2
+  elif [ -n "$force" ] || [ ! -f ".git/refs/remotes/$remote/HEAD" ]; then
+    url="$(git remote get-url "$remote")"
+    if [ "$url" = https://*github.com/* ]; then
+      url="${url#https://*github.com/}"
+    else
+      url="${url#*:}"
+    fi
+    url="${url%.git}"
+    master="$(gh api "repos/$url" --jq .default_branch)"
+    echo "ref: refs/remotes/$remote/$master" > "$ref"
+  fi
+}
+
+git_link_master_head "$@"
