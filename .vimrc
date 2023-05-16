@@ -271,7 +271,7 @@ noremap <leader>0 :tablast<cr>
 
 " http://vim.wikia.com/wiki/Search_and_replace_the_word_under_the_cursor
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
-nnoremap <Leader>g :Ggrep '\<<C-r><C-w>\>'
+nnoremap <Leader>g :Ggrep -w <C-r><C-w>
 
 " Reload settings
 nnoremap <leader>R :source ~/.vimrc<CR>:echo "Reloaded ~/.vimrc"<CR>
