@@ -1,0 +1,26 @@
+#!/bin/sh
+
+hash="$(echo "$@" | md5)"
+
+cache="$TMPDIR/memo-${hash}"
+
+if [ -n "$UNMEMO" ] && [ -f "$cache" ]; then
+  rm "$cache"
+fi
+
+if [ -f "$cache" ]; then
+  cat "$cache"
+else
+  tmp="$(mktemp memo.XXXXX)"
+  "$@" > "$tmp"
+  rc="$?"
+
+  if [ "$rc" -eq 0 ]; then
+    mv "$tmp" "$cache"
+    cat "$cache"
+  else
+    cat "$tmp"
+    rm "$tmp"
+  fi
+  exit "$rc"
+fi
