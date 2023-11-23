@@ -119,6 +119,12 @@ ANSII_RESET="\[\033[0m\]"
 ANSII_RED="\[\033[31m\]"
 
 # Git PS1 support
+
+GIT_PROMPT_LOCATION=/run/current-system/sw/share/bash-completion/completions/git-prompt.sh
+if ! type __git_ps1 >/dev/null 2>&1 && [ -f "$GIT_PROMPT_LOCATION" ]; then
+  source "$GIT_PROMPT_LOCATION"
+fi
+
 if [[ $(__git_ps1 1>/dev/null 2>/dev/null) || $? == 0 ]]; then
   GITPS1="\$(__git_ps1 \" $ANSII_RED(%s)$ANSII_RESET\")"
 else
