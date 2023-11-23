@@ -48,7 +48,7 @@ call plug#begin()
     Plug 'derekwyatt/vim-sbt'
     Plug 'derekwyatt/vim-scala'
 "    Plug 'gre/play2vim'
-    Plug 'neoclide/coc.nvim', { 'do': 'yarn install' }
+    Plug 'neoclide/coc.nvim', { 'do': 'npm ci' }
 "    Plug 'ensime/ensime-vim'
     Plug 'nvim-lua/plenary.nvim'  " Needed for scalameta/nvim-metals
     Plug 'scalameta/nvim-metals'  " Has a dependency on nvim-lua/plenary.nvim
