@@ -16,12 +16,18 @@
         [ (pkgs.python311.withPackages(ps: [ps.numpy]))
           pkgs.bun
           pkgs.coreutils
+          pkgs.entr
           pkgs.git
           pkgs.git-extras
+          pkgs.go
           pkgs.google-cloud-sdk
+          pkgs.jq
+          pkgs.moreutils
           pkgs.neovim
           pkgs.nodePackages.pnpm
           pkgs.nodejs
+          pkgs.reattach-to-user-namespace
+          pkgs.sbt
           pkgs.tmux
         ];
 
