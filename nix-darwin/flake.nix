@@ -14,24 +14,31 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [ (pkgs.python311.withPackages(ps: [ps.numpy]))
-          pkgs.bun
           pkgs.coreutils
-          pkgs.gnused
           pkgs.entr
           pkgs.git
           pkgs.git-extras
-          pkgs.go
-          pkgs.google-cloud-sdk
-          pkgs.jq
+          pkgs.gnused
           pkgs.moreutils
-          pkgs.neovim
-          pkgs.nodePackages.pnpm
+
           pkgs.nodejs_21
-          pkgs.reattach-to-user-namespace
+          pkgs.bun
+          pkgs.nodePackages.pnpm
+
+          pkgs.go
+
           pkgs.sbt
           pkgs.coursier
-          pkgs.tmux
           pkgs.poetry
+
+          pkgs.jdk
+
+          pkgs.google-cloud-sdk
+          pkgs.jq
+
+          pkgs.neovim
+          pkgs.reattach-to-user-namespace
+          pkgs.tmux
         ];
 
       # Auto upgrade nix package and the daemon service.
