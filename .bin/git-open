@@ -127,7 +127,6 @@ if [ ! -z "$line" ]; then
   if [[ "$host" = *"-github.com" ]]; then
     host="github.com"
   fi
-  echo "$host" >&2
 
   if [ -z "$branchname" ]; then
     branchname=""
