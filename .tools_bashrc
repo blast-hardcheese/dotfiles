@@ -4,10 +4,6 @@ if [ -f ~/.pathrc ]; then
     source ~/.pathrc
 fi
 
-if [ -d ~/.tools/ ]; then
-  export PYTHONPATH=$PYTHONPATH:~/.tools/:~/.tools/code/python/
-fi
-
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
