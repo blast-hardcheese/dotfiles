@@ -16,6 +16,7 @@
         [ (pkgs.python311.withPackages(ps: [ps.numpy]))
           pkgs.bun
           pkgs.coreutils
+          pkgs.gnused
           pkgs.entr
           pkgs.git
           pkgs.git-extras
@@ -25,10 +26,12 @@
           pkgs.moreutils
           pkgs.neovim
           pkgs.nodePackages.pnpm
-          pkgs.nodejs
+          pkgs.nodejs_21
           pkgs.reattach-to-user-namespace
           pkgs.sbt
+          pkgs.coursier
           pkgs.tmux
+          pkgs.poetry
         ];
 
       # Auto upgrade nix package and the daemon service.
@@ -56,12 +59,12 @@
   in
   {
     # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#replit-s-MacBook-Pro
-    darwinConfigurations."replit-s-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+    # $ darwin-rebuild build --flake .#Replit-Devon-Stewarts-MacBook-Pro-14-inch-Nov-2023
+    darwinConfigurations."Replit-Devon-Stewarts-MacBook-Pro-14-inch-Nov-2023" = nix-darwin.lib.darwinSystem {
       modules = [ configuration ];
     };
 
     # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."replit-s-MacBook-Pro".pkgs;
+    darwinPackages = self.darwinConfigurations."Replit-Devon-Stewarts-MacBook-Pro-14-inch-Nov-2023".pkgs;
   };
 }
