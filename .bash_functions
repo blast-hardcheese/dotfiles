@@ -336,6 +336,19 @@ mov2gif() {
   ffmpeg -i "${input}" -s "${size}" -pix_fmt rgb24 -r 15 -t 60 -f gif - | gifsicle --optimize=3 --delay=8 > "${output}"
 }
 
+ffmpeg_concat() {
+        count=0
+        filter=""
+        inputs=()
+        while [[ "${#@}" -gt 1 ]]; do
+                filter="${filter} [$count:v] [$count:a]"
+                count=$((count + 1))
+                inputs=( "${inputs[@]}" -i "$1" )
+                shift
+        done
+        ffmpeg "${inputs[@]}" -filter_complex "${filter} concat=n=$count:v=1:a=1 [v] [a]" -map "[v]" -map "[a]" "$1"
+}
+
 ivy2m2() {
   group="$1"
   shift
