@@ -50,6 +50,8 @@ call plug#begin()
 "    Plug 'gre/play2vim'
     Plug 'neoclide/coc.nvim', { 'do': 'yarn install' }
 "    Plug 'ensime/ensime-vim'
+    Plug 'nvim-lua/plenary.nvim'  " Needed for scalameta/nvim-metals
+    Plug 'scalameta/nvim-metals'  " Has a dependency on nvim-lua/plenary.nvim
 
 " HTML/JavaScript/CSS
 "    Plug 'groenewege/vim-less'
