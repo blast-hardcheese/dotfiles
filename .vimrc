@@ -315,6 +315,10 @@ set clipboard^=unnamed,unnamedplus
 
 set mouse=
 
+" Disable SQL Omni maps:
+" https://www.reddit.com/r/vim/comments/2om1ib/how_to_disable_sql_dynamic_completion/
+let g:omni_sql_no_default_maps = 1
+
 " Include settings from local vimrc
 let hostname = system("hostname -s")
 let hostname = substitute(hostname, "\n$", "", "g")
