@@ -20,6 +20,11 @@
           pkgs.git-extras
           pkgs.gnused
           pkgs.moreutils
+          pkgs.socat
+
+          pkgs.protobuf
+          pkgs.protoc-gen-go
+          pkgs.protoc-gen-go-grpc
 
           pkgs.nodejs_21
           pkgs.bun
@@ -33,8 +38,12 @@
 
           pkgs.jdk
 
-          pkgs.google-cloud-sdk
+          pkgs.ghc
+          pkgs.ghcid
+
+          (pkgs.google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin])
           pkgs.jq
+          pkgs.yq
 
           pkgs.neovim
           pkgs.reattach-to-user-namespace
@@ -66,7 +75,7 @@
   in
   {
     # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#Replit-Devon-Stewarts-MacBook-Pro-14-inch-Nov-2023
+    # $ darwin-rebuild build --flake .#HD73VL2GVX
     darwinConfigurations."Replit-Devon-Stewarts-MacBook-Pro-14-inch-Nov-2023" = nix-darwin.lib.darwinSystem {
       modules = [ configuration ];
     };
