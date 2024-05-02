@@ -88,7 +88,7 @@ if [ "$branchname" = "cur" ]; then
   if [ -z "$remote" ]; then
     for remote in $(git branch --no-color --remotes --contains "$branchname"); do
       remote="${remote# }"
-      remote="${remote%/*}"
+      remote="${remote%%/*}"
       for known in "${remotes[@]}" __nope__; do
         [ "$known" = "$remote" ] && break
       done
