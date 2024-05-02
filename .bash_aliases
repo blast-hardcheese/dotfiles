@@ -9,7 +9,7 @@ else
     unset XCLIP_OUT
 fi
 
-alias urlquote='python2.7 -c "import urllib, sys; _in = (sys.argv[1] if len(sys.argv) > 1 else raw_input()); print urllib.quote(_in)"'
+alias urlquote='python3 -c "import urllib.parse, sys; _in = (sys.argv[1] if len(sys.argv) > 1 else input()); print(urllib.parse.quote(_in))"'
 
 alias pssh="ssh -o 'ProxyCommand /usr/bin/env nc -x localhost:5000 %h %p'"
 alias pscp="scp -o 'ProxyCommand /usr/bin/env nc -x localhost:5000 %h %p'"
