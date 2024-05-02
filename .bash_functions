@@ -394,6 +394,23 @@ cycle() {
   done
 }
 
+# SYNTAX:
+#   catch STDOUT_VARIABLE STDERR_VARIABLE COMMAND [ARG1[ ARG2[ ...[ ARGN]]]]
+#   https://stackoverflow.com/a/59592881
+catch() {
+  {
+    IFS=$'\n' read -r -d '' "${1}";
+    IFS=$'\n' read -r -d '' "${2}";
+    (IFS=$'\n' read -r -d '' _ERRNO_; return ${_ERRNO_});
+  } < <(
+    (
+      printf '\0%s\0%d\0' "$(
+        ((({ shift 2; "${@}"; echo "${?}" 1>&3-; } | tr -d '\0' 1>&4-) 4>&2- 2>&1- | tr -d '\0' 1>&4-) 3>&1- | exit "$(cat)") 4>&1-
+      )" "${?}" 1>&2
+    ) 2>&1
+  )
+}
+
 #### Overrides
 if [ -f ~/.tools/configs/machines/$(hostname -s).bash_functions ]; then
   . ~/.tools/configs/machines/$(hostname -s).bash_functions
