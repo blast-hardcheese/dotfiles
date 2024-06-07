@@ -68,6 +68,7 @@ prefix_root "$HOME/Library/Application Support/Coursier"
 prefix_path "$HOME/.rbenv/shims"
 prefix_path "$HOME/.cargo/bin"
 prefix_path "$HOME/.emacs.d/bin"
+prefix_root "/run/wrappers"  # NixOS
 prefix_root "/nix/var/nix/profiles/default"
 prefix_root "/run/current-system/sw"
 

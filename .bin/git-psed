@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 greppattern="$1"
 regex="$2"

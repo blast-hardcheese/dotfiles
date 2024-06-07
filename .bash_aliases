@@ -26,7 +26,7 @@ alias x_register='echo $DISPLAY > ~/.xsession_var'
 alias x_use='export DISPLAY=$(cat ~/.xsession_var)'
 
 alias chat='ssh scyther -t tmux attach -t chat'
-alias mv='/bin/mv -i'
+# alias mv='/bin/mv -i'
 
 alias cd..='cd ..'
 alias gt='git'
