@@ -6,8 +6,8 @@
 [color]
 	ui = auto
 [alias]
-	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	lola = log --graph --decorate --decorate-refs=refs/ --decorate-refs=HEAD --pretty=oneline --abbrev-commit --all
+	lol = log --graph --decorate --decorate-refs=refs/ --decorate-refs=HEAD --pretty=oneline --abbrev-commit
 	reword = commit --amend
 	fixup = commit --amend -C@
 [push]
