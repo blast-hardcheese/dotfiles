@@ -2,12 +2,21 @@
 
 set +e
 
+die() {
+  echo "$@" >&2
+  exit 1
+}
+
 git_link_master_head() {
   force=
   while [ "${#@}" -gt 0 ]; do
     case "$1" in
       -f|--force)
         force=1
+        ;;
+      -t|--target)
+        master="$2"
+        shift || die '-t|--target needs an argument'
         ;;
       *)
         remote="$1"
@@ -23,7 +32,10 @@ git_link_master_head() {
     return 1
   elif [ ! -d ".git/refs/remotes/$remote" ]; then
     return 2
-  elif [ -n "$force" ] || [ ! -f ".git/refs/remotes/$remote/HEAD" ]; then
+  else
+    if [ -z "$force" ] && [ -f ".git/refs/remotes/$remote/HEAD" ]; then
+      die "$remote/HEAD already present, use -f to overwrite"
+    fi
     url="$(git remote get-url "$remote")"
     if [ "$url" = https://*github.com/* ]; then
       url="${url#https://*github.com/}"
@@ -31,7 +43,13 @@ git_link_master_head() {
       url="${url#*:}"
     fi
     url="${url%.git}"
-    master="$(gh api "repos/$url" --jq .default_branch)"
+    if [ -z "$master" ]; then
+      if hash gh 2>/dev/null >/dev/null; then
+        master="$(gh api "repos/$url" --jq .default_branch)"
+      else
+        die 'Missing -t|--target and no fallback gh available'
+      fi
+    fi
     echo "ref: refs/remotes/$remote/$master" > "$ref"
   fi
 }
