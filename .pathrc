@@ -115,13 +115,13 @@ export MANPATH
 export LIBRARY_PATH
 export CPATH
 
-if hash python >/dev/null 2>/dev/null; then
-  version="$(python -c 'import sys; print((lambda i: "%s.%s" % (i.major, i.minor))(sys.version_info))')"
-  export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python${version}/site-packages/"
-  if [ -d ~/.tools/ ]; then
-    export PYTHONPATH=$PYTHONPATH:~/.tools/:~/.tools/code/python/
-  fi
-fi
+# if hash python >/dev/null 2>/dev/null; then
+#   version="$(python -c 'import sys; print((lambda i: "%s.%s" % (i.major, i.minor))(sys.version_info))')"
+#   export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python${version}/site-packages/"
+#   if [ -d ~/.tools/ ]; then
+#     export PYTHONPATH=$PYTHONPATH:~/.tools/:~/.tools/code/python/
+#   fi
+# fi
 
 # Needed because multi-user nix on OSX doesn't respect non-root user's channels:
 #   brick:dstewart$ nix-shell -p meld
