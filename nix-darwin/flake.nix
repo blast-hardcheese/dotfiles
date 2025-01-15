@@ -14,6 +14,7 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [ (pkgs.python311.withPackages(ps: [ps.numpy]))
+          pkgs.pyenv
           pkgs.coreutils
           pkgs.entr
           pkgs.git
@@ -28,6 +29,7 @@
 
           pkgs.nodejs_21
           pkgs.bun
+          pkgs.yarn
           pkgs.nodePackages.pnpm
 
           pkgs.go
@@ -76,11 +78,11 @@
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#HD73VL2GVX
-    darwinConfigurations."Replit-Devon-Stewarts-MacBook-Pro-14-inch-Nov-2023" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."RPL-HD73VL2GVX" = nix-darwin.lib.darwinSystem {
       modules = [ configuration ];
     };
 
     # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."Replit-Devon-Stewarts-MacBook-Pro-14-inch-Nov-2023".pkgs;
+    darwinPackages = self.darwinConfigurations."RPL-HD73VL2GVX".pkgs;
   };
 }
