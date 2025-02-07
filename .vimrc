@@ -36,7 +36,7 @@ call plug#begin()
     Plug 'tpope/vim-unimpaired'
     Plug 'vim-scripts/AnsiEsc.vim'
     Plug 'tpope/vim-obsession'
-    Plug 'altercation/vim-colors-solarized'
+    Plug 'maxmx03/solarized.nvim'
     Plug 'whiteinge/diffconflicts'
     " Plug 'junegunn/vim-peekaboo'
     Plug 'hrsh7th/nvim-cmp'
