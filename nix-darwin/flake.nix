@@ -11,6 +11,9 @@
   outputs = inputs@{ self, determinate, nix-darwin, nixpkgs }:
   let
     configuration = { pkgs, ... }: {
+      # Defer to Determinate Nix
+      nix.enable = false;
+
       environment.shells = [ pkgs.bashInteractive ];
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
@@ -229,7 +232,7 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#HD73VL2GVX
     darwinConfigurations."RPL-HD73VL2GVX" = nix-darwin.lib.darwinSystem {
-      modules = [ determinate.darwinModules.default configuration ];
+      modules = [ configuration ];
     };
 
     # Expose the package set, including overlays, for convenience.
