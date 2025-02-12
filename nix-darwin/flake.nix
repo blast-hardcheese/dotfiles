@@ -52,7 +52,6 @@
 
           pkgs.neovim
           pkgs.reattach-to-user-namespace
-          pkgs.tmux
         ];
 
       # Auto upgrade nix package and the daemon service.
@@ -67,6 +66,24 @@
       programs.bash.completion.enable = true;  # hopefully bash completion for everything (including nix!)
       programs.direnv.enable = true;  # direnv and nix-direnv
       # programs.fish.enable = true;
+      programs.tmux.enable = true;
+      programs.tmux.enableSensible = true;
+      programs.tmux.extraConfig = ''
+        set-option -g prefix `
+        unbind-key C-b
+        bind-key e send-prefix
+
+        bind-key ` last-window
+
+        # http://jasonwryan.com/blog/2010/01/07/tmux-terminal-multiplexer/
+        # Toggle status line using a keybinding
+        bind-key b set-option status
+
+        # TODO: Upstream these
+        set-option -g pane-base-index 1
+
+        source-file -q $HOME/.tmux.conf
+      '';
 
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
