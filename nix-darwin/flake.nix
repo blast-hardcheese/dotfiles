@@ -6,9 +6,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, determinate, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, determinate, home-manager, nix-darwin, nixpkgs }:
   let
     configuration = { pkgs, ... }: {
       # Defer to Determinate Nix
@@ -57,7 +59,7 @@
           pkgs.reattach-to-user-namespace
           (pkgs.writeShellScriptBin "my-flake-update-input" ''
                 cd ~/.tools/config/nix-darwin
-                nix flake update determinate nixpkgs nix-darwin
+                nix flake update determinate home-manager nixpkgs nix-darwin
             '')
           (pkgs.writeShellScriptBin "my-flake-rebuild" ''
                 darwin-rebuild switch --flake ~/.tools/config/nix-darwin
@@ -239,7 +241,14 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#HD73VL2GVX
     darwinConfigurations."RPL-HD73VL2GVX" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+      modules = [
+        configuration
+        home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+        }
+      ];
     };
 
     # Expose the package set, including overlays, for convenience.
