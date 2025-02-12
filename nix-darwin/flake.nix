@@ -55,6 +55,13 @@
 
           pkgs.neovim
           pkgs.reattach-to-user-namespace
+          (pkgs.writeShellScriptBin "my-flake-update-input" ''
+                cd ~/.tools/config/nix-darwin
+                nix flake update determinate nixpkgs nix-darwin
+            '')
+          (pkgs.writeShellScriptBin "my-flake-rebuild" ''
+                darwin-rebuild switch --flake ~/.tools/config/nix-darwin
+            '')
         ];
 
       # Auto upgrade nix package and the daemon service.
