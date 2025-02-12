@@ -21,7 +21,6 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [ (pkgs.python311.withPackages(ps: [ps.numpy]))
-          pkgs.pyenv
           pkgs.coreutils
           pkgs.entr
           pkgs.git
@@ -31,25 +30,27 @@
           pkgs.socat
           # pkgs.sem  # .sem
 
-          pkgs.protobuf
-          pkgs.protoc-gen-go
-          pkgs.protoc-gen-go-grpc
+          pkgs.home-manager
 
-          pkgs.nodejs_23
-          pkgs.bun
-          pkgs.yarn
-          pkgs.nodePackages.pnpm
+          # pkgs.protobuf
+          # pkgs.protoc-gen-go
+          # pkgs.protoc-gen-go-grpc
 
-          pkgs.go
+          # pkgs.nodejs_23
+          # pkgs.bun
+          # pkgs.yarn
+          # pkgs.nodePackages.pnpm
 
-          pkgs.sbt
-          pkgs.coursier
-          pkgs.poetry
+          # pkgs.go
 
-          pkgs.jdk
+          # pkgs.sbt
+          # pkgs.coursier
+          # pkgs.poetry
 
-          pkgs.ghc
-          pkgs.ghcid
+          # pkgs.jdk
+
+          # pkgs.ghc
+          # pkgs.ghcid
 
           (pkgs.google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin])
           pkgs.jq
