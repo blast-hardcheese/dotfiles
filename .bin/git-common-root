@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+common_root() {
+  first="$1"; shift || die 'Missing "first" ref'
+  second="$2"; shift || die 'Missing "first" ref'
+
+  git rev-list --boundary "${first}...${second}" | grep ^- | cut -c2-
+}
+
+common_root "$@"
