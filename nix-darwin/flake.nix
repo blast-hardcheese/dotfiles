@@ -2,15 +2,15 @@
   description = "My Darwin system flake";
 
   inputs = {
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    # nix-darwin.url = "github:LnL7/nix-darwin";
+    # nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, determinate, home-manager, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, determinate, home-manager, nix-darwin,nixpkgs }:
   let
     configuration = { pkgs, ... }: {
       # Defer to Determinate Nix
@@ -28,15 +28,17 @@
           pkgs.gnused
           pkgs.moreutils
           pkgs.socat
-          # pkgs.sem  # .sem
+          pkgs.pstree
+          pkgs.sem
 
           pkgs.home-manager
+          pkgs.ffmpeg
 
           # pkgs.protobuf
           # pkgs.protoc-gen-go
           # pkgs.protoc-gen-go-grpc
 
-          # pkgs.nodejs_23
+          pkgs.nodejs_23
           # pkgs.bun
           # pkgs.yarn
           # pkgs.nodePackages.pnpm
@@ -57,10 +59,14 @@
           pkgs.yq
 
           pkgs.neovim
+          pkgs.helix
           pkgs.reattach-to-user-namespace
+
+          pkgs._1password-cli
+
           (pkgs.writeShellScriptBin "my-flake-update-input" ''
                 cd ~/.tools/config/nix-darwin
-                nix flake update determinate home-manager nixpkgs nix-darwin
+                nix flake update
             '')
           (pkgs.writeShellScriptBin "my-flake-rebuild" ''
                 darwin-rebuild switch --flake ~/.tools/config/nix-darwin
@@ -80,6 +86,7 @@
       # We use direnv for dev shells
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true; # make direnv cache better
+      programs.direnv.silent = true;
       programs.tmux.enable = true;
       programs.tmux.enableSensible = true;
       programs.tmux.extraConfig = ''
@@ -106,23 +113,27 @@
       # $ darwin-rebuild changelog
       system.stateVersion = 4;
 
-      nix.gc.automatic = true;
-      nix.gc.interval = [
-        {
-          Hour = 10;
-          Minute = 0;
-        }
-      ];
-      nix.optimise.automatic = true;
-      nix.optimise.interval = [
-        {
-          Hour = 11;
-          Minute = 0;
-        }
-      ];
+      # nix.gc.automatic = true;
+      # nix.gc.interval = [
+      #   {
+      #     Hour = 10;
+      #     Minute = 0;
+      #   }
+      # ];
+      # nix.optimise.automatic = true;
+      # nix.optimise.interval = [
+      #   {
+      #     Hour = 11;
+      #     Minute = 0;
+      #   }
+      # ];
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
-      security.pam.enableSudoTouchIdAuth = true;
+      nixpkgs.config.allowUnfree = true;
+
+      # This is needed for pkgs.sem
+      nixpkgs.config.allowUnsupportedSystem = true;
+      security.pam.services.sudo_local.touchIdAuth = true;
       services.aerospace.enable = true;
       services.aerospace.settings = {
         accordion-padding = 0;
@@ -251,10 +262,5 @@
         }
       ];
     };
-
-    # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."RPL-HD73VL2GVX".pkgs ++ [
-      nixpkgs.sem
-    ];
   };
 }
