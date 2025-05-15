@@ -1,0 +1,32 @@
+{
+  "runtime": {
+    "version": "LuaJIT"
+  },
+  "workspace": {
+    "library": [
+      "${3rd}/luv/library",
+      "${3rd}/busted/library",
+      "${3rd}/luassert/library",
+      "${3rd}/lua-language-server/library",
+      "${3rd}/lovr/library",
+      "${3rd}/vim.lua/library",
+      "${3rd}/vim._meta/library"
+    ],
+    "checkThirdParty": false,
+    "maxPreload": 2000,
+    "preloadFileSize": 50000
+  },
+  "diagnostics": {
+    "globals": [
+      "vim",
+      "hs",
+      "it",
+      "describe",
+      "before_each",
+      "after_each",
+      "teardown",
+      "pending",
+      "lovr"
+    ]
+  }
+}
