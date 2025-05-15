@@ -145,6 +145,13 @@ require('gitsigns').setup{
       end
     end)
 
+    map('n', ']q', function()
+        pcall(vim.cmd.cnext)
+    end)
+    map('n', '[q', function()
+        pcall(vim.cmd.cprevious)
+    end)
+
     -- Actions
     map('n', '<leader>hs', gitsigns.stage_hunk)
     map('n', '<leader>hr', gitsigns.reset_hunk)
@@ -183,3 +190,7 @@ require('gitsigns').setup{
     map({'o', 'x'}, 'ih', gitsigns.select_hunk)
   end
 }
+
+-- nnoremap <leader>go :silent exec('Git open -b cur -l ' . line('.') . ' %')<CR>
+
+vim.keymap.set("n", "<leader>go", ":silent exec('Git open -b cur -l ' . line('.') . ' %')<CR>", { noremap = true })
