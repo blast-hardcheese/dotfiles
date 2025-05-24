@@ -68,8 +68,15 @@ vim.api.nvim_set_keymap(
 
 -- Telescope keybindings
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>ff', builtin.git_files, { desc = 'Telescope find files' })
+-- vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fg', function()
+  builtin.live_grep({
+    additional_args = function()
+      return {"--hidden", "--glob=!.git/"}
+    end
+  })
+end, { desc = 'Telescope git grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
@@ -82,7 +89,7 @@ local action_state = require('telescope.actions.state')
 local open_in_tabs = function(prompt_bufnr)
   local picker = action_state.get_current_picker(prompt_bufnr)
   local multi_selection = picker:get_multi_selection()
-  
+
   if #multi_selection > 0 then
     actions.close(prompt_bufnr)
     for _, selection in ipairs(multi_selection) do
