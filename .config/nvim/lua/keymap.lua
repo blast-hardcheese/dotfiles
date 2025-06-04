@@ -198,6 +198,10 @@ require('gitsigns').setup{
   end
 }
 
--- nnoremap <leader>go :silent exec('Git open -b cur -l ' . line('.') . ' %')<CR>
-
 vim.keymap.set("n", "<leader>go", ":silent exec('Git open -b cur -l ' . line('.') . ' %')<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>gd", ":silent Gdiffsplit<CR>", { noremap = true })
+
+vim.g.claude_map_implement = "<Leader>ci"
+vim.g.claude_map_open_chat = "<Leader>cc"
+vim.g.claude_map_send_chat_message = "<C-]>"
+vim.g.claude_map_cancel_response = "<Leader>cx"
