@@ -76,13 +76,29 @@ if [ -d "/opt/ghc" ]; then
   prefix_root "/opt/ghc/$(ls "/opt/ghc/" | sort -n | tail -n 1)"
 fi
 
-if [ -z "$BASH_COMPLETION_USER_DIR" ]; then
-  for BASH_COMPLETION_USER_DIR in "$HOME/.nix-profile/share/bash-completion" "/usr/local/share/bash-completion"; do
-    if [ -d "$BASH_COMPLETION_USER_DIR" ]; then
-      export BASH_COMPLETION_USER_DIR
-      break
+if [[ "$(type -t _comp_split)" = function ]]; then
+  declare -a dirs=()
+  dirs=(
+    "/usr/local/share/bash-completion"
+    "${HOME}/.nix-profile/share/bash-completion"
+    "${HOME}/.local/share/bash-completion"
+  )
+
+  _comp_split -F : paths "$BASH_COMPLETION_USER_DIR" &&
+    dirs+=("${paths[@]}")
+
+  BASH_COMPLETION_USER_DIR=""
+  for path in "${dirs[@]}"; do
+    if [[ -d "$path" ]]; then
+      if [[ -z "${BASH_COMPLETION_USER_DIR}" ]]; then
+        BASH_COMPLETION_USER_DIR="${path}"
+      else
+        BASH_COMPLETION_USER_DIR="${BASH_COMPLETION_USER_DIR}:${path}"
+      fi
     fi
   done
+  export BASH_COMPLETION_USER_DIR
+  unset dirs
 fi
 
 ANDROID_PATH="$HOME/.tools/localized/android-sdk"
