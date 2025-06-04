@@ -28,9 +28,6 @@ alias x_use='export DISPLAY=$(cat ~/.xsession_var)'
 alias chat='ssh scyther -t tmux attach -t chat'
 # alias mv='/bin/mv -i'
 
-alias cd..='cd ..'
-alias gt='git'
-
 if ls --color &>/dev/null ; then
     alias ls="ls --color=auto -I '*.pyc'"
 fi
