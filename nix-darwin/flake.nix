@@ -16,6 +16,8 @@
       # Defer to Determinate Nix
       nix.enable = false;
 
+      system.primaryUser = "dstewart";
+
       environment.shells = [ pkgs.bashInteractive ];
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
@@ -25,11 +27,13 @@
           pkgs.entr
           pkgs.git
           pkgs.git-extras
+          pkgs.graphite-cli
           pkgs.gnused
           pkgs.moreutils
           pkgs.socat
           pkgs.pstree
           pkgs.sem
+          pkgs.ripgrep
 
           pkgs.home-manager
           pkgs.ffmpeg
@@ -38,7 +42,7 @@
           # pkgs.protoc-gen-go
           # pkgs.protoc-gen-go-grpc
 
-          pkgs.nodejs_23
+          pkgs.nodejs_24
           # pkgs.bun
           # pkgs.yarn
           # pkgs.nodePackages.pnpm
@@ -69,7 +73,7 @@
                 nix flake update
             '')
           (pkgs.writeShellScriptBin "my-flake-rebuild" ''
-                darwin-rebuild switch --flake ~/.tools/config/nix-darwin
+                sudo -Hi darwin-rebuild switch --flake ~/.tools/config/nix-darwin
             '')
         ];
 
