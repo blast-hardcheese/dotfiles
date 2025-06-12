@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+mapfile -t mine < <(find .git/refs/remotes/origin -path '*/dstewart/*' -type f | cut -f 4- -d /)
+
+git lol @ origin/HEAD "${mine[@]}" "$@"
