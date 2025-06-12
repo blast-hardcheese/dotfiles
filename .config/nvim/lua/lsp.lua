@@ -13,7 +13,7 @@ function M.setup()
   local lspconfig = require('lspconfig')
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-  vim.lsp.set_log_level("debug")
+  vim.lsp.set_log_level("warn")
 
   -- For each server you want to configure
   lspconfig.lua_ls.setup {
