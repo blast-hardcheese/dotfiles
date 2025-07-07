@@ -65,9 +65,9 @@ return require('packer').startup(function(use)
       require("parrot").setup {
         -- Providers must be explicitly added to make them available.
         providers = {
-          anthropic = {
-            api_key = os.getenv "NVIM_ANTHROPIC_API_KEY",
-          },
+--        anthropic = {
+--          api_key = os.getenv "NVIM_ANTHROPIC_API_KEY",
+--        },
 --        gemini = {
 --          api_key = os.getenv "GEMINI_API_KEY",
 --        },
@@ -82,9 +82,16 @@ return require('packer').startup(function(use)
 --        },
 --        -- provide an empty list to make provider available (no API key required)
 --        ollama = {},
---        openai = {
---          api_key = os.getenv "OPENAI_API_KEY",
---        },
+          openai = {
+            name = "openai",
+            api_key = os.getenv "OPENAI_API_KEY",
+            endpoint = "https://api.openai.com/v1/chat/completions",
+            models = {
+              "gpt-4o",
+              "o4-mini",
+              "gpt-4.1-nano",
+            },
+          },
 --        github = {
 --          api_key = os.getenv "GITHUB_TOKEN",
 --        },
