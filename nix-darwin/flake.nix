@@ -1,16 +1,24 @@
 {
   description = "My Darwin system flake";
 
+  nixConfig = {
+    extra-trusted-substituters = ["https://cache.flox.dev"];
+    extra-trusted-public-keys = ["flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="];
+    trusted-users = ["root" "dstewart"];
+  };
+
   inputs = {
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     # nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.url = "github:nix-darwin/nix-darwin";
     # nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    flox.url = "github:flox/flox/v1.5.0";
   };
 
-  outputs = inputs@{ self, determinate, home-manager, nix-darwin,nixpkgs }:
+  outputs = inputs@{ self, determinate, home-manager, nix-darwin, nixpkgs, flox }:
   let
     configuration = { pkgs, ... }: {
       # Defer to Determinate Nix
@@ -44,8 +52,8 @@
 
           pkgs.nodejs_24
           # pkgs.bun
-          # pkgs.yarn
-          # pkgs.nodePackages.pnpm
+          pkgs.yarn
+          pkgs.nodePackages.pnpm
 
           # pkgs.go
 
@@ -57,6 +65,12 @@
 
           # pkgs.ghc
           # pkgs.ghcid
+
+          pkgs.postgresql
+          pkgs.awscli2
+          pkgs.awsebcli
+
+          pkgs.terraform
 
           (pkgs.google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin])
           pkgs.jq
@@ -75,14 +89,27 @@
           (pkgs.writeShellScriptBin "my-flake-rebuild" ''
                 sudo -Hi darwin-rebuild switch --flake ~/.tools/config/nix-darwin
             '')
+
+          inputs.flox.packages.${pkgs.system}.default
+
+          pkgs.doppler
+          pkgs.gnupg
         ];
 
       # Auto upgrade nix package and the daemon service.
       # services.nix-daemon.enable = true;
       # nix.package = pkgs.nix;
 
-      # Necessary for using flakes on this system.
-      # nix.settings.experimental-features = "nix-command flakes";
+      nix.settings = {
+        experimental-features = "nix-command flakes";
+
+        substituters = [
+          "https://cache.flox.dev"
+        ];
+        trusted-public-keys = [
+          "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
+        ];
+      };
 
       # Create /etc/zshrc that loads the nix-darwin environment.
       programs.bash.enable = true;  # default shell on catalina
@@ -254,9 +281,7 @@
     };
   in
   {
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#HD73VL2GVX
-    darwinConfigurations."RPL-HD73VL2GVX" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."TiBook" = nix-darwin.lib.darwinSystem {
       modules = [
         configuration
         home-manager.darwinModules.home-manager
@@ -265,6 +290,7 @@
           home-manager.useUserPackages = true;
         }
       ];
+      specialArgs = { inherit inputs; };
     };
   };
 }
