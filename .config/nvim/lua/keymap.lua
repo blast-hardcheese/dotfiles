@@ -214,3 +214,5 @@ vim.g.claude_map_implement = "<Leader>ci"
 vim.g.claude_map_open_chat = "<Leader>cc"
 vim.g.claude_map_send_chat_message = "<C-]>"
 vim.g.claude_map_cancel_response = "<Leader>cx"
+
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Show diagnostic popup" })
