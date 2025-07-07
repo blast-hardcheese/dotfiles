@@ -31,22 +31,7 @@ function M.setup()
       }
     }
   }
-  lspconfig.ts_ls.setup {
-    capabilities = capabilities,
-    settings = {
-	maxTsServerMemory = 8192,
-    },
-  }
-  lspconfig.vtsls.setup {
-    settings = {
-      typescript = {
-        tsserver = {
-          maxTsServerMemory = 8192,
-        },
-      },
-    },
-  }
-  
+
   -- Set keybindings when an LSP is attached to a buffer
   vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
