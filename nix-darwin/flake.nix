@@ -50,10 +50,11 @@
           # pkgs.protoc-gen-go
           # pkgs.protoc-gen-go-grpc
 
-          pkgs.nodejs_24
+          pkgs.nodejs
           # pkgs.bun
           pkgs.yarn
-          pkgs.nodePackages.pnpm
+          # pkgs.nodePackages.pnpm
+          pkgs.corepack
 
           # pkgs.go
 
