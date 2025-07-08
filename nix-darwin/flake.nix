@@ -94,6 +94,7 @@
 
           pkgs.doppler
           pkgs.gnupg
+          pkgs.sentry-cli
         ];
 
       # Auto upgrade nix package and the daemon service.
