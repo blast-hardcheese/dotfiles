@@ -132,7 +132,7 @@ local has_plugin = function(plugin)
   return not path_empty
 end
 
-if false and has_plugin('gitsigns.vim') then
+if has_plugin('gitsigns.nvim') then
   require('gitsigns').setup{
     on_attach = function(bufnr)
       local gitsigns = require('gitsigns')
@@ -205,16 +205,6 @@ if false and has_plugin('gitsigns.vim') then
       map({'o', 'x'}, 'ih', gitsigns.select_hunk)
     end
   }
-
-  -- Provide ]c and [c to emulate gitgutter.vim bindings
-  vim.api.nvim_create_autocmd("VimEnter", {
-    callback = function()
-      if not vim.opt.diff:get() then
-        vim.keymap.set("n", "]c", "<cmd>Gitsigns nav_hunk next<CR>", { desc = "Next git hunk" })
-        vim.keymap.set("n", "[c", "<cmd>Gitsigns nav_hunk prev<CR>", { desc = "Previous git hunk" })
-      end
-    end,
-  })
 end
 
 vim.keymap.set("n", "<leader>go", ":silent exec('Git open -b cur -l ' . line('.') . ' %')<CR>", { noremap = true })
