@@ -99,6 +99,17 @@ if [[ "$(type -t _comp_split)" = function ]]; then
   done
   export BASH_COMPLETION_USER_DIR
   unset dirs
+
+  # Actually activate them
+  nullglobStatus=$(shopt -p nullglob)
+  shopt -s nullglob
+  for p in $BASH_COMPLETION_USER_DIR; do
+    for m in "$p/"*; do
+      source $m
+    done
+  done
+  eval "$nullglobStatus"
+  unset nullglobStatus p m
 fi
 
 ANDROID_PATH="$HOME/.tools/localized/android-sdk"
