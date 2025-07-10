@@ -97,7 +97,11 @@ if ! shopt -oq posix; then
 
         HASCOMPLETION=1
     elif type _get_comp_words_by_ref >/dev/null 2>&1; then
-	HASCOMPLETION=1
+        HASCOMPLETION=1
+    elif type nix &>/dev/null; then
+        # Maybe --inputs-from .../config/nix-darwin/ at some point
+        source "$(nix build --no-link nixpkgs#bash-completion --print-out-paths 2>/dev/null)"/share/bash-completion/bash_completion
+        HASCOMPLETION=1
     fi
 
     if [ $HASCOMPLETION == 1 ]; then
