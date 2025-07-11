@@ -99,8 +99,17 @@ if ! shopt -oq posix; then
     elif type _get_comp_words_by_ref >/dev/null 2>&1; then
         HASCOMPLETION=1
     elif type nix &>/dev/null; then
-        # Maybe --inputs-from .../config/nix-darwin/ at some point
-        source "$(nix build --no-link nixpkgs#bash-completion --print-out-paths 2>/dev/null)"/share/bash-completion/bash_completion
+        # If we have a nixos/nix-darwin flake available, we can use it to get
+        # a stable derivation and awesome caching.
+        if [ -n "${NIX_FLAKE_ROOT}" ]; then
+            nix_build_args=( --inputs-from "${NIX_FLAKE_ROOT}" )
+        fi
+
+        read -r nix_completion_root < <(
+            nix build "${nix_build_args[@]}" --no-link nixpkgs#bash-completion --print-out-paths 2>/dev/null
+        )
+
+        source "${nix_completion_root}"/share/bash-completion/bash_completion
         HASCOMPLETION=1
     fi
 
