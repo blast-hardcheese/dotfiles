@@ -103,13 +103,23 @@ if ! shopt -oq posix; then
         # a stable derivation and awesome caching.
         if [ -n "${NIX_FLAKE_ROOT}" ]; then
             nix_build_args=( --inputs-from "${NIX_FLAKE_ROOT}" )
+            cached_path="${NIX_FLAKE_ROOT}/bash-completion.cache"
         fi
 
-        read -r nix_completion_root < <(
-            nix build "${nix_build_args[@]}" --no-link nixpkgs#bash-completion --print-out-paths 2>/dev/null
-        )
+        if [[ -n "$cached_path" ]] && [[ -r "${cached_path}" ]]; then
+            source "${cached_path}"
+        else
+            read -r nix_completion_root < <(
+                nix build "${nix_build_args[@]}" --no-link nixpkgs#bash-completion --print-out-paths 2>/dev/null
+            )
 
-        source "${nix_completion_root}"/share/bash-completion/bash_completion
+            if [[ -n "${cached_path}" ]]; then
+                ln -fs "${nix_completion_root}"/share/bash-completion/bash_completion "${cached_path}"
+            fi
+
+            source "${nix_completion_root}"/share/bash-completion/bash_completion
+        fi
+
         HASCOMPLETION=1
     fi
 
