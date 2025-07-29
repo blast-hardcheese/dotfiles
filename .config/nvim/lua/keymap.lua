@@ -1,3 +1,5 @@
+local conditionals = require("conditionals")
+
 vim.g.mapleader = "\\"
 
 -- Reorder tabs
@@ -125,14 +127,7 @@ telescope.load_extension("file_browser")
 vim.keymap.set("n", "<space>fb", ":Telescope file_browser<CR>", { noremap = true })
 
 
-local has_plugin = function(plugin)
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/'..plugin
-  local path_empty = fn.empty(fn.glob(install_path)) == 1
-  return not path_empty
-end
-
-if has_plugin('gitsigns.nvim') then
+if conditionals.has_plugin('gitsigns.nvim') then
   require('gitsigns').setup{
     on_attach = function(bufnr)
       local gitsigns = require('gitsigns')
