@@ -45,6 +45,8 @@ return require('packer').startup(function(use)
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
 
+  use 'cappyzawa/starlark.vim'
+
   -- GenAI
 -- use {
 --   'pasky/claude.vim',
