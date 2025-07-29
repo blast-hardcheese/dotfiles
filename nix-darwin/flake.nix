@@ -67,6 +67,9 @@
           # pkgs.ghc
           # pkgs.ghcid
 
+          pkgs.act
+          pkgs.gh
+
           pkgs.postgresql
           pkgs.awscli2
           pkgs.awsebcli
