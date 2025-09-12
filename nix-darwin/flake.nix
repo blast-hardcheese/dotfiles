@@ -32,6 +32,7 @@
       environment.systemPackages =
         [ (pkgs.python311.withPackages(ps: [ps.numpy]))
           pkgs.coreutils
+          pkgs.gnugrep
           pkgs.entr
           pkgs.git
           pkgs.git-extras
@@ -42,6 +43,9 @@
           pkgs.pstree
           pkgs.sem
           pkgs.ripgrep
+          pkgs.graphviz
+          pkgs.k9s
+          pkgs.redis
 
           pkgs.home-manager
           pkgs.ffmpeg
@@ -166,6 +170,12 @@
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
       nixpkgs.config.allowUnfree = true;
+
+      security.sudo = {
+        extraConfig = ''
+          dstewart ALL = (ALL)  NOPASSWD: /Users/dstewart/Projects/wandercom/flox-minikube/.flox/run/aarch64-darwin.flox-minikube.dev/bin/telepresence
+        '';
+      };
 
       # This is needed for pkgs.sem
       nixpkgs.config.allowUnsupportedSystem = true;

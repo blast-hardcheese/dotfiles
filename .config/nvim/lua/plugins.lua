@@ -28,7 +28,7 @@ return require('packer').startup(function(use)
   use 'maxmx03/solarized.nvim'
   use 'tpope/vim-fugitive'
   use 'whiteinge/diffconflicts'
-  -- use 'lewis6991/gitsigns.nvim'
+  use 'lewis6991/gitsigns.nvim'
 
   use {
     'nvim-telescope/telescope-file-browser.nvim',

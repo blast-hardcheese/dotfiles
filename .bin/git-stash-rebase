@@ -59,7 +59,9 @@ do_pop() {
 
   sanity_check_pop "$found_caches"
 
-  mv -vf "${GIT_ROOT}"/REBASE_HEAD{"${found_caches}",}
+  if [ -r "${GIT_ROOT}/REBASE_HEAD${found_caches}" ]; then
+    mv -vf "${GIT_ROOT}"/REBASE_HEAD{"${found_caches}",}
+  fi
   mv -v "${GIT_ROOT}"/rebase-merge{"${found_caches}",}
 }
 

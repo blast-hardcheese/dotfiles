@@ -38,7 +38,7 @@ alias ve='source ~/.virtualenv/bin/activate'
 alias ve27='source ~/.virtualenv2.7/bin/activate'
 
 # neovim adapters
-alias vim=nvim
+alias vim="NODE_OPTIONS=--max-old-space-size=8192 nvim"
 alias vimdiff="nvim -d"
 alias view="nvim -R"
 

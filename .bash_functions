@@ -411,6 +411,28 @@ catch() {
   )
 }
 
+# Apply a replacement pattern against stdin
+prefix() {
+  unescaped="$1"; shift || die 'Missing replace string'
+  if [ -t 1 ] && [[ "$unescaped" = "$HOME"* ]]; then
+    unescaped="~${unescaped:${#HOME}}"
+  fi
+  escaped="$(printf '%s\n' "$unescaped" | sed -e 's/[\/&]/\\&/g')"
+  sed "s/^/$escaped/"
+}
+
+# Given a root and an array of names, run a git command inside each repo
+multigit() {
+  root="$1"; shift || die 'Missing root'
+  repocount="$1"; shift || die 'Missing repo count'
+  repos=( "${@:1:repocount}" )
+  shift "$repocount" || die 'Not enough repos'
+  for repo in "${repos[@]}"; do
+    (cd "$root/$repo"; git "$@") | prefix "$root/$repo/"
+  done
+}
+
+
 #### Overrides
 if [ -f ~/.tools/configs/machines/$(hostname -s).bash_functions ]; then
   . ~/.tools/configs/machines/$(hostname -s).bash_functions
