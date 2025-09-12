@@ -15,7 +15,16 @@ function M.setup()
 
   vim.lsp.set_log_level("warn")
 
+
+  vim.env.NODE_OPTIONS = "--huge-max-old-generation-size " .. (vim.env.NODE_OPTIONS or "")
+
   -- For each server you want to configure
+  lspconfig.ts_ls.setup {
+    capabilities = capabilities,
+    init_options = {
+      maxTsServerMemory = 6144,
+    },
+  }
   lspconfig.lua_ls.setup {
     capabilities = capabilities,
   }
