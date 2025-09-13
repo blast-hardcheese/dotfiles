@@ -22,11 +22,11 @@ contains_line() {
     help="$0 <path> <pattern> <insert>"
     path="$1"; shift || die "$help"
     pattern="$1"; shift || die "$help"
-    insert="$1"; shift || die "$help"
+    export insert="$1"; shift || die "$help"
 
     if ! grep "$pattern" "$path" >/dev/null 2>&1; then
         echo "Adding $insert to $path"
-        ex -sc "1i|$insert" -cx "$path"
+        ex -s -c '0put =$insert' -c x -- "$path"
     fi
 }
 

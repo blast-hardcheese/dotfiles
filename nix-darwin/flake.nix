@@ -295,8 +295,8 @@
       system.defaults.screencapture.disable-shadow = true;
     };
   in
-  {
-    darwinConfigurations."TiBook" = nix-darwin.lib.darwinSystem {
+  let
+    macConfig = nix-darwin.lib.darwinSystem {
       modules = [
         configuration
         home-manager.darwinModules.home-manager
@@ -307,5 +307,10 @@
       ];
       specialArgs = { inherit inputs; };
     };
+  in
+  {
+    darwinConfigurations."TiBook" = macConfig;
+
+    darwinConfigurations."Ashley" = macConfig;
   };
 }
