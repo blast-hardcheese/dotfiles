@@ -2,9 +2,13 @@
 
 REDISCLI_ARGS=()
 
+if [ -n "$REDISCLI_HOST" ]; then
+  REDISCLI_ARGS=( "${REDISCLI_ARGS[@]}" -h "$REDISCLI_HOST" )
+fi
 if [ -n "$REDISCLI_PORT" ]; then
   REDISCLI_ARGS=( "${REDISCLI_ARGS[@]}" -p "$REDISCLI_PORT" )
-elif [ -n "$REDISCLI_AUTH" ]; then
+fi
+if [ -n "$REDISCLI_AUTH" ]; then
   REDISCLI_ARGS=( "${REDISCLI_ARGS[@]}" -u "$REDISCLI_AUTH" )
 fi
 
