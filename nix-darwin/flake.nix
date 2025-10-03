@@ -16,6 +16,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flox.url = "github:flox/flox/v1.5.0";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = inputs@{ self, determinate, home-manager, nix-darwin, nixpkgs, flox }:
