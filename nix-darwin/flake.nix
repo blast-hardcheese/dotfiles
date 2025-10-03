@@ -18,7 +18,7 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = inputs@{ self, determinate, home-manager, nix-darwin, nixpkgs, flox }:
+  outputs = inputs@{ self, flake-utils, determinate, home-manager, nix-darwin, nixpkgs, flox }:
   let
     configuration = { pkgs, ... }: {
       # Defer to Determinate Nix
@@ -46,6 +46,8 @@
           pkgs.graphviz
           pkgs.k9s
           pkgs.redis
+          pkgs.graphviz
+          (import ./crd-wizard.nix { inherit pkgs; })
 
           pkgs.home-manager
           pkgs.ffmpeg
@@ -310,8 +312,15 @@
       ];
       specialArgs = { inherit inputs; };
     };
-  in
-  {
+  in (flake-utils.lib.eachDefaultSystem
+    (system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in
+      {
+        packages.default = import ./crd-wizard.nix { inherit pkgs; };
+      }
+    )) // {
     darwinConfigurations."TiBook" = macConfig;
 
     darwinConfigurations."Ashley" = macConfig;
