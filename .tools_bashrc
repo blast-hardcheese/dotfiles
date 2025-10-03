@@ -218,6 +218,11 @@ export PYTHONSTARTUP="$HOME/.pythonrc"
 ## https://wayland.freedesktop.org/building.html
 #export XDG_RUNTIME_DIR="/tmp/${UID}-runtime-dir"
 
+# Probably on a mac
+if [ -z "$XDG_CONFIG_HOME" ]; then
+  export XDG_CONFIG_HOME="$HOME/.config"
+fi
+
 # Set up chruby
 if [ -f "/usr/local/opt/chruby/share/chruby/chruby.sh" ]; then
     source /usr/local/opt/chruby/share/chruby/chruby.sh
