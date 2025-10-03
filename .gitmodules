@@ -10,3 +10,6 @@
 [submodule ".tmux/plugins/tmux-cluster"]
 	path = .tmux/plugins/tmux-cluster
 	url = https://git::@github.com/davidscholberg/tmux-cluster
+[submodule ".config/k9s-repo"]
+	path = .config/k9s-repo
+	url = git@github.com:derailed/k9s.git
