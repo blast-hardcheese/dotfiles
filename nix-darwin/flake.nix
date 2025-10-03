@@ -10,9 +10,8 @@
   inputs = {
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    # nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.url = "github:nix-darwin/nix-darwin";
-    # nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flox.url = "github:flox/flox/v1.5.0";
@@ -79,7 +78,8 @@
           pkgs.awscli2
           pkgs.awsebcli
 
-          pkgs.terraform
+          # Not always cached, no sense in building it if we don't use it
+          # pkgs.terraform
 
           (pkgs.google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin])
           pkgs.jq
@@ -103,7 +103,9 @@
 
           pkgs.doppler
           pkgs.gnupg
-          pkgs.sentry-cli
+          # Does not build on latest nix-darwin.
+          # If necessary, nixpkgs@2f9173bde1d3fbf1ad26ff6d52f952f9e9da52ea works
+          # pkgs.sentry-cli
         ];
 
       # Auto upgrade nix package and the daemon service.
