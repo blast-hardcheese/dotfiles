@@ -171,7 +171,7 @@
 
       security.sudo = {
         extraConfig = ''
-          dstewart ALL = (ALL)  NOPASSWD: /Users/dstewart/Projects/wandercom/flox-minikube/.flox/run/aarch64-darwin.flox-minikube.dev/bin/telepresence
+          dstewart ALL = (ALL)  NOPASSWD: /Users/dstewart/Projects/wandercom/flox-project-template/.flox/run/aarch64-darwin.flox-project-template.dev/bin/telepresence
         '';
       };
 
