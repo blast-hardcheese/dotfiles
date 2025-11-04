@@ -8,11 +8,10 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    flox.url = "github:flox/flox/v1.7.5";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = inputs@{ self, flake-utils, determinate, home-manager, nix-darwin, nixpkgs, flox }:
+  outputs = inputs@{ self, flake-utils, determinate, home-manager, nix-darwin, nixpkgs }:
   let
     configuration = { pkgs, ... }: {
       # Defer to Determinate Nix
@@ -94,8 +93,6 @@
           (pkgs.writeShellScriptBin "my-flake-rebuild" ''
                 sudo -Hi darwin-rebuild switch --flake ~/.tools/config/nix-darwin
             '')
-
-          inputs.flox.packages.${pkgs.system}.default
 
           pkgs.doppler
           pkgs.gnupg
