@@ -1,12 +1,6 @@
 {
   description = "My Darwin system flake";
 
-  nixConfig = {
-    extra-trusted-substituters = ["https://cache.flox.dev"];
-    extra-trusted-public-keys = ["flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="];
-    trusted-users = ["root" "dstewart"];
-  };
-
   inputs = {
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -116,6 +110,8 @@
 
       nix.settings = {
         experimental-features = "nix-command flakes";
+
+        trusted-users = ["root" "dstewart"];
 
         substituters = [
           "https://cache.flox.dev"
