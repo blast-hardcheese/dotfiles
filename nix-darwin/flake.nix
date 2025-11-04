@@ -8,7 +8,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    flox.url = "github:flox/flox/v1.5.0";
+    flox.url = "github:flox/flox/v1.7.5";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
