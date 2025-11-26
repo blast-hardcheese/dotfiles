@@ -16,6 +16,15 @@ function M.setup()
     },
   }
 
+  vim.lsp.config["denols"] = {
+    capabilities = capabilities,
+    root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+    single_file_support = false,
+    init_options = {
+      lint = true,
+      unstable = true,
+    },
+  }
 
   vim.lsp.config["lua_ls"] {
     capabilities = capabilities,
