@@ -1,34 +1,27 @@
 local M = {}
 
 function M.setup()
-  -- Setup Mason to automatically install LSP servers
-  require('mason').setup()
-  require('mason-lspconfig').setup({
-    -- List servers you want to automatically install
-    ensure_installed = { "lua_ls", "pyright", "ts_ls" },
-    automatic_installation = true,
-  })
 
   -- Setup LSP servers
   local lspconfig = require('lspconfig')
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-  vim.lsp.set_log_level("warn")
-
-
-  vim.env.NODE_OPTIONS = "--huge-max-old-generation-size " .. (vim.env.NODE_OPTIONS or "")
-
   -- For each server you want to configure
-  lspconfig.ts_ls.setup {
+  vim.lsp.config["ts_ls"] = {
     capabilities = capabilities,
+    root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
+    single_file_support = false,
     init_options = {
       maxTsServerMemory = 6144,
     },
   }
-  lspconfig.lua_ls.setup {
+
+
+  vim.lsp.config["lua_ls"] {
     capabilities = capabilities,
   }
-  lspconfig.pyright.setup {
+
+  vim.lsp.config["pyright"] {
     capabilities = capabilities,
     settings = {
       python = {
@@ -40,6 +33,18 @@ function M.setup()
       }
     }
   }
+
+  -- Setup Mason to automatically install LSP servers
+  require('mason').setup()
+  require('mason-lspconfig').setup({
+    -- List servers you want to automatically install
+    ensure_installed = { "lua_ls", "pyright", "ts_ls" },
+    automatic_installation = true,
+  })
+
+  vim.lsp.set_log_level("warn")
+
+  vim.env.NODE_OPTIONS = "--huge-max-old-generation-size " .. (vim.env.NODE_OPTIONS or "")
 
   -- Set keybindings when an LSP is attached to a buffer
   vim.api.nvim_create_autocmd('LspAttach', {
