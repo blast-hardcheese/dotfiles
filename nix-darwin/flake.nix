@@ -41,6 +41,7 @@
           pkgs.redis
           pkgs.graphviz
           (import ./crd-wizard.nix { inherit pkgs; })
+          pkgs.shellcheck
 
           pkgs.home-manager
           pkgs.ffmpeg
@@ -68,6 +69,7 @@
 
           pkgs.act
           pkgs.gh
+          pkgs.claude-code
 
           pkgs.postgresql
           pkgs.awscli2
@@ -171,24 +173,28 @@
 
       security.sudo = {
         extraConfig = ''
-          dstewart ALL = (ALL)  NOPASSWD: /Users/dstewart/Projects/wandercom/flox-project-template/.flox/run/aarch64-darwin.flox-project-template.dev/bin/telepresence
+          dstewart ALL = (ALL)  NOPASSWD: /Users/dstewart/Projects/wandercom/tooling-kubernetes/.flox/run/aarch64-darwin.tooling-kubernetes.dev/bin/telepresence
         '';
       };
 
       # This is needed for pkgs.sem
       nixpkgs.config.allowUnsupportedSystem = true;
+      # Enable TID for sudo
       security.pam.services.sudo_local.touchIdAuth = true;
+      # Reattach PAM through sudo
+      security.pam.services.sudo_local.reattach = true;
       services.aerospace.enable = true;
       services.aerospace.settings = {
         accordion-padding = 0;
-        default-root-container-layout = "accordion";
+        default-root-container-layout = "tiles";
+        default-root-container-orientation = "horizontal";
         gaps = {
-          inner.horizontal = 5;
+          inner.horizontal = 0;
           inner.vertical =   5;
-          outer.left = 5;
-          outer.bottom = 5;
-          outer.top = 5;
-          outer.right = 5;
+          outer.left = 2;
+          outer.bottom = 2;
+          outer.top = 2;
+          outer.right = 2;
         };
         mode.main.binding = {
           # See: https://nikitabobko.github.io/AeroSpace/commands#layout
@@ -208,18 +214,18 @@
           alt-shift-l = "move right";
 
           # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-          alt-1 = "workspace 1";
-          alt-2 = "workspace 2";
-          alt-3 = "workspace 3";
-          alt-4 = "workspace 4";
-          alt-5 = "workspace 5";
-          alt-6 = "workspace 6";
-          alt-7 = "workspace 7";
-          alt-8 = "workspace 8";
-          alt-9 = "workspace 9";
+          # alt-1 = "workspace 1";
+          # alt-2 = "workspace 2";
+          # alt-3 = "workspace 3";
+          # alt-4 = "workspace 4";
+          # alt-5 = "workspace 5";
+          # alt-6 = "workspace 6";
+          # alt-7 = "workspace 7";
+          # alt-8 = "workspace 8";
+          # alt-9 = "workspace 9";
           # alt-a = "workspace A";
           # alt-b = "workspace B";
-          # alt-c = "workspace C";
+          alt-c = "workspace C";
           # alt-d = "workspace D";
           # alt-e = "workspace E";
           # alt-f = "workspace F";
@@ -236,23 +242,23 @@
           # alt-u = "workspace U";
           # alt-v = "workspace V";
           # alt-w = "workspace W";
-          # alt-x = "workspace X";
+          alt-x = "workspace X";
           # alt-y = "workspace Y";
-          # alt-z = "workspace Z";
+          alt-z = "workspace Z";
 
           # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-          alt-shift-1 = "move-node-to-workspace 1";
-          alt-shift-2 = "move-node-to-workspace 2";
-          alt-shift-3 = "move-node-to-workspace 3";
-          alt-shift-4 = "move-node-to-workspace 4";
-          alt-shift-5 = "move-node-to-workspace 5";
-          alt-shift-6 = "move-node-to-workspace 6";
-          alt-shift-7 = "move-node-to-workspace 7";
-          alt-shift-8 = "move-node-to-workspace 8";
-          alt-shift-9 = "move-node-to-workspace 9";
+          # alt-shift-1 = "move-node-to-workspace 1";
+          # alt-shift-2 = "move-node-to-workspace 2";
+          # alt-shift-3 = "move-node-to-workspace 3";
+          # alt-shift-4 = "move-node-to-workspace 4";
+          # alt-shift-5 = "move-node-to-workspace 5";
+          # alt-shift-6 = "move-node-to-workspace 6";
+          # alt-shift-7 = "move-node-to-workspace 7";
+          # alt-shift-8 = "move-node-to-workspace 8";
+          # alt-shift-9 = "move-node-to-workspace 9";
           # alt-shift-a = "move-node-to-workspace A";
           # alt-shift-b = "move-node-to-workspace B";
-          # alt-shift-c = "move-node-to-workspace C";
+          alt-shift-c = "move-node-to-workspace C";
           # alt-shift-d = "move-node-to-workspace D";
           # alt-shift-e = "move-node-to-workspace E";
           # alt-shift-f = "move-node-to-workspace F";
@@ -269,19 +275,28 @@
           # alt-shift-u = "move-node-to-workspace U";
           # alt-shift-v = "move-node-to-workspace V";
           # alt-shift-w = "move-node-to-workspace W";
-          # alt-shift-x = "move-node-to-workspace X";
+          alt-shift-x = "move-node-to-workspace X";
           # alt-shift-y = "move-node-to-workspace Y";
-          # alt-shift-z = "move-node-to-workspace Z";
+          alt-shift-z = "move-node-to-workspace Z";
         };
       };
-      services.jankyborders.enable = true;
+      services.jankyborders.enable = false;
       services.jankyborders.active_color = "0xFFF36318";
       services.jankyborders.inactive_color = "0xFF000000";
       # services.jankyborders.inactive_color = "0xFF652903";
       services.jankyborders.width = 5.0;
       # services.karabiner-elements.enable = true;
+
+      # https://github.com/cmacrae/spacebar
+      # impossible to google for
       services.spacebar.enable = true;
       services.spacebar.package = pkgs.spacebar;
+      services.spacebar.config = {
+        clock = "off";
+        height = "40";
+        power = "off";
+        title = "off";
+      };
 
       # Corner hover actions
       # 1 here means "Disabled"
@@ -316,6 +331,6 @@
     )) // {
     darwinConfigurations."TiBook" = macConfig;
 
-    darwinConfigurations."Ashley" = macConfig;
+    darwinConfigurations."m4-pro" = macConfig;
   };
 }
