@@ -34,7 +34,7 @@
           pkgs.moreutils
           pkgs.socat
           pkgs.pstree
-          pkgs.sem
+          # pkgs.sem
           pkgs.ripgrep
           pkgs.graphviz
           pkgs.k9s
