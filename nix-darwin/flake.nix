@@ -123,6 +123,7 @@
       # Create /etc/zshrc that loads the nix-darwin environment.
       programs.bash.enable = true;  # default shell on catalina
       programs.bash.completion.enable = true;  # hopefully bash completion for everything (including nix!)
+      programs.zsh.enable = true;
       # We use direnv for dev shells
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true; # make direnv cache better
