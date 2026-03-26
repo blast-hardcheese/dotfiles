@@ -128,6 +128,16 @@
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true; # make direnv cache better
       programs.direnv.silent = true;
+      # Weird bug related to fetching a too-new version of nixpkgs somehow.
+      # go build -ldflags '-linkmode=external -X main.bashPath=/nix/store/my9bsdsfxcaxkb400i4xvvh1ahb8pybs-bash-interactive-5.3p9/bin/bash' -o direnv
+      # -linkmode=external requires external (cgo) linking, but cgo is not enabled
+      # make: *** [GNUmakefile:68: direnv] Error 1
+      programs.direnv.package = pkgs.direnv.overrideAttrs (old: {
+        buildPhase = ''
+          export CGO_ENABLED=1
+          ${old.buildPhase or "make"}
+        '';
+      });
       programs.tmux.enable = true;
       programs.tmux.enableSensible = true;
       programs.tmux.extraConfig = ''
