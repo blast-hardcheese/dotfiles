@@ -30,11 +30,12 @@ shopt -s checkwinsize
 # Timestamps in `history' output
 export HISTTIMEFORMAT="%s "
 
-unset HISTFILESIZE
-export HISTFILESIZE
+# Unlimited history
+export HISTSIZE=-1
+export HISTFILESIZE=-1
 
-unset HISTSIZE
-export HISTSIZE
+# Max files
+ulimit -n 4096
 
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
