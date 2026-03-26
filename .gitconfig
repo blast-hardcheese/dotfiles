@@ -30,3 +30,6 @@
 	insteadOf = https://github.com/
 [advice]
 	addEmptyPathspec = false
+[log]
+	decorate = auto
+	decorateRefs = refs/schemas/*

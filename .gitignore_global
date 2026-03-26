@@ -4,3 +4,5 @@
 .ensime
 .ensime_cache/
 .metals/
+.claude/
+.pact/
