@@ -40,7 +40,6 @@
           pkgs.k9s
           pkgs.redis
           pkgs.graphviz
-          (import ./crd-wizard.nix { inherit pkgs; })
           pkgs.shellcheck
 
           pkgs.home-manager
@@ -321,15 +320,7 @@
       ];
       specialArgs = { inherit inputs; };
     };
-  in (flake-utils.lib.eachDefaultSystem
-    (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        packages.default = import ./crd-wizard.nix { inherit pkgs; };
-      }
-    )) // {
+  in {
     darwinConfigurations."TiBook" = macConfig;
 
     darwinConfigurations."m4-pro" = macConfig;
