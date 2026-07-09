@@ -427,8 +427,17 @@ multigit() {
   repocount="$1"; shift || die 'Missing repo count'
   repos=( "${@:1:repocount}" )
   shift "$repocount" || die 'Not enough repos'
+  local worktree
   for repo in "${repos[@]}"; do
-    (cd "$root/$repo"; git "$@") | prefix "$root/$repo/"
+    worktree="$root/$repo";
+    if [ -d "$worktree/dev" ]; then
+      worktree="$worktree/dev";
+    elif [ -d "$worktree/master" ]; then
+      worktree="$worktree/master";
+    elif [ -d "$worktree/staging" ]; then
+      worktree="$worktree/staging";
+    fi;
+    (cd "$worktree"; git "$@") | prefix "$worktree/"
   done
 }
 
