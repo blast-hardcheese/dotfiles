@@ -2,7 +2,7 @@
 	name = Devon Stewart
 	useconfigonly = true
 [core]
-	excludesfile = /home/blast/.gitignore_global
+	excludesfile = /Users/dstewart/.gitignore_global
 [color]
 	ui = auto
 [alias]
