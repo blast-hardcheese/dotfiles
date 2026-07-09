@@ -1,0 +1,67 @@
+#!/bin/sh
+# Translates adjacent lines matching:
+#   T<digit>[optional comment]
+#   M104 S<digits>[optional comment]
+# into a single line: T<digit> S<digits>
+#
+# Usage: ./translate_tool_temp.sh <file>
+
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <file>" >&2
+    exit 1
+fi
+
+if [ ! -f "$1" ]; then
+    echo "Error: file '$1' not found" >&2
+    exit 1
+fi
+
+old="$1.old"
+mv -v "$1" "${old}"
+
+awk '
+# Regex for the T line: T followed by one digit, then either end-of-line
+# or a space-then-semicolon-comment.
+# Regex for the M104 line: M104 S<digits>, same trailing rule.
+{
+    if (held != "") {
+        # We have a pending T<d> line from the previous iteration.
+        if ($0 ~ /^M104 S[0-9]+([ \t]*$|[ \t]+;.*$)/) {
+            # Match - emit combined line.
+            temp = $0
+            sub(/^M104 /, "", temp)         # strip "M104 "
+            sub(/[ \t]*;.*$/, "", temp)     # strip trailing comment
+            sub(/[ \t]+$/, "", temp)        # strip trailing whitespace
+            sub(/^S/, "S=", temp)           # transform S<n> -> S=<n>
+            print held_tool " " temp
+            print  # Print the original line just in case
+            held = ""
+            held_tool = ""
+            next
+        } else {
+            # No match - flush the held line as-is, then fall through
+            # to process the current line.
+            print held
+            held = ""
+            held_tool = ""
+        }
+    }
+
+    if ($0 ~ /^T[0-9]([ \t]*$|[ \t]+;.*$)/) {
+        # Stash this T<d> line; decide what to do once we see the next line.
+        held = $0
+        tool = $0
+        sub(/[ \t]*;.*$/, "", tool)        # strip trailing comment
+        sub(/[ \t]+$/, "", tool)           # strip trailing whitespace
+        held_tool = tool
+        next
+    }
+
+    # Ordinary line - print unchanged.
+    print
+}
+END {
+    # Flush any trailing held T-line.
+    if (held != "") print held
+}
+' "$old"  > "$1"
