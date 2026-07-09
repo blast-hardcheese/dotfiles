@@ -4,5 +4,7 @@
 .ensime
 .ensime_cache/
 .metals/
-.claude/
+.claude/*.lock
+.claude/settings.local.json
 .pact/
+dashboards/*.json
