@@ -25,24 +25,23 @@ test_auth_sock() {
     fi
 
     if ls "$SOCKFILE" &>/dev/null; then
-        # The following perl blurb grabs the pid out of a string like:
-        # /tmp/ssh-qeedRuu2jHmL/agent.23886
-        # and then increments it, since (at least on linux) the socket pid
-        # is the parent pid (not the daemon pid)
-        SSHPID=$(echo -n $SOCKFILE |
-            perl -ne 's/^.*agent\.(\d*)/$1/; print;')
-        if [ "$SSHPID" = "$SOCKFILE" ]; then
-            return 4 # Unknown path type
+        AGENTPID=( $( \
+          pgrep ssh-agent \
+        | xargs -n1 lsof -p \
+        | grep "$SSH_AUTH_SOCK" \
+        | awk '{print$2}' \
+        ) )
+
+        if [[ "${#AGENTPID[@]}" -ne 1 ]]; then
+            return 4 # Multiple matches
         fi
-        AGENTPID=$(($SSHPID+1))
 
         # If the regex matched a pid
-        if test \( "xx$AGENTPID" != "xx" \) -o \( "xx$SSHPID" != "xx" \) ; then
-            # If neight AGENTPID or SSHPID are running, return 3
-            ps -p $AGENTPID &>/dev/null || ps -p $SSHPID &>/dev/null || return 3
-        else
+        if [[ -z "${AGENTPID[0]}" ]] ; then
             return 100
         fi
+
+        return 0
     else
         return 2
     fi
