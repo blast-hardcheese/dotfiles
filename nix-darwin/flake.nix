@@ -19,23 +19,24 @@
     pkgs2511 = nixpkgs2511.legacyPackages.aarch64-darwin;
     configuration = { pkgs, ... }:
     let
-      dirstat-rs = pkgs.rustPlatform.buildRustPackage {
-        pname = "dirstat-rs";
-        version = "0.3.7";
-        src = pkgs.fetchFromGitHub {
-          owner = "scullionw";
-          repo = "dirstat-rs";
-          rev = "aafe0687ee2b778941451847c8a2a65789ebe85d"; # v0.3.7
-          hash = "sha256-gDIUYhc+GWbQsn5DihnBJdOJ45zdwm24J2ZD2jEwGyE=";
-        };
-        cargoHash = "sha256-SdxTiIrsK3U4mcrcilOhMkkp12yEUkWlXmlT+C75dZw=";
-      };
-      codex = pkgs.stdenvNoCC.mkDerivation rec {
+#     dirstat-rs = pkgs.rustPlatform.buildRustPackage {
+#       pname = "dirstat-rs";
+#       version = "0.3.7";
+#       src = pkgs.fetchFromGitHub {
+#         owner = "scullionw";
+#         repo = "dirstat-rs";
+#         rev = "aafe0687ee2b778941451847c8a2a65789ebe85d"; # v0.3.7
+#         hash = "sha256-gDIUYhc+GWbQsn5DihnBJdOJ45zdwm24J2ZD2jEwGyE=";
+#       };
+#       cargoHash = "sha256-SdxTiIrsK3U4mcrcilOhMkkp12yEUkWlXmlT+C75dZw=";
+#     };
+      codexVersion = "0.153.4";
+      codex = pkgs.stdenvNoCC.mkDerivation {
         pname = "codex";
-        version = "0.142.1";
+        version = codexVersion;
         src = pkgs.fetchurl {
-          url = "https://github.com/openai/codex/releases/download/rust-v${version}/codex-aarch64-apple-darwin.tar.gz";
-          hash = "sha256-dGMmpwsYWDfCZg5QHDukVDv25SUP1PGlZ/vDhUtRi+0=";
+          url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-aarch64-apple-darwin.tar.gz";
+          hash = "sha256-jPkR6mdlI7+yEh7FYYSNKrpWSJCtU2202KM1PyuYULE=";
         };
         sourceRoot = ".";
         installPhase = ''
@@ -44,25 +45,39 @@
           runHook postInstall
         '';
       };
-      gemini-cli-package = pkgs.buildNpmPackage {
-        pname = "gemini-cli";
-        version = "0.45.2";
-        src = gemini-cli;
-        npmDepsHash = "sha256-BIZtPXDZYGjS2oBXfQ/lXyPEPzoNTogLRSr1nSvf6tY=";
-        npmDepsFetcherVersion = 2;
-        npmBuildScript = "bundle";
-        npmInstallFlags = [ "--ignore-scripts" ];
-        nativeBuildInputs = [ pkgs.makeWrapper ];
+      codex-code-mode-host = pkgs.stdenvNoCC.mkDerivation {
+        pname = "codex-code-mode-host";
+        version = codexVersion;
+        src = pkgs.fetchurl {
+          url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-code-mode-host-aarch64-apple-darwin.tar.gz";
+          hash = "sha256-Ramw/fU7mLhaa7keF13ZDpYTKKehT7UKQJAiBRmd8d8=";
+        };
+        sourceRoot = ".";
         installPhase = ''
           runHook preInstall
-          mkdir -p $out/lib/gemini-cli $out/bin
-          cp -RL bundle $out/lib/gemini-cli/
-          cp package.json $out/lib/gemini-cli/
-          makeWrapper ${pkgs.nodejs}/bin/node $out/bin/gemini \
-            --add-flags "$out/lib/gemini-cli/bundle/gemini.js"
+          install -Dm755 codex-code-mode-host-aarch64-apple-darwin $out/bin/codex-code-mode-host
           runHook postInstall
         '';
       };
+#     gemini-cli-package = pkgs.buildNpmPackage {
+#       pname = "gemini-cli";
+#       version = "0.45.2";
+#       src = gemini-cli;
+#       npmDepsHash = "sha256-BIZtPXDZYGjS2oBXfQ/lXyPEPzoNTogLRSr1nSvf6tY=";
+#       npmDepsFetcherVersion = 2;
+#       npmBuildScript = "bundle";
+#       npmInstallFlags = [ "--ignore-scripts" ];
+#       nativeBuildInputs = [ pkgs.makeWrapper ];
+#       installPhase = ''
+#         runHook preInstall
+#         mkdir -p $out/lib/gemini-cli $out/bin
+#         cp -RL bundle $out/lib/gemini-cli/
+#         cp package.json $out/lib/gemini-cli/
+#         makeWrapper ${pkgs.nodejs}/bin/node $out/bin/gemini \
+#           --add-flags "$out/lib/gemini-cli/bundle/gemini.js"
+#         runHook postInstall
+#       '';
+#     };
       sentry-cli = pkgs.stdenvNoCC.mkDerivation rec {
         pname = "sentry-cli";
         version = "3.4.3";
@@ -87,7 +102,8 @@
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
-        [ (pkgs.python311.withPackages(ps: [ps.numpy]))
+        [ # (pkgs.python311.withPackages(ps: [ps.numpy]))
+          pkgs.python313
           pkgs.coreutils
           pkgs.gnugrep
           pkgs.entr
@@ -112,7 +128,7 @@
           pkgs.ffmpeg
           pkgs.openscad
 
-          pkgs.disk-inventory-x
+          # pkgs.disk-inventory-x
 
           # pkgs.protobuf
           # pkgs.protoc-gen-go
@@ -125,7 +141,7 @@
           pkgs.corepack
           pkgs.cargo
 
-          dirstat-rs
+          # dirstat-rs
 
           # pkgs.go
 
@@ -142,7 +158,8 @@
           pkgs.gh
           pkgs.claude-code
           codex
-          gemini-cli-package
+          codex-code-mode-host
+          # gemini-cli-package
 
           pkgs.postgresql
           pkgs.awscli2
@@ -154,6 +171,7 @@
           (pkgs.google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin])
           pkgs.jq
           pkgs.yq
+          pkgs.imagemagick
 
           pkgs.neovim
           pkgs.helix
@@ -267,7 +285,7 @@
       security.pam.services.sudo_local.touchIdAuth = true;
       # Reattach PAM through sudo
       security.pam.services.sudo_local.reattach = true;
-      services.aerospace.enable = true;
+      services.aerospace.enable = false;
       services.aerospace.settings = {
         accordion-padding = 0;
         default-root-container-layout = "accordion";
