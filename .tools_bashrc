@@ -157,7 +157,17 @@ if [ -n "$IN_NIX_SHELL" ]; then
   NIXPS1=" $ANSII_YELLOW(nix)$ANSII_RESET"
 fi
 
-PS1="$ANSII_RESET\h:\W$NIXPS1$GITPS1 \u\$ $ANSII_RESET"
+if [[ -d ~/.tools/telepresence-ps1 ]]; then
+  source ~/.tools/telepresence-ps1/telepresence-ps1.sh
+  TELEPS1="\$(telepresence_ps1)"
+fi
+
+if [[ -d ~/.tools/kube-ps1 ]]; then
+  source ~/.tools/kube-ps1/kube-ps1.sh
+  KUBEPS1="\$(kubectl config current-context 2>/dev/null | sed 's~^.*$~ ${ANSII_YELLOW}(k8s:&)${ANSII_RESET}~' || echo '')"
+fi
+
+PS1="$ANSII_RESET\h:\W$NIXPS1$GITPS1$TELEPS1$KUBEPS1 \u\$ $ANSII_RESET"
 unset ANSII_RESET ANSII_RED
 
 export LESS='-RFMSXix4'
