@@ -180,7 +180,13 @@
           pkgs._1password-cli
 
           (pkgs.writeShellScriptBin "my-flake-update-input" ''
+                set -e
                 cd ~/.tools/config/nix-darwin
+                nix flake update
+                # Standalone home-manager flake (user-level, `home-manager switch`).
+                # home-manager master and nixpkgs must move together, otherwise HM
+                # warns about a version mismatch — so update all of its inputs.
+                cd ~/.tools/config/.config/home-manager
                 nix flake update
             '')
           (pkgs.writeShellScriptBin "my-flake-rebuild" ''
