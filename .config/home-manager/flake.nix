@@ -118,6 +118,7 @@
             config.whitelist.prefix = [
               "~/Projects/wandercom"
               "~/Projects/mea"
+              "~/Projects/s2s-framework"
             ];
           };
 

@@ -48,6 +48,7 @@
             '')
           (pkgs.writeShellScriptBin "my-flake-rebuild" ''
                 sudo -Hi darwin-rebuild switch --flake ~/.tools/config/nix-darwin
+                home-manager switch
             '')
         ];
 

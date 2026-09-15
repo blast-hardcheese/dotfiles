@@ -138,6 +138,7 @@ fi
 # direnv is installed by home-manager; its bash hook is ours to wire up
 # (home-manager's shell integration only applies to its own programs.bash).
 if type direnv >/dev/null 2>&1; then
+    export DIRENV_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/direnv"
     eval "$(direnv hook bash)"
 fi
 
