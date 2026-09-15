@@ -4,95 +4,16 @@
   inputs = {
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs2511.url = "github:NixOS/nixpkgs/nixos-25.11";
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
-    gemini-cli.url = "github:google-gemini/gemini-cli/v0.45.2";
-    gemini-cli.flake = false;
   };
 
-  outputs = inputs@{ self, flake-utils, determinate, gemini-cli, home-manager, nix-darwin, nixpkgs, nixpkgs2511 }:
+  outputs = inputs@{ self, flake-utils, determinate, home-manager, nix-darwin, nixpkgs }:
   let
-    pkgs2511 = nixpkgs2511.legacyPackages.aarch64-darwin;
-    configuration = { pkgs, ... }:
-    let
-#     dirstat-rs = pkgs.rustPlatform.buildRustPackage {
-#       pname = "dirstat-rs";
-#       version = "0.3.7";
-#       src = pkgs.fetchFromGitHub {
-#         owner = "scullionw";
-#         repo = "dirstat-rs";
-#         rev = "aafe0687ee2b778941451847c8a2a65789ebe85d"; # v0.3.7
-#         hash = "sha256-gDIUYhc+GWbQsn5DihnBJdOJ45zdwm24J2ZD2jEwGyE=";
-#       };
-#       cargoHash = "sha256-SdxTiIrsK3U4mcrcilOhMkkp12yEUkWlXmlT+C75dZw=";
-#     };
-      codexVersion = "0.153.4";
-      codex = pkgs.stdenvNoCC.mkDerivation {
-        pname = "codex";
-        version = codexVersion;
-        src = pkgs.fetchurl {
-          url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-aarch64-apple-darwin.tar.gz";
-          hash = "sha256-jPkR6mdlI7+yEh7FYYSNKrpWSJCtU2202KM1PyuYULE=";
-        };
-        sourceRoot = ".";
-        installPhase = ''
-          runHook preInstall
-          install -Dm755 codex-aarch64-apple-darwin $out/bin/codex
-          runHook postInstall
-        '';
-      };
-      codex-code-mode-host = pkgs.stdenvNoCC.mkDerivation {
-        pname = "codex-code-mode-host";
-        version = codexVersion;
-        src = pkgs.fetchurl {
-          url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-code-mode-host-aarch64-apple-darwin.tar.gz";
-          hash = "sha256-Ramw/fU7mLhaa7keF13ZDpYTKKehT7UKQJAiBRmd8d8=";
-        };
-        sourceRoot = ".";
-        installPhase = ''
-          runHook preInstall
-          install -Dm755 codex-code-mode-host-aarch64-apple-darwin $out/bin/codex-code-mode-host
-          runHook postInstall
-        '';
-      };
-#     gemini-cli-package = pkgs.buildNpmPackage {
-#       pname = "gemini-cli";
-#       version = "0.45.2";
-#       src = gemini-cli;
-#       npmDepsHash = "sha256-BIZtPXDZYGjS2oBXfQ/lXyPEPzoNTogLRSr1nSvf6tY=";
-#       npmDepsFetcherVersion = 2;
-#       npmBuildScript = "bundle";
-#       npmInstallFlags = [ "--ignore-scripts" ];
-#       nativeBuildInputs = [ pkgs.makeWrapper ];
-#       installPhase = ''
-#         runHook preInstall
-#         mkdir -p $out/lib/gemini-cli $out/bin
-#         cp -RL bundle $out/lib/gemini-cli/
-#         cp package.json $out/lib/gemini-cli/
-#         makeWrapper ${pkgs.nodejs}/bin/node $out/bin/gemini \
-#           --add-flags "$out/lib/gemini-cli/bundle/gemini.js"
-#         runHook postInstall
-#       '';
-#     };
-      sentry-cli = pkgs.stdenvNoCC.mkDerivation rec {
-        pname = "sentry-cli";
-        version = "3.4.3";
-        src = pkgs.fetchurl {
-          url = "https://github.com/getsentry/sentry-cli/releases/download/${version}/sentry-cli-Darwin-arm64";
-          hash = "sha256-WDgn3PnbPySJwRRWRLP0BOXYiMkvU1BiVoNEyzCoFqQ=";
-        };
-        dontUnpack = true;
-        installPhase = ''
-          runHook preInstall
-          install -Dm755 $src $out/bin/sentry-cli
-          runHook postInstall
-        '';
-      };
-    in {
+    configuration = { pkgs, ... }: {
       # Defer to Determinate Nix
       nix.enable = false;
 
@@ -101,83 +22,19 @@
       environment.shells = [ pkgs.bashInteractive ];
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
+      # Root-facing minimum only: `sudo -Hi` (my-flake-rebuild) and launchd
+      # daemons see /run/current-system/sw, never ~/.nix-profile. Everything
+      # user-facing lives in ~/.tools/config/.config/home-manager/flake.nix.
       environment.systemPackages =
-        [ # (pkgs.python311.withPackages(ps: [ps.numpy]))
-          pkgs.python313
+        [
           pkgs.coreutils
           pkgs.gnugrep
-          pkgs.entr
-          pkgs.git
-          pkgs.git-lfs
-          pkgs.git-extras
-          # pkgs.graphite-cli
           pkgs.gnused
-          pkgs.moreutils
-          pkgs.socat
-          pkgs.pstree
-          pkgs.uv
-          # pkgs.sem
-          pkgs.ripgrep
-          pkgs.graphviz
-          pkgs.k9s
-          pkgs.redis
-          pkgs.graphviz
-          pkgs.shellcheck
-
-          pkgs.home-manager
-          pkgs.ffmpeg
-          pkgs.openscad
-
-          # pkgs.disk-inventory-x
-
-          # pkgs.protobuf
-          # pkgs.protoc-gen-go
-          # pkgs.protoc-gen-go-grpc
-
-          pkgs.nodejs
-          # pkgs.bun
-          pkgs.yarn
-          # pkgs.nodePackages.pnpm
-          pkgs.corepack
-          pkgs.cargo
-
-          # dirstat-rs
-
-          # pkgs.go
-
-          # pkgs.sbt
-          # pkgs.coursier
-          # pkgs.poetry
-
-          # pkgs.jdk
-
-          # pkgs.ghc
-          # pkgs.ghcid
-
-          pkgs.act
-          pkgs.gh
-          pkgs.claude-code
-          codex
-          codex-code-mode-host
-          # gemini-cli-package
-
-          pkgs.postgresql
-          pkgs.awscli2
-          pkgs.awsebcli
-
-          # Not always cached, no sense in building it if we don't use it
-          # pkgs.terraform
-
-          (pkgs.google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin])
+          pkgs.git
           pkgs.jq
-          pkgs.yq
-          pkgs.imagemagick
 
-          pkgs.neovim
-          pkgs.helix
-          pkgs.reattach-to-user-namespace
-
-          pkgs._1password-cli
+          # Bootstrap for the user-level flake if ~/.nix-profile is ever broken.
+          pkgs.home-manager
 
           (pkgs.writeShellScriptBin "my-flake-update-input" ''
                 set -e
@@ -192,12 +49,6 @@
           (pkgs.writeShellScriptBin "my-flake-rebuild" ''
                 sudo -Hi darwin-rebuild switch --flake ~/.tools/config/nix-darwin
             '')
-
-          pkgs.doppler
-          pkgs.gnupg
-          # nixpkgs' sentry-cli does not build on latest nix-darwin, so we pull
-          # the prebuilt release binary directly (see sentry-cli derivation above).
-          sentry-cli
         ];
 
       # Auto upgrade nix package and the daemon service.
@@ -221,38 +72,6 @@
       programs.bash.enable = true;  # default shell on catalina
       programs.bash.completion.enable = true;  # hopefully bash completion for everything (including nix!)
       programs.zsh.enable = true;
-      # We use direnv for dev shells
-      programs.direnv.enable = true;
-      programs.direnv.nix-direnv.enable = true; # make direnv cache better
-      programs.direnv.silent = true;
-      # Pin direnv to nixpkgs 25.11; skip fish integration tests (SIGKILL'd in Nix sandbox on Darwin)
-      programs.direnv.package = pkgs2511.direnv.overrideAttrs (_: { doCheck = false; });
-      programs.direnv.settings = {
-        whitelist = {
-          prefix = [
-            "~/Projects/wandercom"
-            "~/Projects/mea"
-          ];
-        };
-      };
-      programs.tmux.enable = true;
-      programs.tmux.enableSensible = true;
-      programs.tmux.extraConfig = ''
-        set-option -g prefix `
-        unbind-key C-b
-        bind-key e send-prefix
-
-        bind-key ` last-window
-
-        # http://jasonwryan.com/blog/2010/01/07/tmux-terminal-multiplexer/
-        # Toggle status line using a keybinding
-        bind-key b set-option status
-
-        # TODO: Upstream these
-        set-option -g pane-base-index 1
-
-        source-file -q $HOME/.tmux.conf
-      '';
 
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;

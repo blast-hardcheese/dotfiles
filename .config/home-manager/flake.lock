@@ -50,6 +50,23 @@
         "type": "github"
       }
     },
+    "gemini-cli": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780690022,
+        "narHash": "sha256-Dexn501qF47PbQuxSFYjRFseZZifmq3/zSNYkeruZNA=",
+        "owner": "google-gemini",
+        "repo": "gemini-cli",
+        "rev": "dfa8394cad8ce33d8d35f29473f5f04374829969",
+        "type": "github"
+      },
+      "original": {
+        "owner": "google-gemini",
+        "ref": "v0.45.2",
+        "repo": "gemini-cli",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -101,6 +118,22 @@
         "type": "github"
       }
     },
+    "nixpkgs2511": {
+      "locked": {
+        "lastModified": 1782847189,
+        "narHash": "sha256-twXPFqFsrrY5r28Zh7Homgcp2gUMBgQ6WDS98Q/3xFI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b6018f87da91d19d0ab4cf979885689b469cdd41",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1773646010,
@@ -140,8 +173,10 @@
     },
     "root": {
       "inputs": {
+        "gemini-cli": "gemini-cli",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
+        "nixpkgs2511": "nixpkgs2511",
         "pi": "pi"
       }
     },

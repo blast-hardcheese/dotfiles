@@ -135,6 +135,13 @@ if ! shopt -oq posix; then
 fi
 
 
+# direnv is installed by home-manager; its bash hook is ours to wire up
+# (home-manager's shell integration only applies to its own programs.bash).
+if type direnv >/dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+fi
+
+
 ANSII_RESET="\[\033[0m\]"
 ANSII_YELLOW="\[\033[33m\]"
 ANSII_RED="\[\033[31m\]"

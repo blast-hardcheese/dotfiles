@@ -63,7 +63,6 @@ prefix_path "$HOME/.docker/bin"
 prefix_root "$HOME/.homebrew"
 prefix_path "$HOME/.bin"
 prefix_path "$HOME/.rvm/bin"
-prefix_root "$HOME/.nix-profile"
 prefix_root "$HOME/Library/Python/2.7"
 prefix_root "$HOME/Library/Application Support/Coursier"
 prefix_path "$HOME/.rbenv/shims"
@@ -71,6 +70,8 @@ prefix_path "$HOME/.cargo/bin"
 prefix_path "$HOME/.emacs.d/bin"
 prefix_root "/nix/var/nix/profiles/default"
 prefix_root "/run/current-system/sw"
+# home-manager profile outranks the nix-darwin system profile (later prefix_* = earlier in PATH)
+prefix_root "$HOME/.nix-profile"
 prefix_root "/run/wrappers"  # NixOS
 
 if [ -d "/opt/ghc" ]; then
