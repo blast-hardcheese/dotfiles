@@ -252,5 +252,7 @@
     darwinConfigurations."TiBook" = macConfig;
 
     darwinConfigurations."m4-pro" = macConfig;
+
+    darwinConfigurations."wanderer" = macConfig;
   };
 }
