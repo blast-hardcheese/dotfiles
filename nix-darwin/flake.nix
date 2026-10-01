@@ -2,16 +2,14 @@
   description = "My Darwin system flake";
 
   inputs = {
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    home-config.url = "path:../.config/home-manager";
+    nixpkgs.follows = "home-config/nixpkgs";
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    flake-utils.url = "github:numtide/flake-utils";
+    home-manager.follows = "home-config/home-manager";
   };
 
-  outputs = inputs@{ self, flake-utils, determinate, home-manager, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, home-manager, nix-darwin, nixpkgs, ... }:
   let
     configuration = { username, hostname }: { pkgs, ... }: {
       # Defer to Determinate Nix
@@ -44,12 +42,10 @@
 
           (pkgs.writeShellScriptBin "my-flake-update-input" ''
                 set -e
-                cd ~/.tools/config/nix-darwin
-                nix flake update
-                # Standalone home-manager flake (user-level, `home-manager switch`).
-                # home-manager master and nixpkgs must move together, otherwise HM
-                # warns about a version mismatch — so update all of its inputs.
+                # Home Manager owns the shared nixpkgs and home-manager pins.
                 cd ~/.tools/config/.config/home-manager
+                nix flake update
+                cd ~/.tools/config/nix-darwin
                 nix flake update
             '')
           (pkgs.writeShellScriptBin "my-flake-rebuild" ''

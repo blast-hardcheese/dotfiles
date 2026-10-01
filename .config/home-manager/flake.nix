@@ -6,9 +6,9 @@
     nixpkgs2511.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # https://github.com/lukasl-dev/pi.nix — its nixpkgs deliberately NOT set to follow ours:
-    # keeping upstream's pin is what makes pi.cachix.org hits possible.
+    # Share the primary nixpkgs pin; pi may need a local build instead of its upstream cache.
     pi.url = "github:lukasl-dev/pi.nix";
+    pi.inputs.nixpkgs.follows = "nixpkgs";
     herdr.url = "github:herdrdev/herdr";
     gemini-cli.url = "github:google-gemini/gemini-cli/v0.45.2";
     gemini-cli.flake = false;
