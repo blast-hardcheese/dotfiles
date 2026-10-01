@@ -28,13 +28,13 @@
         pi.homeModules.default
         ({ pkgs, ... }:
         let
-          codexVersion = "0.153.4";
+          codexVersion = "0.156.1";
           codex = pkgs.stdenvNoCC.mkDerivation {
             pname = "codex";
             version = codexVersion;
             src = pkgs.fetchurl {
               url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-aarch64-apple-darwin.tar.gz";
-              hash = "sha256-jPkR6mdlI7+yEh7FYYSNKrpWSJCtU2202KM1PyuYULE=";
+              hash = "sha256-K9ZK8U3t1HeV8va/1dElz3kZmswse6IiFE4IEnERpco=";
             };
             sourceRoot = ".";
             installPhase = ''
@@ -48,7 +48,7 @@
             version = codexVersion;
             src = pkgs.fetchurl {
               url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-code-mode-host-aarch64-apple-darwin.tar.gz";
-              hash = "sha256-Ramw/fU7mLhaa7keF13ZDpYTKKehT7UKQJAiBRmd8d8=";
+              hash = "sha256-JiXQI+K24D0rzEN6Pg4IMcJdPHItKFRjio50kh/3m9k=";
             };
             sourceRoot = ".";
             installPhase = ''
