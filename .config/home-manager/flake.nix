@@ -9,11 +9,12 @@
     # https://github.com/lukasl-dev/pi.nix — its nixpkgs deliberately NOT set to follow ours:
     # keeping upstream's pin is what makes pi.cachix.org hits possible.
     pi.url = "github:lukasl-dev/pi.nix";
+    herdr.url = "github:herdrdev/herdr";
     gemini-cli.url = "github:google-gemini/gemini-cli/v0.45.2";
     gemini-cli.flake = false;
   };
 
-  outputs = { self, nixpkgs, nixpkgs2511, home-manager, pi, gemini-cli, ... }:
+  outputs = { self, nixpkgs, nixpkgs2511, home-manager, pi, herdr, gemini-cli, ... }:
   let
     system = "aarch64-darwin";
     pkgs = import nixpkgs {
@@ -142,6 +143,7 @@
             pkgs.redis
             pkgs.shellcheck
 
+            herdr.packages.${system}.default
             pkgs.tmux
             pkgs.reattach-to-user-namespace
 
