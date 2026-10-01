@@ -13,11 +13,17 @@
 
   outputs = inputs@{ self, flake-utils, determinate, home-manager, nix-darwin, nixpkgs }:
   let
-    configuration = { username }: { pkgs, ... }: {
+    configuration = { username, hostname }: { pkgs, ... }: {
       # Defer to Determinate Nix
       nix.enable = false;
 
       system.primaryUser = username;
+
+      networking = {
+        computerName = hostname;
+        hostName = hostname;
+        localHostName = hostname;
+      };
 
       environment.shells = [ pkgs.bashInteractive ];
       # List packages installed in system profile. To search by name, run:
@@ -237,9 +243,9 @@
     };
   in
   let
-    macConfig = { username }: nix-darwin.lib.darwinSystem {
+    macConfig = { username, hostname }: nix-darwin.lib.darwinSystem {
       modules = [
-        (configuration { inherit username; })
+        (configuration { inherit username hostname; })
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -249,10 +255,10 @@
       specialArgs = { inherit inputs; };
     };
   in {
-    darwinConfigurations."TiBook" = macConfig { username = "dstewart"; };
+    darwinConfigurations."TiBook" = macConfig { username = "dstewart"; hostname = "TiBook"; };
 
-    darwinConfigurations."m4-pro" = macConfig { username = "dstewart"; };
+    darwinConfigurations."m4-pro" = macConfig { username = "dstewart"; hostname = "m4-pro"; };
 
-    darwinConfigurations."wanderer" = macConfig { username = "devon"; };
+    darwinConfigurations."wanderer" = macConfig { username = "devon"; hostname = "wanderer"; };
   };
 }
