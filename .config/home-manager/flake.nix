@@ -1,5 +1,5 @@
 {
-  description = "Standalone home-manager for dstewart (user-level, no sudo)";
+  description = "Standalone home-manager (user-level, no sudo)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -21,8 +21,7 @@
       config.allowUnfree = true;
     };
     pkgs2511 = nixpkgs2511.legacyPackages.${system};
-  in {
-    homeConfigurations."dstewart" = home-manager.lib.homeManagerConfiguration {
+    homeConfig = { username }: home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [
         pi.homeModules.default
@@ -93,8 +92,8 @@
             '';
           };
         in {
-          home.username = "dstewart";
-          home.homeDirectory = "/Users/dstewart";
+          home.username = username;
+          home.homeDirectory = "/Users/${username}";
           home.stateVersion = "26.05";
 
           # Lets `home-manager` in ~/.nix-profile track this flake's home-manager input.
@@ -205,5 +204,8 @@
         })
       ];
     };
+  in {
+    homeConfigurations."dstewart" = homeConfig { username = "dstewart"; };
+    homeConfigurations."devon" = homeConfig { username = "devon"; };
   };
 }

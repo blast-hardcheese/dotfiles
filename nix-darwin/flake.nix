@@ -13,11 +13,11 @@
 
   outputs = inputs@{ self, flake-utils, determinate, home-manager, nix-darwin, nixpkgs }:
   let
-    configuration = { pkgs, ... }: {
+    configuration = { username }: { pkgs, ... }: {
       # Defer to Determinate Nix
       nix.enable = false;
 
-      system.primaryUser = "dstewart";
+      system.primaryUser = username;
 
       environment.shells = [ pkgs.bashInteractive ];
       # List packages installed in system profile. To search by name, run:
@@ -59,7 +59,7 @@
       nix.settings = {
         experimental-features = "nix-command flakes";
 
-        trusted-users = ["root" "dstewart"];
+        trusted-users = ["root" username];
 
         substituters = [
           "https://cache.flox.dev"
@@ -101,7 +101,7 @@
 
       security.sudo = {
         extraConfig = ''
-          dstewart ALL = (ALL)  NOPASSWD: /Users/dstewart/Projects/wandercom/tooling-kubernetes/.flox/run/aarch64-darwin.tooling-kubernetes.dev/bin/telepresence
+          ${username} ALL = (ALL)  NOPASSWD: /Users/${username}/Projects/wandercom/tooling-kubernetes/.flox/run/aarch64-darwin.tooling-kubernetes.dev/bin/telepresence
         '';
       };
 
@@ -237,9 +237,9 @@
     };
   in
   let
-    macConfig = nix-darwin.lib.darwinSystem {
+    macConfig = { username }: nix-darwin.lib.darwinSystem {
       modules = [
-        configuration
+        (configuration { inherit username; })
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -249,10 +249,10 @@
       specialArgs = { inherit inputs; };
     };
   in {
-    darwinConfigurations."TiBook" = macConfig;
+    darwinConfigurations."TiBook" = macConfig { username = "dstewart"; };
 
-    darwinConfigurations."m4-pro" = macConfig;
+    darwinConfigurations."m4-pro" = macConfig { username = "dstewart"; };
 
-    darwinConfigurations."wanderer" = macConfig;
+    darwinConfigurations."wanderer" = macConfig { username = "devon"; };
   };
 }
