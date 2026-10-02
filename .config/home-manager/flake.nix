@@ -33,27 +33,16 @@
             pname = "codex";
             version = codexVersion;
             src = pkgs.fetchurl {
-              url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-aarch64-apple-darwin.tar.gz";
-              hash = "sha256-B8PHyjdqj3kRFTQvUxON2jfpfPopuBJdBlLZN4SJS10=";
+              url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-package-aarch64-apple-darwin.tar.gz";
+              hash = "sha256-AH30G2B9u8jSBLl0bOf+0tTObIE/RMMs7uVBdcp5ZSU=";
             };
             sourceRoot = ".";
+            dontStrip = true;
             installPhase = ''
               runHook preInstall
-              install -Dm755 codex-aarch64-apple-darwin $out/bin/codex
-              runHook postInstall
-            '';
-          };
-          codex-code-mode-host = pkgs.stdenvNoCC.mkDerivation {
-            pname = "codex-code-mode-host";
-            version = codexVersion;
-            src = pkgs.fetchurl {
-              url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-code-mode-host-aarch64-apple-darwin.tar.gz";
-              hash = "sha256-3HD7x26dyuWuPVQkgIyOfC314NtKyCfd1PvjOQFarXU=";
-            };
-            sourceRoot = ".";
-            installPhase = ''
-              runHook preInstall
-              install -Dm755 codex-code-mode-host-aarch64-apple-darwin $out/bin/codex-code-mode-host
+              mkdir -p $out
+              cp -R bin codex-path codex-resources $out/
+              cp codex-package.json $out/
               runHook postInstall
             '';
           };
@@ -187,7 +176,6 @@
             pkgs.gh
             claude-code
             codex
-            codex-code-mode-host
             # gemini-cli-package
 
             pkgs.postgresql
