@@ -28,13 +28,13 @@
         pi.homeModules.default
         ({ pkgs, ... }:
         let
-          codexVersion = "0.156.1";
+          codexVersion = "0.160.0";
           codex = pkgs.stdenvNoCC.mkDerivation {
             pname = "codex";
             version = codexVersion;
             src = pkgs.fetchurl {
               url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-aarch64-apple-darwin.tar.gz";
-              hash = "sha256-K9ZK8U3t1HeV8va/1dElz3kZmswse6IiFE4IEnERpco=";
+              hash = "sha256-B8PHyjdqj3kRFTQvUxON2jfpfPopuBJdBlLZN4SJS10=";
             };
             sourceRoot = ".";
             installPhase = ''
@@ -48,7 +48,7 @@
             version = codexVersion;
             src = pkgs.fetchurl {
               url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-code-mode-host-aarch64-apple-darwin.tar.gz";
-              hash = "sha256-JiXQI+K24D0rzEN6Pg4IMcJdPHItKFRjio50kh/3m9k=";
+              hash = "sha256-3HD7x26dyuWuPVQkgIyOfC314NtKyCfd1PvjOQFarXU=";
             };
             sourceRoot = ".";
             installPhase = ''
@@ -57,6 +57,13 @@
               runHook postInstall
             '';
           };
+          claude-code = pkgs.claude-code.overrideAttrs (_: {
+            version = "2.1.287";
+            src = pkgs.fetchurl {
+              url = "https://downloads.claude.ai/claude-code-releases/2.1.287/darwin-arm64/claude.zst";
+              hash = "sha256-JwHawE4CrL6n11hPw14Erd328kAh0yHjun65WZTtz5Y=";
+            };
+          });
 #         gemini-cli-package = pkgs.buildNpmPackage {
 #           pname = "gemini-cli";
 #           version = "0.45.2";
@@ -178,7 +185,7 @@
 
             pkgs.act
             pkgs.gh
-            pkgs.claude-code
+            claude-code
             codex
             codex-code-mode-host
             # gemini-cli-package
