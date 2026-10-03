@@ -18,7 +18,28 @@ end
 
 local packer_bootstrap = ensure_packer()
 
-return require('packer').startup(function(use)
+local function plugins_installed()
+  local install_root = vim.fn.stdpath('data')..'/site/pack/packer/'
+  for _, plugin in ipairs({
+    'telescope.nvim',
+    'telescope-file-browser.nvim',
+    'solarized.nvim',
+    'nvim-cmp',
+    'cmp-nvim-lsp',
+    'mason.nvim',
+    'mason-lspconfig.nvim',
+  }) do
+    if vim.fn.isdirectory(install_root..'start/'..plugin) == 0
+      and vim.fn.isdirectory(install_root..'opt/'..plugin) == 0 then
+      return false
+    end
+  end
+  return true
+end
+
+local plugins_ready = not packer_bootstrap and plugins_installed()
+
+require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
@@ -86,7 +107,9 @@ return require('packer').startup(function(use)
 --        ollama = {},
           openai = {
             name = "openai",
-            api_key = os.getenv "OPENAI_API_KEY",
+            api_key = function()
+              return os.getenv("OPENAI_API_KEY")
+            end,
             endpoint = "https://api.openai.com/v1/chat/completions",
             models = {
               "gpt-4o",
@@ -111,7 +134,9 @@ return require('packer').startup(function(use)
     end,
   }
 
-  if packer_bootstrap then
+  if not plugins_ready then
     require('packer').sync()
   end
 end)
+
+return plugins_ready
