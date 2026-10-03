@@ -28,7 +28,7 @@ test_auth_sock() {
         AGENTPID=( $( \
           pgrep ssh-agent \
         | xargs -n1 lsof -p \
-        | grep "$SSH_AUTH_SOCK" \
+        | grep -F -- "$SOCKFILE" \
         | awk '{print$2}' \
         ) )
 
@@ -73,7 +73,7 @@ fi
 
 if test -z "$SSH_AUTH_SOCK" ; then
     # Find agent socks
-    AGENTS=$(find $TMPDIR/ssh-* -user $USER -type s 2>/dev/null)
+    AGENTS=$(find "${TMPDIR:-/tmp}"/ssh-* "$HOME/.ssh/agent" -user "$USER" -type s 2>/dev/null)
     AGENTCOUNT=$(echo $AGENTS | wc -w)
     if test $AGENTCOUNT -eq 0 ; then
         #echo "Unable to find SSH agent"
