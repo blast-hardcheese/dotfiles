@@ -33,3 +33,5 @@
 [log]
 	decorate = auto
 	decorateRefs = refs/schemas/*
+[includeIf "gitdir:~/Projects/wandercom/"]
+	path = /Users/devon/.gitconfig-wandercom
