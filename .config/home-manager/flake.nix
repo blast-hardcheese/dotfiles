@@ -10,7 +10,7 @@
     pi.url = "github:lukasl-dev/pi.nix";
     pi.inputs.nixpkgs.follows = "nixpkgs";
     herdr.url = "github:herdrdev/herdr";
-    gemini-cli.url = "github:google-gemini/gemini-cli/v0.45.2";
+    gemini-cli.url = "github:google-gemini/gemini-cli/v0.64.0";
     gemini-cli.flake = false;
   };
 
@@ -28,13 +28,13 @@
         pi.homeModules.default
         ({ pkgs, ... }:
         let
-          codexVersion = "0.160.0";
+          codexVersion = "0.164.0";
           codex = pkgs.stdenvNoCC.mkDerivation {
             pname = "codex";
             version = codexVersion;
             src = pkgs.fetchurl {
               url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-package-aarch64-apple-darwin.tar.gz";
-              hash = "sha256-AH30G2B9u8jSBLl0bOf+0tTObIE/RMMs7uVBdcp5ZSU=";
+              hash = "sha256-3ZnpCSJwaRpnvd574ErCg96p2o6Gy941bCzIUaeSBfo=";
             };
             sourceRoot = ".";
             dontStrip = true;
@@ -76,10 +76,10 @@
           # the prebuilt release binary directly.
           sentry-cli = pkgs.stdenvNoCC.mkDerivation rec {
             pname = "sentry-cli";
-            version = "3.4.3";
+            version = "3.8.2";
             src = pkgs.fetchurl {
               url = "https://github.com/getsentry/sentry-cli/releases/download/${version}/sentry-cli-Darwin-arm64";
-              hash = "sha256-WDgn3PnbPySJwRRWRLP0BOXYiMkvU1BiVoNEyzCoFqQ=";
+              hash = "sha256-yA2SttNOtk/nQC9WzHlo+7Faqxx2MlStQotVzJjsfc8=";
             };
             dontUnpack = true;
             installPhase = ''
