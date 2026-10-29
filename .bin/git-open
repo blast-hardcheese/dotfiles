@@ -105,24 +105,27 @@ fi
 
 line=$(git remote get-url "$remote")
 
-function isSshRemote() {
-  remote="$1"
-  [ -z "${remote##*@*:*}" ]
-  return $?
-}
-
 if [ ! -z "$line" ]; then
-  if isSshRemote "$line"; then
-    host="${line#git@}"
-    host="${host%:*}"
-    path="${line#git@}"
-    path="${path#${host}:}"
-    path="${path%.git}"
-  else
-    host="${line#http*://}"
-    host="${host%%/*}"
-    path="${line#http*://$host/}"
-  fi
+  case "$line" in
+    ssh://*)
+      host="${line#ssh://}"
+      path="${host#*/}"
+      host="${host%%/*}"
+      host="${host##*@}"
+      host="${host%%:*}"
+      ;;
+    *@*:*)
+      host="${line%%:*}"
+      host="${host##*@}"
+      path="${line#*:}"
+      ;;
+    *)
+      host="${line#http*://}"
+      host="${host%%/*}"
+      path="${line#http*://$host/}"
+      ;;
+  esac
+  path="${path%.git}"
 
   if [[ "$host" = *"-github.com" ]]; then
     host="github.com"
