@@ -7,9 +7,9 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # Share the primary nixpkgs pin; pi may need a local build instead of its upstream cache.
-    pi.url = "github:lukasl-dev/pi.nix";
+    pi.url = "github:lukasl-dev/pi.nix/v1.5.2";
     pi.inputs.nixpkgs.follows = "nixpkgs";
-    herdr.url = "github:herdrdev/herdr";
+    herdr.url = "github:herdrdev/herdr/v0.9.5";
     gemini-cli.url = "github:google-gemini/gemini-cli/v0.64.0";
     gemini-cli.flake = false;
   };
@@ -28,13 +28,13 @@
         pi.homeModules.default
         ({ pkgs, ... }:
         let
-          codexVersion = "0.164.0";
+          codexVersion = "0.169.0";
           codex = pkgs.stdenvNoCC.mkDerivation {
             pname = "codex";
             version = codexVersion;
             src = pkgs.fetchurl {
               url = "https://github.com/openai/codex/releases/download/rust-v${codexVersion}/codex-package-aarch64-apple-darwin.tar.gz";
-              hash = "sha256-3ZnpCSJwaRpnvd574ErCg96p2o6Gy941bCzIUaeSBfo=";
+              hash = "sha256-iiMiYN96EsXoPgtLdlnhyNklm0GUJRe8AGjYq1XDZGE=";
             };
             sourceRoot = ".";
             dontStrip = true;
@@ -47,10 +47,10 @@
             '';
           };
           claude-code = pkgs.claude-code.overrideAttrs (_: {
-            version = "2.1.287";
+            version = "2.1.325";
             src = pkgs.fetchurl {
-              url = "https://downloads.claude.ai/claude-code-releases/2.1.287/darwin-arm64/claude.zst";
-              hash = "sha256-JwHawE4CrL6n11hPw14Erd328kAh0yHjun65WZTtz5Y=";
+              url = "https://downloads.claude.ai/claude-code-releases/2.1.325/darwin-arm64/claude.zst";
+              hash = "sha256-URffAbuBUM7QJNiUSpcGA04Mm/bijuUnuNdzU5espts=";
             };
           });
 #         gemini-cli-package = pkgs.buildNpmPackage {
