@@ -101,15 +101,16 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1790817238,
-        "narHash": "sha256-AiruvCcV2wdbAU06TldsWj3i7LmKvH9NuTnlCY90ik0=",
+        "lastModified": 1791993401,
+        "narHash": "sha256-N7e7oCKxeCoxek6UT8Lweq16rSsQQi34QMb7C2iNpm8=",
         "owner": "herdrdev",
         "repo": "herdr",
-        "rev": "d6b40d4edd550ccea081f089605a64314f8c8b27",
+        "rev": "2ecf19a92fc3a7fff75b6ce3655ef04f4625ec01",
         "type": "github"
       },
       "original": {
         "owner": "herdrdev",
+        "ref": "v0.9.5",
         "repo": "herdr",
         "type": "github"
       }
@@ -240,15 +241,16 @@
         "nixpkgs-x86_64-darwin": "nixpkgs-x86_64-darwin"
       },
       "locked": {
-        "lastModified": 1790889354,
-        "narHash": "sha256-BgOyXSsWukjby09ZgV4g2umGoPNzBqAtHnmGuP+W7Yc=",
+        "lastModified": 1794314432,
+        "narHash": "sha256-fZ8xJGJrDW9u8rNKmEER+ApmNV7xGVAbbl/RANdHISc=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "5dcf8ed775e341a1eff87590e9f2376c6c35bb05",
+        "rev": "5fe160e61fbea8e0c5e2ea1f3ab50a51e0d8cc5c",
         "type": "github"
       },
       "original": {
         "owner": "lukasl-dev",
+        "ref": "v1.5.2",
         "repo": "pi.nix",
         "type": "github"
       }
